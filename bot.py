@@ -531,7 +531,7 @@ def user_data():
   
 @application.route('/ball')
 def ball():
-    return render_template("ball.html")
+    return render_template("Ball.html")
 
 if __name__ == "__main__":
     application.run(host='0.0.0.0', port=5000)
