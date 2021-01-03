@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/Xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Ball</title>
+    <style>
+        html {
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            margin: 0 0 0 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: white;
+        }
+
+        canvas {
+            background-color: #0A0A19;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="Canvas" width="1920" height="1080">Error</canvas>
+    <script>
+        var canvas = document.getElementById("Canvas");
+        var ctx = canvas.getContext("2d");
+        var boxwidth, boxheight;
+        var minX, maxX, minY, maxY;
+        var X, Y, dX, dY;
+        var cursorX, cursorY;
+        var play;
+        var ispassed = false;
+
+        canvas.width = document.body.clientWidth;
+        canvas.height = document.body.clientHeight;
+        boxwidth = canvas.width * 0.5;
+        boxheight = canvas.height * 0.5;
+        X = canvas.width * 0.5;
+        Y = canvas.height * 0.5;
+        minX = canvas.width * 0.5 - boxwidth * 0.5;
+        maxX = minX + boxwidth;
+        minY = canvas.height * 0.5 - boxheight * 0.5;
+        maxY = minY + boxheight;
+        dX = 2; dY = 2;
+
+        ctx.beginPath();
+        ctx.rect(minX, minY, boxwidth, boxheight);
+        ctx.lineWidth = 10;
+        ctx.strokeStyle = "white";
+        ctx.stroke();
+        ctx.font = "20px Sans-Serif";
+        ctx.textAlign = "center";
+        ctx.fillStyle = "white";
+        ctx.fillText("Click anywhere in box", canvas.width * 0.5, maxY + 40);
+
+        canvas.addEventListener("mousedown", function (e) { redirect(e) }, false);
+
+        function draw() {
+            ctx.clearRect(minX, minY, boxwidth, boxheight);
+            if (!ispassed) {
+                ctx.beginPath();
+                ctx.arc(cursorX, cursorY, 3, 0, Math.PI * 2, false);
+                ctx.fillStyle = "coral";
+                ctx.fill();
+                ctx.beginPath();
+                ctx.arc(cursorX, cursorY, 10, 0, Math.PI * 2, false);
+                ctx.lineWidth = 3;
+                ctx.strokeStyle = "coral";
+                ctx.stroke();
+            }
+            ctx.beginPath();
+            ctx.arc(X, Y, 10, 0, Math.PI * 2, false);
+            ctx.fillStyle = "snow";
+            ctx.fill(); 
+        }
+
+        function move() {
+            draw();
+            if (X + dX + 10 > maxX || X + dX - 10 < minX) dX = -dX;
+            if (Y + dY + 10 > maxY || Y + dY - 10 < minY) dY = -dY;
+            if ((cursorX - X) * dX <= 0 || (cursorY - Y) * dY <= 0) ispassed = true;
+            X += dX;
+            Y += dY;
+        }
+
+        function redirect(e) {
+            if (e.offsetX + 11 > maxX || e.offsetX - 11 < minX || e.offsetY + 11 > maxY || e.offsetY - 11 < minY) return;
+            cursorX = e.offsetX; cursorY = e.offsetY;
+            ispassed = false;
+            dX = 4 * (cursorX - X) / (Math.abs(cursorX - X) + Math.abs(cursorY - Y));
+            dY = 4 * (cursorY - Y) / (Math.abs(cursorX - X) + Math.abs(cursorY - Y));
+            if (play == null) play = setInterval(move, 10);
+        }
+
+        play = setInterval(move, 10);
+    </script>
+</body>
+</html>
