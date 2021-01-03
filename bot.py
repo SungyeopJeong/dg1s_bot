@@ -523,7 +523,7 @@ def index():
     return render_template("index.html")
   
 @application.route('/userdata')
-def user_data(): # user data 사이트에서 보여주기
+def show_userdata(): # user data 사이트에서 보여주기
   
     fr=open("/home/ubuntu/dg1s_bot/user data.txt","r")
     data_send=fr.readlines()
@@ -531,7 +531,7 @@ def user_data(): # user data 사이트에서 보여주기
     return render_template("userdata.html",data=data_send)
   
 @application.route('/finalsave')
-def final_save(): # user data 사이트에서 보여주기
+def show_finalsave(): # user data 사이트에서 보여주기
   
     fr=open("/home/ubuntu/dg1s_bot/final save.txt","r")
     data_send=fr.readlines()
@@ -539,7 +539,7 @@ def final_save(): # user data 사이트에서 보여주기
     return render_template("finalsave.html",data=data_send)
   
 @application.route('/subjectdata')
-def subject_data(): # user data 사이트에서 보여주기
+def show_subjectdata(): # user data 사이트에서 보여주기
   
     fr=open("/home/ubuntu/dg1s_bot/subject data.txt","r")
     data_send=fr.readlines()
