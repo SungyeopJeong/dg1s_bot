@@ -526,9 +526,9 @@ def index():
 def user_data(): # user data 사이트에서 보여주기
   
     fr=open("/home/ubuntu/dg1s_bot/user data.txt","r")
-    data=fr.readlines()
+    data_send=fr.readlines()
     fr.close()
-    return render_template("userdata.html",data)
+    return render_template("userdata.html",data=data_send)
   
 @application.route('/ball')
 def ball():
