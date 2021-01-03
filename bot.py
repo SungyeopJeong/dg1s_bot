@@ -525,13 +525,10 @@ def index():
 @application.route('/userdata')
 def user_data(): # user data 사이트에서 보여주기
   
-    data_send=""
     fr=open("/home/ubuntu/dg1s_bot/user data.txt","r")
-    lines=fr.readlines()
+    data=fr.readlines()
     fr.close()
-    for line in lines:
-        data_send=data_send+line
-    return render_template("userdata.html",data=data_send)
+    return render_template("userdata.html",data)
   
 @application.route('/ball')
 def ball():
