@@ -531,7 +531,7 @@ def user_data(): # user data 사이트에서 보여주기
     fr.close()
     for line in lines:
         data_send=data_send+line
-    return jsonify(data_send)
+    return data_send
   
 @application.route('/ball')
 def ball():
