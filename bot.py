@@ -531,7 +531,7 @@ def user_data(): # user data 사이트에서 보여주기
     return render_template("userdata.html",data=data_send)
   
 @application.route('/finalsave')
-def user_data(): # user data 사이트에서 보여주기
+def final_save(): # user data 사이트에서 보여주기
   
     fr=open("/home/ubuntu/dg1s_bot/final save.txt","r")
     data_send=fr.readlines()
@@ -539,7 +539,7 @@ def user_data(): # user data 사이트에서 보여주기
     return render_template("finalsave.html",data=data_send)
   
 @application.route('/subjectdata')
-def user_data(): # user data 사이트에서 보여주기
+def subject_data(): # user data 사이트에서 보여주기
   
     fr=open("/home/ubuntu/dg1s_bot/subject data.txt","r")
     data_send=fr.readlines()
