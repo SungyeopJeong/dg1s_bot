@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 import datetime
 from pytz import timezone, utc
 import openpyxl
@@ -15,12 +15,134 @@ Msg=[["[오늘 아침]","[오늘 점심]","[오늘 저녁]"],["[내일 아침]",
 Menu = [["","",""],["","",""]] # 오늘, 내일 급식
 classn=["11","12","13","14","21","22","23","24","31","32","33","34"] # 반 이름
 classN=[20,20,20,21,20,19,19,19,14,13,10,11] # 반 학생 수
+Timetable=[[[["1반","생명B(1,2반)","수학A","물리B","물리B","수학B","봉사","자율","1반"],
+             ["1반","음악","음악","영어A(1,2반)","국어B","화학B","화학B","동아리","1반"],
+             ["1반","수학B","수학A","방학식","방학","방학","방학","방학","방학"],
+             ["방학","방학","방학","방학","방학","방학","방학","방학","방학"],
+             ["방학","방학","방학","방학","방학","방학","방학","방학","방학"]],
+            [["2반","진로","국어B","화학B","화학B","영어A(1,2반)","봉사","자율","2반"],
+             ["2반","생명B(1,2반)","생명A","수학A","수학B","지학A","지학A","동아리","2반"],
+             ["2반","영어A(1,2반)","화학A","방학식","방학","방학","방학","방학","방학"],
+             ["방학","방학","방학","방학","방학","방학","방학","방학","방학"],
+             ["방학","방학","방학","방학","방학","방학","방학","방학","방학"]],
+            [["3반","음악","음악","수학B","영어A(3,4반)","국어B","봉사","자율","3반"],
+             ["3반","물리B","물리B","생명B(3,4반)","화학A","지학B","지학B","동아리","3반"],
+             ["3반","체육(3반)","생명B(3,4반)","방학식","방학","방학","방학","방학","방학"],
+             ["방학","방학","방학","방학","방학","방학","방학","방학","방학"],
+             ["방학","방학","방학","방학","방학","방학","방학","방학","방학"]],
+            [["4반","국어B","지학A","지학A","수학A","체육(4반)","봉사","자율","4반"],
+             ["4반","영어A(3,4반)","수학A","수학B","진로","음악","음악","동아리","4반"],
+             ["4반","수학A","수학B","방학식","방학","방학","방학","방학","방학"],
+             ["방학","방학","방학","방학","방학","방학","방학","방학","방학"],
+             ["방학","방학","방학","방학","방학","방학","방학","방학","방학"]]],
+           [[[],[],[],[],[]],[[],[],[],[],[]],[[],[],[],[],[]],[[],[],[],[],[]]],
+           [[[],[],[],[],[]],[[],[],[],[],[]],[[],[],[],[],[]],[[],[],[],[],[]]]]
+#변동사항
 
 KST=timezone('Asia/Seoul')
 now=datetime.datetime.utcnow()
 date=int(utc.localize(now).astimezone(KST).strftime("%d"))-1
 month=int(utc.localize(now).astimezone(KST).strftime("%m"))
 year=int(utc.localize(now).astimezone(KST).strftime("%Y"))
+
+def prin(datas,classN):
+    
+    KST=timezone('Asia/Seoul') #현재 시간
+    now=datetime.datetime.utcnow()
+    day=int(utc.localize(now).astimezone(KST).strftime("%w"))
+    answer=""
+    subName=datas[0]; subType=datas[1]; #datas: 0=name, 1=type, 2=zoomid, 3=zoompwd, 4=hangoutid, 5=class, 6=teacher
+    if subType=="daymeeting":
+        answer+=Days[day]+" ["+subName
+        if classN==0 : answer+=" 조례]\n"
+        elif classN==8 : answer+=" 종례]\n"
+        answer+="https://zoom.us/j/"+datas[2]+"?pwd="+datas[3];
+    elif subType=="club":
+        answer+=Days[day]+" "+str(classN)+"교시 지금은 동아리 시간입니다."
+    else :
+        answer+=Days[day]+" "+str(classN)+"교시 : ["+subName+"]\n"
+        if subType=="none":
+            answer+="(해당 클래스룸이 개설되지 않았습니다.)"
+        else :
+            if subType=="zoom":
+                answer+="줌 : https://zoom.us/j/"+datas[2]+"?pwd="+datas[3]+"\n"
+            elif subType=="hangout":
+                answer+="행아웃 : https://meet.google.com/lookup/"+datas[4]+"\n"
+            answer+="클래스룸 : https://classroom.google.com/u/0/c/"+datas[5]
+    return answer
+
+@application.route('/link', methods=['POST'])
+def response_link(): # 온라인 클래스 링크 대답 함수
+    
+    KST=timezone('Asia/Seoul') #현재 시간
+    now=datetime.datetime.utcnow()
+    day=int(utc.localize(now).astimezone(KST).strftime("%w"))
+    hour=int(utc.localize(now).astimezone(KST).strftime("%H"))
+    minutes=int(utc.localize(now).astimezone(KST).strftime("%M"))
+    classN=0
+    if (hour == 8 and minutes < 23): classN=0 # 8:20~8:40
+    elif ((hour == 8 and minutes >= 23) or (hour == 9 and minutes < 20)): classN=1 # 8:40~9:30
+    elif ((hour == 9 and minutes >= 20) or (hour == 10 and minutes < 20)): classN=2 # 9:40~10:30
+    elif ((hour == 10 and minutes >= 20) or (hour == 11 and minutes < 20)): classN=3 # 10:40~11:30
+    elif ((hour == 11 and minutes >= 20) or (hour == 12 and minutes < 20)): classN=4 # 11:40~12:30
+    elif (hour == 13): classN=5 # 13:20~14:10
+    elif (hour == 14): classN=6 # 14:20~15:10
+    elif (hour == 15): classN=7 # 15:20~16:10
+    elif (hour == 16 and minutes <= 20): classN=8 # 16:10~16:20
+    else : classN=9 # 수업 없음
+        
+    req=request.get_json() # 파라미터 값 불러오기
+    userid=req["userRequest"]["user"]["properties"]["plusfriendUserKey"]
+    stid="none"
+    
+    fr=open("/home/ubuntu/dg1s_bot/user data.txt","r") # 학번 불러오기
+    lines=fr.readlines()
+    fr.close()
+    fw=open("/home/ubuntu/dg1s_bot/user data.txt","w")
+    for line in lines:
+        datas=line.split(" ")
+        dusid=datas[0]; dstid=datas[1];
+        if dusid==userid: stid=dstid
+        fw.write(line)
+    fw.close()
+    if stid=="none":
+        res={
+            "version": "2.0",
+            "template": {
+                "outputs": [
+                    {
+                        "basicCard": {
+                            "title": "[학번 등록]",
+                            "description": "학번이 등록되어 있지 않습니다.\n아래 버튼을 눌러 학번을 등록해주세요",
+                            "buttons": [ { "action": "message", "label": "학번 등록", "messageText": "학번 등록" } ]
+                        }
+                    }
+                ]
+            }
+        }
+    else :
+        if day==6 or day==0 or classN==9: answer="진행 중인 수업이 없습니다."
+        else :
+            grade=int(stid[0]); classn=int(stid[1])
+            subjectName=Timetable[grade-1][classn-1][day-1][classN]
+            fr=open("/home/ubuntu/dg1s_bot/subject data.txt","r") # 과목 정보 불러오기
+            lines=fr.readlines()
+            fr.close()
+            fw=open("/home/ubuntu/dg1s_bot/subject data.txt","w")
+            for line in lines:
+                datas=line.split(" ")
+                dname=datas[0]; dtype=datas[1]; dzoomid=datas[2];
+                dzoompwd=datas[3]; dhangoutid=datas[4]; dclass=datas[5];
+                if dname==subjectName: answer=prin(datas,classN)
+                fw.write(line)
+            fw.close()
+        res={
+            "version": "2.0",
+            "template": {
+                "outputs": [ { "simpleText": { "text": answer } } ]
+            }
+        }
+    return jsonify(res)
 
 @application.route('/seat', methods=['POST'])
 def input_seat(): # 좌석 입력 함수
@@ -192,7 +314,7 @@ def final_save(): # 최종 저장 함수
     lines=fr.readlines()
     fr.close()
     rw=open("/home/ubuntu/dg1s_bot/user data.txt","w")
-    fw=open("/home/ubuntu/dg1s_bot/basic_function/final save.txt","a")
+    fw=open("/home/ubuntu/dg1s_bot/final save.txt","a")
     for line in lines:
         datas=line.split(" ")
         dusid=datas[0]; dstid=datas[1]; dday=int(datas[2]); dmeal=datas[3]
@@ -299,7 +421,7 @@ def to_excel(): # 엑셀 파일로 생성
             sheet.cell(k,17).number_format="0%"
         j+=1
 
-    fr=open("/home/ubuntu/dg1s_bot/basic_function/final save.txt","r") # 엑셀 채워 넣기
+    fr=open("/home/ubuntu/dg1s_bot/final save.txt","r") # 엑셀 채워 넣기
     lines=fr.readlines()
     for line in lines:
         datas=line.split(" ")
@@ -362,9 +484,9 @@ def response_menu(): # 메뉴 대답 함수 made by 1316, 1301
     today=0
     hour=int(utc.localize(now).astimezone(KST).strftime("%H"))
     minu=int(utc.localize(now).astimezone(KST).strftime("%M"))
-    if (hour==13 and minu<20) or (hour>=8 and hour<=12): Meal="아침"
-    elif (hour==13 and minu>=20) or (hour>=14 and hour<=18) or (hour==19 and minu<20): Meal="점심"
-    else: Meal="저녁"
+    if (hour==13 and minu<20) or (hour>=8 and hour<=12): Meal="아침" # 아침을 먹은 후
+    elif (hour==13 and minu>=20) or (hour>=14 and hour<=18) or (hour==19 and minu<20): Meal="점심" # 점심을 먹은 후
+    else: Meal="저녁" # 저녁을 먹은 후
     
     if Meal=="아침": fi=1; si=2; ti=0 # 아침 점심 저녁 정보 불러오기
     elif Meal=="점심": fi=2; si=0; ti=1
@@ -396,10 +518,9 @@ def response_menu(): # 메뉴 대답 함수 made by 1316, 1301
     }
     return jsonify(res)
 
-@application.route('/test')
-def Test():
-    dataSend = "dg1s_bot test message"
-    return jsonify(dataSend)
+@application.route('/')
+def index():
+    return render_template("index.html")
 
 if __name__ == "__main__":
     application.run(host='0.0.0.0', port=5000)
