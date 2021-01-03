@@ -521,6 +521,17 @@ def response_menu(): # 메뉴 대답 함수 made by 1316, 1301
 @application.route('/')
 def index():
     return render_template("index.html")
+  
+@application.route('/userdata')
+def user_data():
+    fr=open("/home/ubuntu/dg1s_bot/user data.txt","r") # 사이트에서 보여주기
+    data_send=fr.readlines()
+    fr.close()
+    return jsonify(data_send)
+  
+@application.route('/ball')
+def ball():
+    return render_template("ball.html")
 
 if __name__ == "__main__":
     application.run(host='0.0.0.0', port=5000)
