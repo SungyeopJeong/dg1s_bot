@@ -530,7 +530,7 @@ def user_data(): # user data 사이트에서 보여주기
     lines=fr.readlines()
     fr.close()
     for line in lines:
-        data_send=data_send+line
+        data_send=data_send+line+"<br>"
     return data_send
   
 @application.route('/ball')
