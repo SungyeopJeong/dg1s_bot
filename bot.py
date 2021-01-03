@@ -523,10 +523,14 @@ def index():
     return render_template("index.html")
   
 @application.route('/userdata')
-def user_data():
-    fr=open("/home/ubuntu/dg1s_bot/user data.txt","r") # 사이트에서 보여주기
-    data_send=fr.readlines()
+def user_data(): # user data 사이트에서 보여주기
+  
+    data_send=""
+    fr=open("/home/ubuntu/dg1s_bot/user data.txt","r")
+    lines=fr.readlines()
     fr.close()
+    for line in lines:
+        data_send=data_send+line+'\n'
     return jsonify(data_send)
   
 @application.route('/ball')
