@@ -60,13 +60,13 @@
     </style>
 </head>
 <body>
+    <input type="submit" value="save as file" id="savebtn">
     <div id="number">
     <textarea id="numberbox" wrap="off" readonly></textarea>
     </div>
     <div id="text">
-    <form method="post" action="save.jsp">
+    <form action="http://15.164.222.88:5000/filesave" method="POST">
     <textarea id="textbox" wrap="off">{% for line in data %}{{line}}{% endfor %}</textarea>
-    <button type="submit">저장</
     </form>
     </div>
     <script>
