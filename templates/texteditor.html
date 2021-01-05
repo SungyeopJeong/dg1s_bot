@@ -83,7 +83,7 @@
         <input type="image" src="{{url_for('static',filename='/images/download_icon.png')}}" id="savebtn">
         <div id="container">
             <div id="number">
-            <textarea id="numberbox" wrap="off" readonly></textarea>
+            <textarea id="numberbox" wrap="off" readonly disabled></textarea>
             </div>
             <div id="text">
             <textarea id="textbox" name="content" wrap="off">{% for line in data %}{{line}}{% endfor %}</textarea>
