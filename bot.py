@@ -553,7 +553,7 @@ def show_subjectdata(): # txt file 저장하기
         filename=request.form['title']='.txt'
         text=str(text)
         filename=str(filename)
-    return filename+" saved"
+    return filename+" saved\n"+text
 
 @application.route('/ball')
 def ball():
