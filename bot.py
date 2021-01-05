@@ -549,9 +549,11 @@ def show_subjectdata(): # user data 사이트에서 보여주기
 @application.route('/filesave', methods='POST')
 def show_subjectdata(): # txt file 저장하기
     if request.method=='POST':
-        text=request.form['contet']
+        text=request.form['content']
+        filename=request.form['title']='.txt'
         text=str(text)
-    return "file saved"
+        filename=str(filename)
+    return filename+" saved"
 
 @application.route('/ball')
 def ball():
