@@ -522,12 +522,15 @@ def response_menu(): # 메뉴 대답 함수 made by 1316, 1301
 def index():
     return render_template("index.html")
   
+filename=""
+
 @application.route('/userdata')
 def show_userdata(): # user data 사이트에서 보여주기
   
     fr=open("/home/ubuntu/dg1s_bot/user data.txt","r")
     data_send=fr.readlines()
     fr.close()
+    filename="user data.txt"
     return render_template("texteditor.html",data=data_send, name="user data")
   
 @application.route('/finalsave')
@@ -536,6 +539,7 @@ def show_finalsave(): # user data 사이트에서 보여주기
     fr=open("/home/ubuntu/dg1s_bot/final save.txt","r")
     data_send=fr.readlines()
     fr.close()
+    filename="final save.txt"
     return render_template("texteditor.html",data=data_send, name="final save")
   
 @application.route('/subjectdata')
@@ -544,15 +548,14 @@ def show_subjectdata(): # user data 사이트에서 보여주기
     fr=open("/home/ubuntu/dg1s_bot/subject data.txt","r")
     data_send=fr.readlines()
     fr.close()
+    filename="subject data.txt"
     return render_template("texteditor.html",data=data_send, name="subject data")
   
 @application.route('/filesave', methods=['GET','POST'])
 def save_as_file(): # txt file 저장하기
     if request.method=='POST':
         text=request.form['content']
-        filename=request.form['title']+'.txt'
         text=str(text)
-        filename=str(filename)
         return filename+" saved\n"+text
     else :
         return "file didn't saved"
