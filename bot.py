@@ -530,7 +530,8 @@ def show_userdata(): # user data 사이트에서 보여주기
     fr=open("/home/ubuntu/dg1s_bot/user data.txt","r")
     data_send=fr.readlines()
     fr.close()
-    global filename="user data.txt"
+    global filename
+    filename="user data.txt"
     return render_template("texteditor.html",data=data_send, name="user data")
   
 @application.route('/finalsave')
@@ -539,7 +540,8 @@ def show_finalsave(): # user data 사이트에서 보여주기
     fr=open("/home/ubuntu/dg1s_bot/final save.txt","r")
     data_send=fr.readlines()
     fr.close()
-    global filename="final save.txt"
+    global filename
+    filename="final save.txt"
     return render_template("texteditor.html",data=data_send, name="final save")
   
 @application.route('/subjectdata')
@@ -548,7 +550,8 @@ def show_subjectdata(): # user data 사이트에서 보여주기
     fr=open("/home/ubuntu/dg1s_bot/subject data.txt","r")
     data_send=fr.readlines()
     fr.close()
-    global filename="subject data.txt"
+    global filename
+    filename="subject data.txt"
     return render_template("texteditor.html",data=data_send, name="subject data")
   
 @application.route('/filesave', methods=['GET','POST'])
