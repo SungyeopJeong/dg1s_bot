@@ -554,6 +554,8 @@ def save_as_file(): # txt file 저장하기
         text=str(text)
         filename=str(filename)
         return filename+" saved\n"+text
+    else :
+        return "file didn't saved"
 
 @application.route('/ball')
 def ball():
