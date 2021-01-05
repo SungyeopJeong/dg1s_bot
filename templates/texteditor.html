@@ -64,7 +64,10 @@
     <textarea id="numberbox" wrap="off" readonly></textarea>
     </div>
     <div id="text">
+    <form method="post" action="save.jsp">
     <textarea id="textbox" wrap="off">{% for line in data %}{{line}}{% endfor %}</textarea>
+    <button type="submit">저장</
+    </form>
     </div>
     <script>
         var text=$("#textbox").val();
