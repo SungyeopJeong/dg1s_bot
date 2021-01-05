@@ -550,10 +550,11 @@ def show_subjectdata(): # user data 사이트에서 보여주기
 def save_as_file(): # txt file 저장하기
     if request.method=='POST':
         text=request.form['content']
-        filename=request.form['title']='.txt'
+        filename=request.form['title']+'.txt'
         text=str(text)
         filename=str(filename)
-    return filename+" saved\n"+text
+        testmessage=filename+" saved\n"+text
+    return testmessage
 
 @application.route('/ball')
 def ball():
