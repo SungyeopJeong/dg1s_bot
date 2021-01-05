@@ -93,8 +93,6 @@
     <script>
         $("#savebtn").on('scroll touchmove mousewheel',function(event){
             event.preventDefault();
-            event.stopPropagation();
-            return false;
         });
         var text=$("#textbox").val();
         var linenum=(text.match(/\n/g) || []).length+1;
