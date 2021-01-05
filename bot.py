@@ -546,6 +546,13 @@ def show_subjectdata(): # user data 사이트에서 보여주기
     fr.close()
     return render_template("texteditor.html",data=data_send, name="subject data")
   
+@application.route('/filesave', methods='POST')
+def show_subjectdata(): # txt file 저장하기
+    if request.method=='POST':
+        text=request.form['context']
+        text=str(text)
+    return "file saved"
+
 @application.route('/ball')
 def ball():
     return render_template("Ball.html")
