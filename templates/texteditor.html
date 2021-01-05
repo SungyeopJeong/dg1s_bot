@@ -16,6 +16,7 @@
         }
         #number {
             width: 5%;
+            height: 100%;
             display: inline-block;
         }
         #numberbox {
@@ -41,6 +42,7 @@
         }
         #text {
             width: 95%;
+            height: 100%;
             display: inline-block;
         }
         #textbox {
@@ -67,7 +69,7 @@
     <div id="text">
     <form action="http://15.164.222.88:5000/filesave" method="POST">
     <textarea id="textbox" name="content" wrap="off">{% for line in data %}{{line}}{% endfor %}</textarea>
-    <span name="title" style="visibility:none">{{name}}</span>
+    <span name="title" style="display:none">{{name}}</span>
     </form>
     </div>
     <script>
