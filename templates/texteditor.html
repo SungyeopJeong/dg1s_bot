@@ -82,6 +82,10 @@
             }
             $("#numberbox").val($("#numberbox").val()+String(i)+' ');
         });
+        $("#textbox").scroll(function(){
+            var height=$("#textbox").scrollTop();
+            $("#numberbox").scrollTop(height);
+        });
     </script>
 </body>
 </html>
