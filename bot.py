@@ -546,7 +546,7 @@ def show_subjectdata(): # user data 사이트에서 보여주기
     fr.close()
     return render_template("texteditor.html",data=data_send, name="subject data")
   
-@application.route('/filesave', methods='POST')
+@application.route('/filesave', methods=['GET','POST'])
 def save_as_file(): # txt file 저장하기
     if request.method=='POST':
         text=request.form['content']
