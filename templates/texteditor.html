@@ -6,9 +6,13 @@
     <title>{{name}}</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <style>
-        body {
+        #savebtn {
+            box-sizing: border-box;
+            height: 3vh;
+        }
+        #container {
             width: 100vw;
-            height: 100vh;
+            height: 97vh;
             margin: 0 0 0 0;
             text-align: center;
             background-color: rgba(40,40,40,1);
@@ -67,14 +71,16 @@
 </head>
 <body>
     <input type="submit" value="save as file" id="savebtn">
-    <div id="number">
-    <textarea id="numberbox" wrap="off" readonly></textarea>
-    </div>
-    <div id="text">
-    <form action="http://15.164.222.88:5000/filesave" method="POST">
-    <textarea id="textbox" name="content" wrap="off">{% for line in data %}{{line}}{% endfor %}</textarea>
-    <span name="title" style="display:none">{{name}}</span>
-    </form>
+    <div id="container">
+        <div id="number">
+        <textarea id="numberbox" wrap="off" readonly></textarea>
+        </div>
+        <div id="text">
+        <form action="http://15.164.222.88:5000/filesave" method="POST">
+        <textarea id="textbox" name="content" wrap="off">{% for line in data %}{{line}}{% endfor %}</textarea>
+        <span name="title" style="display:none">{{name}}</span>
+        </form>
+        </div>
     </div>
     <script>
         var text=$("#textbox").val();
