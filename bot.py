@@ -121,7 +121,7 @@ def response_link(): # 온라인 클래스 링크 대답 함수
             }
         }
     else :
-        if day==6 or day==0 or classN==9 or Timetable[grade-1][classn-1][day-1][classN]="": answer="진행 중인 수업이 없습니다."
+        if day==6 or day==0 or classN==9 or Timetable[grade-1][classn-1][day-1][classN]=="": answer="진행 중인 수업이 없습니다."
         else :
             grade=int(stid[0]); classn=int(stid[1])
             subjectName=Timetable[grade-1][classn-1][day-1][classN]
