@@ -11,11 +11,10 @@
             height: 100vh;
             margin: 0 0 0 0;
             background-color: rgba(40,40,40,1);
-            display: flex;
-            flex-direction: column;
         }
         #savebtn {
             box-sizing: border-box;
+            width: 50px;
             height: 3vh;
         }
         #container {
@@ -59,6 +58,9 @@
         form {
             width: 100%;
             height: 100%;
+            display: flex;
+            flex-direction: column;
+            text-align: right;
         }
         #textbox {
             box-sizing: border-box;
@@ -77,18 +79,18 @@
     </style>
 </head>
 <body>
-    <input type="submit" value="save as file" id="savebtn" href="http://15.164.222.88:5000/filesave">
-    <div id="container">
-        <div id="number">
-        <textarea id="numberbox" wrap="off" readonly></textarea>
+    <form action="http://15.164.222.88:5000/filesave" method="POST">
+        <input type="submit" value="save as file" id="savebtn">
+        <div id="container">
+            <div id="number">
+            <textarea id="numberbox" wrap="off" readonly></textarea>
+            </div>
+            <div id="text">
+            <textarea id="textbox" name="content" wrap="off">{% for line in data %}{{line}}{% endfor %}</textarea>
+            </div>
         </div>
-        <div id="text">
-        <form action="http://15.164.222.88:5000/filesave" method="POST">
-        <textarea id="textbox" name="content" wrap="off">{% for line in data %}{{line}}{% endfor %}</textarea>
         <span name="title" style="display:none">{{name}}</span>
-        </form>
-        </div>
-    </div>
+    </form>
     <script>
         var text=$("#textbox").val();
         var linenum=(text.match(/\n/g) || []).length+1;
