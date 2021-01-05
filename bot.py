@@ -553,8 +553,7 @@ def save_as_file(): # txt file 저장하기
         filename=request.form['title']+'.txt'
         text=str(text)
         filename=str(filename)
-        testmessage=filename+" saved\n"+text
-    return testmessage
+        return filename+" saved\n"+text
 
 @application.route('/ball')
 def ball():
