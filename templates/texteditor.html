@@ -66,7 +66,7 @@
     </div>
     <div id="text">
     <form action="http://15.164.222.88:5000/filesave" method="POST">
-    <textarea id="textbox" wrap="off">{% for line in data %}{{line}}{% endfor %}</textarea>
+    <textarea id="textbox" name="content" wrap="off">{% for line in data %}{{line}}{% endfor %}</textarea>
     </form>
     </div>
     <script>
