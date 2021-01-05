@@ -559,9 +559,7 @@ def save_as_file(): # txt file 저장하기
     if request.method=='POST':
         text=request.form['content']
         text=str(text)
-        return filename+" saved\n"+text
-    else :
-        return "file didn't saved"
+    return render_template("saved.html")
 
 @application.route('/ball')
 def ball():
