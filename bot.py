@@ -6,6 +6,11 @@ import openpyxl
 import requests
 from bs4 import BeautifulSoup
 from pytz import timezone, utc
+from selenium import webdriver
+from selenium.webdriver.support.ui import Select
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.alert import Alert
 
 application=Flask(__name__)
 
@@ -563,8 +568,75 @@ def save_as_file(): # txt file 저장하기
     return render_template("saved.html")
 
 @application.route('/selfdiag')
-def self_diagnosis():
-    return render_template("selfdiag.html")
+def self_diagnosis(): # original author : KimDongHyun / editor : JeongSungyeop
+  
+    N=28 # save name, birth, pwd
+    namelist = ["김동현","최정빈","박재범","서원준","허도윤",
+                "정성엽","이준엽","김재용","강민성","이재훈",
+                "신은규","김정수","전우주","김진서","정현석",
+                "박형준","김동은 ","김성윤","박주용","박성민",
+                "김재헌","유혜원","박재영","용유성","이슬찬",
+                "김유진","이지언","정은주"]
+    birthlist = ["040206","040728","040604","041102","041213",
+               "040311","040131","040323","040821","041205",
+               "040718","040210","041128","040917","040731",
+               "040908","040823","040213","040117","040131",
+               "040515","041208","040809","041022","040619",
+               "041112","041230","040616"]
+    pwdlist = ["1234","0728","7374","1102","9975",
+               "1234","4830","0323","9876","0493",
+               "8800","6212","1128","0917","0731",
+               "1234","1234","0213","0425","1365",
+               "0515","4646","9927","6704","0226",
+               "3861","1230","0616"]
+    browser = webdriver.Chrome()
+    complete_Msg=""
+    
+    for i in range(0,N):
+        browser.get("https://hcs.eduro.go.kr/#/loginHome")
+        time.sleep(1)
+        #school select
+        browser.delete_all_cookies()
+        browser.find_element_by_id("btnConfirm2").click()
+        browser.find_element_by_class_name("searchBtn").click()
+        Select(browser.find_element_by_id("sidolabel")).select_by_value("03")
+        Select(browser.find_element_by_id("crseScCode")).select_by_value("4")
+        scb = browser.find_element_by_id("orgname")
+        scb.send_keys("대구일과학고등학교")
+        scb.send_keys(Keys.RETURN)
+        time.sleep(1)
+        #user input
+        browser.find_element_by_xpath('//*[@id="softBoardListLayer"]/div[2]/div[1]/ul/li/a').click()
+        browser.find_element_by_xpath('//*[@id="softBoardListLayer"]/div[2]/div[2]/input').click()
+        browser.find_element_by_xpath('//*[@id="user_name_input"]').send_keys(namelist[i])
+        browser.find_element_by_xpath('//*[@id="birthday_input"]').send_keys(birthlist[i])
+        browser.find_element_by_xpath('//*[@id="btnConfirm"]').click() 
+        time.sleep(3)
+        browser.find_element_by_xpath('//*[@id="WriteInfoForm"]/table/tbody/tr/td/input').send_keys(pwdlist[i])
+        browser.find_element_by_xpath('//*[@id="btnConfirm"]').click()
+        time.sleep(3)
+        browser.find_element_by_xpath('//*[@id="container"]/div/section[2]/div[2]/ul/li[1]/a/span[1]').click()
+        time.sleep(2)
+        #servay input
+        browser.find_element_by_xpath('//*[@id="survey_q1a1"]').click()
+        browser.find_element_by_xpath('//*[@id="survey_q2a1"]').click()
+        browser.find_element_by_xpath('//*[@id="survey_q3a1"]').click()
+        time.sleep(0.5)
+        browser.find_element_by_xpath('//*[@id="btnConfirm"]').click()
+        browser.find_element_by_xpath('//*[@id="topMenuBtn"]').click()
+        time.sleep(0.5)
+        browser.find_element_by_xpath('//*[@id="topMenuWrap"]/ul/li[4]/button').click()
+        Alert(browser).accept()
+        time.sleep(0.5)
+        browser.find_element_by_xpath('/html/body/app-root/div/div[1]/div/button').click()
+        Alert(browser).accept()
+        time.sleep(10)
+        complete_Msg+=namelist[i] + "completed - " + time.strftime('%H%M%S')+'\n'
+    
+    complete_Msg+="All completed - "+ time.strftime('%H%M%S'))
+    browser.close()
+
+    return render_template("selfdiag.html", data=complete_Msg)
   
 @application.route('/ball')
 def ball():
