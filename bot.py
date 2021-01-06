@@ -633,7 +633,7 @@ def self_diagnosis(): # original author : KimDongHyun / editor : JeongSungyeop
         time.sleep(10)
         complete_Msg+=namelist[i] + "completed - " + time.strftime('%H%M%S')+'\n'
     
-    complete_Msg+="All completed - "+ time.strftime('%H%M%S'))
+    complete_Msg+="All completed - "+ time.strftime('%H%M%S')
     browser.close()
 
     return render_template("selfdiag.html", data=complete_Msg)
