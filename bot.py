@@ -592,7 +592,7 @@ def self_diagnosis(): # original author : KimDongHyun / editor : JeongSungyeop
                "0515","4646","9927","6704","0226",
                "3861","1230","0616"]
     
-    display=Display(visible=1, size=(1024,768))
+    display=Display(visible=0, size=(1024,768))
     display.start()
     options=webdriver.ChromeOptions()
     options.add_argument('--headless')
