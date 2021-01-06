@@ -589,7 +589,9 @@ def self_diagnosis(): # original author : KimDongHyun / editor : JeongSungyeop
                "1234","1234","0213","0425","1365",
                "0515","4646","9927","6704","0226",
                "3861","1230","0616"]
-    browser = webdriver.Chrome("/home/ubuntu/dg1s_bot/downloads")
+    options=webdriver.ChromeOptions()
+    options.add_argument('headless')
+    browser = webdriver.Chrome("/home/ubuntu/dg1s_bot/downloads",chrome_options=options)
     browser.implicitly_wait(3)
     complete_Msg=""
     
