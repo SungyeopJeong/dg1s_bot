@@ -11,9 +11,11 @@
             margin: 0 0 0 0;
             background-color: rgba(40,40,40,1);
         }
-        .fileupload label {
+        #uploadbtn {
             width: 300px;
-            height: auto;
+            height: 300px;
+        }
+        #filename {
             font-family: sans-serif;
             font-size: 30px;
             color: rgba(235,235,235,1);
@@ -36,11 +38,9 @@
 </head>
 <body>
     <form method="POST" action="http://15.164.222.88:5000/xlsave">
-        <div class="fileupload">
-            <label for="xlupload">upload</label>
-            <input type="file" id="xlupload">
-        </div>
-        <input type="submit">
+        <input type="button" src="{{url_for('static',filename='/images/upload_icon.png')}}" id="uploadbtn">
+        <input type="text" id="filename">upload</label>
+        <input type="file" id="xlupload">
     </form>
 </body>
 </html>
