@@ -641,9 +641,19 @@ def self_diagnosis(): # original author : KimDongHyun / editor : JeongSungyeop
         browser.find_element_by_xpath('/html/body/app-root/div/div[1]/div/button').click()
         Alert(browser).accept()
         time.sleep(10)
-        complete_Msg+=namelist[i] + "completed - " + time.strftime('%H%M%S')+'\n'
+        KST=timezone('Asia/Seoul')
+        now=datetime.datetime.utcnow()
+        hour=utc.localize(now).astimezone(KST).strftime("%H")+':'
+        minu=utc.localize(now).astimezone(KST).strftime("%M")+':'
+        seco=utc.localize(now).astimezone(KST).strftime("%S")
+        complete_Msg+=namelist[i] + "completed - " + hour + minu + seco +'\n'
     
-    complete_Msg+="All completed - "+ time.strftime('%H%M%S')
+    KST=timezone('Asia/Seoul')
+    now=datetime.datetime.utcnow()
+    hour=utc.localize(now).astimezone(KST).strftime("%H")+':'
+    minu=utc.localize(now).astimezone(KST).strftime("%M")+':'
+    seco=utc.localize(now).astimezone(KST).strftime("%S")
+    complete_Msg+="All completed - " + hour + minu + seco
     browser.close()
 
     return render_template("selfdiag.html", data=complete_Msg)
