@@ -596,7 +596,7 @@ def self_diagnosis(): # original author : KimDongHyun / editor : JeongSungyeop
     display.start()
     options=webdriver.ChromeOptions()
     options.add_argument('headless')
-    browser = webdriver.Chrome("/home/ubuntu/chromedriver",chrome_options=options)
+    browser = webdriver.Chrome("/home/ubuntu/chromedriver",options=options)
     browser.implicitly_wait(3)
     complete_Msg=""
     
