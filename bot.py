@@ -7,6 +7,8 @@ import requests
 from bs4 import BeautifulSoup
 from pytz import timezone, utc
 from selenium import webdriver
+from pyvirtualdisplay import Display
+
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
@@ -589,9 +591,12 @@ def self_diagnosis(): # original author : KimDongHyun / editor : JeongSungyeop
                "1234","1234","0213","0425","1365",
                "0515","4646","9927","6704","0226",
                "3861","1230","0616"]
+    
+    display=Display(visible=0, size=(1024,768))
+    display.start()
     options=webdriver.ChromeOptions()
     options.add_argument('headless')
-    browser = webdriver.Chrome(executable_path=r"/home/ubuntu/dg1s_bot/downloads/chromedriver.exe",chrome_options=options)
+    browser = webdriver.Chrome("/home/ubuntu/chromedriver",chrome_options=options)
     browser.implicitly_wait(3)
     complete_Msg=""
     
