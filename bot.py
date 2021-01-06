@@ -592,7 +592,7 @@ def self_diagnosis(): # original author : KimDongHyun / editor : JeongSungyeop
                "0515","4646","9927","6704","0226",
                "3861","1230","0616"]
     
-    display=Display(visible=0, size=(1024,768))
+    display=Display(visible=1, size=(1024,768))
     display.start()
     options=webdriver.ChromeOptions()
     options.add_argument('--headless')
@@ -629,24 +629,10 @@ def self_diagnosis(): # original author : KimDongHyun / editor : JeongSungyeop
         time.sleep(2)
         #survey input
         browser.find_element_by_xpath('//*[@id="survey_q1a1"]').click()
-        try:
-            WebDriverWait(browser, 3).until(EC.alert_is_present(),
-                                           'Timed out waiting for PA creation ' +
-                                           'confirmation popup to appear.')
-
-            alert = browser.switch_to.alert
-            alert.accept()
-            print("alert accepted")
-        except TimeoutException:
-            print("no alert")
         print("1")
         browser.find_element_by_xpath('//*[@id="survey_q2a1"]').click()
-        alert=driver.switch_to_alert()
-        alert.dismiss()
         print("1")
         browser.find_element_by_xpath('//*[@id="survey_q3a1"]').click()
-        alert=driver.switch_to_alert()
-        alert.dismiss()
         print("1")
         time.sleep(0.5)
         browser.find_element_by_xpath('//*[@id="btnConfirm"]').click()
