@@ -595,7 +595,9 @@ def self_diagnosis(): # original author : KimDongHyun / editor : JeongSungyeop
     display=Display(visible=0, size=(1024,768))
     display.start()
     options=webdriver.ChromeOptions()
-    options.add_argument('headless')
+    options.add_argument('--headless')
+    options.add_argument('--no-sandbox')
+    options.add_argument('--disable-dev-shm-usage')
     browser = webdriver.Chrome("/home/ubuntu/chromedriver",options=options)
     browser.implicitly_wait(3)
     complete_Msg=""
