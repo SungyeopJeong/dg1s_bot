@@ -591,7 +591,7 @@ def self_diagnosis(): # original author : KimDongHyun / editor : JeongSungyeop
                "3861","1230","0616"]
     options=webdriver.ChromeOptions()
     options.add_argument('headless')
-    browser = webdriver.Chrome("/home/ubuntu/dg1s_bot/downloads",chrome_options=options)
+    browser = webdriver.Chrome(executable_path=r"/home/ubuntu/dg1s_bot/downloads/chromedriver.exe",chrome_options=options)
     browser.implicitly_wait(3)
     complete_Msg=""
     
