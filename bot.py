@@ -629,6 +629,8 @@ def self_diagnosis(): # original author : KimDongHyun / editor : JeongSungyeop
         time.sleep(2)
         #survey input
         browser.find_element_by_xpath('//*[@id="survey_q1a1"]').click()
+        alert=browser.switch_to_alert()
+        result.dismiss()
         print("1")
         browser.find_element_by_xpath('//*[@id="survey_q2a1"]').click()
         print("1")
