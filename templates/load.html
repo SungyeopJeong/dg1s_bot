@@ -14,31 +14,35 @@
             align-items: center;
         }
         form {
-            display: flex;
-            flex-direction: column;
+            width: 100vw;
+            text-aling: center;
         }
         #uploadbtn {
-            width: 15vh;
-            height: 15vh;
+            width: 10vh;
+            height: 10vh;
         }
         #uploadbtn:hover {
             cursor: pointer;
         }
         #filename {
+            display: block;
             font-family: sans-serif;
-            font-size: 30px;
+            font-size: 15px;
             color: rgba(235,235,235,1);
+            margin: 10px 0 0 0;
+        }
+        #filename:hover {
+            cursor: default;
         }
         #xlupload {
             display: none;
         }
-
     </style>
 </head>
 <body>
     <form method="POST" action="http://15.164.222.88:5000/xlsave">
-        <img src="{{url_for('static',filename='/images/upload_icon.png')}}" id="uploadbtn">
-        <span id="filename">no file</span>
+        <img src="{{url_for('static',filename='/images/upload_icon.png')}}" id="uploadbtn" onclick="document.getElementById('xlupload').click();">
+        <span id="filename">(upload the file)</span>
         <input type="file" id="xlupload">
     </form>
 </body>
