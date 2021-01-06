@@ -562,6 +562,10 @@ def save_as_file(): # txt file 저장하기
             f.write(text)
     return render_template("saved.html")
 
+@application.route('/selfdiag')
+def self_diagnosis():
+    return render_template("selfdiag.html")
+  
 @application.route('/ball')
 def ball():
     return render_template("Ball.html")
