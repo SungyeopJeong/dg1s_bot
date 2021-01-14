@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 from flask import Flask, request, jsonify, render_template
-import time, datetime
+import datetime
+from datetime import timedelta
 from pytz import timezone, utc
 import openpyxl
 import requests
 from bs4 import BeautifulSoup
-from pytz import timezone, utc
 
 application=Flask(__name__)
 
@@ -37,13 +37,7 @@ Timetable=[[[["","","","","","","","",""],
              ["","","","","","","","",""]]],
            [[[],[],[],[],[]],[[],[],[],[],[]],[[],[],[],[],[]],[[],[],[],[],[]]],
            [[[],[],[],[],[]],[[],[],[],[],[]],[[],[],[],[],[]],[[],[],[],[],[]]]]
-#변동사항
-
-KST=timezone('Asia/Seoul')
-now=datetime.datetime.utcnow()
-date=int(utc.localize(now).astimezone(KST).strftime("%d"))-1
-month=int(utc.localize(now).astimezone(KST).strftime("%m"))
-year=int(utc.localize(now).astimezone(KST).strftime("%Y"))
+# 시간표 변동사항 적는 곳
 
 def prin(datas,classN):
     
@@ -443,61 +437,61 @@ def to_excel(): # 엑셀 파일로 생성
 @application.route('/menu', methods=['POST'])
 def response_menu(): # 메뉴 대답 함수 made by 1316, 1301
     
+    KST = timezone('Asia/Seoul') # 오늘, 내일 날짜
+    now = datetime.datetime.utcnow()
+    today = utc.localize(now).astimezone(KST)
+    tomorrow = today + timedelta(days=1)
+
     url = 'https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=%EB%8C%80%EA%B5%AC%EC%9D%BC%EA%B3%BC%ED%95%99%EA%B3%A0%EB%93%B1%ED%95%99%EA%B5%90&oquery=eorndlfrhkrh+rmqtlr&tqi=U%2Ftz5wprvOssslHyxuossssssLN-415573'
     response = requests.get(url) # url로부터 가져오기
-    if response.status_code == 200:    
-        KST=timezone('Asia/Seoul') #현재 시간
-        now=datetime.datetime.utcnow()
-        day = int(utc.localize(now).astimezone(KST).strftime("%w"))   
-        inputN = 6 # 평상시는 조/중/석/조/중/석 0 1 2 3 4 5
-        if day == 1: inputN = 5 # 월요일은 중/석/조/중/석 () 1 2 3 4 5
-        if day == 4: inputN = 5 # 목요일은 조/중/석/조/중 0 1 2 3 4 ()
-        if day == 5: inputN = 2 # 금요일은 조/중 0 1 () () () ()
-        i = 0
-        pageN = 1; blockN = 1
-        while i < inputN:       
-            pathx = """#main_pack > section.sc_new.cs_school._cs_school > div > div.api_cs_wrap > div.school_area > div:nth-child(6) > div:nth-child("""
-            pathy = """) > ul > li:nth-child("""
-            pathz = """)"""
-            pathc = pathx + str(pageN) + pathy + str(blockN) + pathz    
-            html = response.text
-            soup = BeautifulSoup(html, 'html.parser')
-            today0 = soup.select_one(pathc)
-            today = today0.get_text() # 태그 없애고 텍스트만 추출
-            tmenu = today.split() # 텍스트를 공백 기준으로 나눔
-            del tmenu[0:3] # 앞에 3개(날짜 정보) 없앰
-            tmenu = ' '.join(tmenu) # 다시 공백으로 붙임
-            if day==1: Menu[(i+1)//3][(i+1)%3]=tmenu
-            else : Menu[i//3][i%3]=tmenu
-            i = i + 1
-            if i == 1: pageN = 1; blockN = 2 
-            elif i == 2: pageN = 2; blockN = 1
-            elif i == 3: pageN = 2; blockN = 2
-            elif i == 4: pageN = 3; blockN = 1
-            elif i == 5: pageN = 3; blockN = 2
-    
+    if response.status_code == 200:  
+
+        source = response.text # menu_info class 내용 가져오기
+        soup = BeautifulSoup(source,'html.parser')
+        a = soup.select('.menu_info')
+
+        today_name = " "+str(today.month)+"월 "+str(today.day)+"일 " # 추후 비교용 날짜명 텍스트
+        tomorrow_name = " "+str(tomorrow.month)+"월 "+str(tomorrow.day)+"일 "
+
+        fw=open("/workspace/dg1s_bot/basic_function/menu.txt","w") 
+        for menu in a:
+            menu_text = menu.get_text()
+            bracket_i = menu_text.find('[')
+            bracket_j = menu_text.find(']')
+            menu_day = menu_text[:bracket_i]
+            menu_when = menu_text[bracket_i+1:bracket_j]
+            menu_content = menu_text[bracket_j+3:].rstrip().replace(" ","\n")
+
+            if menu_when == "조식": save_i = 0
+            elif menu_when == "중식": save_i = 1
+            elif menu_when == "석식": save_i = 2
+
+            if menu_day == today_name: Menu[0][save_i]=menu_content
+            elif menu_day == tomorrow_name: Menu[1][save_i]=menu_content
+
+        fw.close()
+
     req=request.get_json() # 파라미터 값 불러오기
     askmenu=req["action"]["detailParams"]["ask_menu"]["value"]
-    msg=""
-    now=datetime.datetime.utcnow()
-    today=0
     hour=int(utc.localize(now).astimezone(KST).strftime("%H"))
     minu=int(utc.localize(now).astimezone(KST).strftime("%M"))
     if (hour==13 and minu<20) or (hour>=8 and hour<=12): Meal="아침" # 아침을 먹은 후
     elif (hour==13 and minu>=20) or (hour>=14 and hour<=18) or (hour==19 and minu<20): Meal="점심" # 점심을 먹은 후
     else: Meal="저녁" # 저녁을 먹은 후
-    
-    if Meal=="아침": fi=1; si=2; ti=0 # 아침 점심 저녁 정보 불러오기
+
+    today=0
+
+    if Meal=="아침": fi=1; si=2; ti=0 # 아침 점심 저녁 정보 불러오기 및 배열
     elif Meal=="점심": fi=2; si=0; ti=1
     elif Meal=="저녁": fi=0; si=1; ti=2
     if askmenu=="내일 급식": fi=0; si=1; ti=2; today=1;
-    first=Menu[today][fi].replace(" ","\n") 
-    second=Menu[today][si].replace(" ","\n")
-    third=Menu[today][ti].replace(" ","\n")
+    first=Menu[today][fi]
+    second=Menu[today][si]
+    third=Menu[today][ti]
     if Menu[today][fi]=="": first="등록된 급식이 없습니다."
     if Menu[today][si]=="": second="등록된 급식이 없습니다."
     if Menu[today][ti]=="": third="등록된 급식이 없습니다."
-    
+
     res={ # 답변
         "version": "2.0",
         "template": {
