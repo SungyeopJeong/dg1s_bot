@@ -3,6 +3,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/Xhtml"><head>
     <meta charset="utf-8">
     <title>main</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <style>
         body {
             width: 100vw;
@@ -35,7 +36,7 @@
             }
             else img.src="{{url_for('static',filename='/images/default_cmd.png')}}"
         }
-        function click(e){
+        $("#cmdimg").click(function click(e){
             alert("youclicked!");
             if(e.button==1){
                 alert("youclickedwithleftbtn!");
@@ -48,14 +49,12 @@
                 }
                 else location.href="/index";
             }
-        }
+        });
     </script>
 </head>
 <body>
     <div>
-        <a href="#" onclick="click(event)">
-            <img src="{{url_for('static',filename='/images/default_cmd.png')}}" onmousemove="hover(event, this)" onmouseout="defaultimg(this)">
-        </a>
+        <img src="{{url_for('static',filename='/images/default_cmd.png')}}" id="cmdimg" onmousemove="hover(event, this)" onmouseout="defaultimg(this)">
     </div>
 </body>
 </html>
