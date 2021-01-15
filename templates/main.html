@@ -8,7 +8,7 @@
             width: 100vw;
             height: 100vh;
             margin: 0 0 0 0;
-            background-color: rgba(40,40,40,1);
+            background-color: black;
             display: flex;
             align-items: center;
         }
@@ -45,7 +45,7 @@
             if(1<=y && y<=31*h/381){
                 if(w*426/575<=x && x<=w*475/575) this.src="{{url_for('static',filename='/images/minimize_cmd.png')}}";
                 else if(w*476/575<=x && x<=w*525/575) this.src="{{url_for('static',filename='/images/maximize_cmd.png')}}";
-                else if(w*526/575<=x && x<=w) this.src="/static/images/loading_gif.gif", setTimeout(function(){ location.href="/index"; },1500);
+                else if(w*526/575<=x && x<=w) this.src="/static/images/loading_img.gif", setTimeout(function(){ location.href="/index"; },1500);
             }
             else location.href="/index";
         });
