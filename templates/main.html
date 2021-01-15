@@ -27,6 +27,7 @@
         function defaultimg(img){ img.src="{{url_for('static',filename='/images/default_cmd.png')}}" }
         function hover(e,img){
             var x=e.offsetX, y=e.offsetY;
+            document.getElementById("locat").innerHTML=x+" "+y;
             if(1<=y && y<=31){
                 if(426<=x && x<=475) img.src="{{url_for('static',filename='/images/minimize_cmd.png')}}";
                 else if(476<=x && x<=525) img.src="{{url_for('static',filename='/images/maximize_cmd.png')}}";
@@ -46,5 +47,6 @@
     <div>
         <img src="{{url_for('static',filename='/images/default_cmd.png')}}" onmousemove="hover(event, this)" onclick="click(event)" onmouseout="defaultimg(this)">
     </div>
+    <span id="locat">fuck</span>
 </body>
 </html>
