@@ -9,40 +9,41 @@ from bs4 import BeautifulSoup
 
 application=Flask(__name__)
 
-Days=["일요일","월요일","화요일","수요일","목요일","금요일","토요일"] # 요일 이름
-mday=[31,28,31,30,31,30,31,31,30,31,30,31] # 매월 일 수
-Msg=[["[오늘 아침]","[오늘 점심]","[오늘 저녁]"],["[내일 아침]","[내일 점심]","[내일 저녁]"]] # 급식 title
+KST=timezone('Asia/Seoul')
+Days = ["일요일","월요일","화요일","수요일","목요일","금요일","토요일"] # 요일 이름
+mday = [31,28,31,30,31,30,31,31,30,31,30,31] # 매월 일 수
+Msg = [["[오늘 아침]","[오늘 점심]","[오늘 저녁]"],["[내일 아침]","[내일 점심]","[내일 저녁]"]] # 급식 title
 Menu = [["","",""],["","",""]] # 오늘, 내일 급식
-classn=["11","12","13","14","21","22","23","24","31","32","33","34"] # 반 이름
-classN=[20,20,20,21,20,19,19,19,14,13,10,11] # 반 학생 수
-Timetable=[[[["","","","","","","","",""],
-             ["","","","","","","","",""],
-             ["","","","","","","","",""],
-             ["","","","","","","","",""],
-             ["","","","","","","","",""]],
-            [["","","","","","","","",""],
-             ["","","","","","","","",""],
-             ["","","","","","","","",""],
-             ["","","","","","","","",""],
-             ["","","","","","","","",""]],
-            [["","","","","","","","",""],
-             ["","","","","","","","",""],
-             ["","","","","","","","",""],
-             ["","","","","","","","",""],
-             ["","","","","","","","",""]],
-            [["","","","","","","","",""],
-             ["","","","","","","","",""],
-             ["","","","","","","","",""],
-             ["","","","","","","","",""],
-             ["","","","","","","","",""]]],
-           [[[],[],[],[],[]],[[],[],[],[],[]],[[],[],[],[],[]],[[],[],[],[],[]]],
-           [[[],[],[],[],[]],[[],[],[],[],[]],[[],[],[],[],[]],[[],[],[],[],[]]]]
+Menu_saved_date = ""
+classn = ["11","12","13","14","21","22","23","24","31","32","33","34"] # 반 이름
+classN = [20,20,20,21,20,19,19,19,14,13,10,11] # 반 학생 수
+Timetable = [[[["","","","","","","","",""],
+               ["","","","","","","","",""],
+               ["","","","","","","","",""],
+               ["","","","","","","","",""],
+               ["","","","","","","","",""]],
+              [["","","","","","","","",""],
+               ["","","","","","","","",""],
+               ["","","","","","","","",""],
+               ["","","","","","","","",""],
+               ["","","","","","","","",""]],
+              [["","","","","","","","",""],
+               ["","","","","","","","",""],
+               ["","","","","","","","",""],
+               ["","","","","","","","",""],
+               ["","","","","","","","",""]],
+              [["","","","","","","","",""],
+               ["","","","","","","","",""],
+               ["","","","","","","","",""],
+               ["","","","","","","","",""],
+               ["","","","","","","","",""]]],
+             [[[],[],[],[],[]],[[],[],[],[],[]],[[],[],[],[],[]],[[],[],[],[],[]]],
+             [[[],[],[],[],[]],[[],[],[],[],[]],[[],[],[],[],[]],[[],[],[],[],[]]]]
 # 시간표 변동사항 적는 곳
 
 def prin(datas,classN):
     
-    KST=timezone('Asia/Seoul') #현재 시간
-    now=datetime.datetime.utcnow()
+    now=datetime.datetime.utcnow() #현재 시간
     day=int(utc.localize(now).astimezone(KST).strftime("%w"))
     answer=""
     subName=datas[0]; subType=datas[1]; #datas: 0=name, 1=type, 2=zoomid, 3=zoompwd, 4=hangoutid, 5=class, 6=teacher
@@ -68,22 +69,21 @@ def prin(datas,classN):
 @application.route('/link', methods=['POST'])
 def response_link(): # 온라인 클래스 링크 대답 함수
     
-    KST=timezone('Asia/Seoul') #현재 시간
-    now=datetime.datetime.utcnow()
-    day=int(utc.localize(now).astimezone(KST).strftime("%w"))
-    hour=int(utc.localize(now).astimezone(KST).strftime("%H"))
-    minutes=int(utc.localize(now).astimezone(KST).strftime("%M"))
-    classN=0
-    if (hour == 8 and minutes < 23): classN=0 # 8:20~8:40
-    elif ((hour == 8 and minutes >= 23) or (hour == 9 and minutes < 20)): classN=1 # 8:40~9:30
-    elif ((hour == 9 and minutes >= 20) or (hour == 10 and minutes < 20)): classN=2 # 9:40~10:30
-    elif ((hour == 10 and minutes >= 20) or (hour == 11 and minutes < 20)): classN=3 # 10:40~11:30
-    elif ((hour == 11 and minutes >= 20) or (hour == 12 and minutes < 20)): classN=4 # 11:40~12:30
-    elif (hour == 13): classN=5 # 13:20~14:10
-    elif (hour == 14): classN=6 # 14:20~15:10
-    elif (hour == 15): classN=7 # 15:20~16:10
-    elif (hour == 16 and minutes <= 20): classN=8 # 16:10~16:20
-    else : classN=9 # 수업 없음
+    now = datetime.datetime.utcnow() #현재 시간
+    day = int(utc.localize(now).astimezone(KST).strftime("%w"))
+    hour = int(utc.localize(now).astimezone(KST).strftime("%H"))
+    minutes = int(utc.localize(now).astimezone(KST).strftime("%M"))
+    classN = 0
+    if (hour == 8 and minutes < 23): classN = 0 # 8:20~8:40
+    elif ((hour == 8 and minutes >= 23) or (hour == 9 and minutes < 20)): classN = 1 # 8:40~9:30
+    elif ((hour == 9 and minutes >= 20) or (hour == 10 and minutes < 20)): classN = 2 # 9:40~10:30
+    elif ((hour == 10 and minutes >= 20) or (hour == 11 and minutes < 20)): classN = 3 # 10:40~11:30
+    elif ((hour == 11 and minutes >= 20) or (hour == 12 and minutes < 20)): classN = 4 # 11:40~12:30
+    elif (hour == 13): classN = 5 # 13:20~14:10
+    elif (hour == 14): classN = 6 # 14:20~15:10
+    elif (hour == 15): classN = 7 # 15:20~16:10
+    elif (hour == 16 and minutes <= 20): classN = 8 # 16:10~16:20
+    else : classN = 9 # 수업 없음
         
     req=request.get_json() # 파라미터 값 불러오기
     userid=req["userRequest"]["user"]["properties"]["plusfriendUserKey"]
@@ -99,6 +99,7 @@ def response_link(): # 온라인 클래스 링크 대답 함수
         if dusid==userid: stid=dstid
         fw.write(line)
     fw.close()
+    
     if stid=="none":
         res={
             "version": "2.0",
@@ -391,15 +392,15 @@ def reset(): # 초기화
 @application.route('/excel', methods=['POST'])
 def to_excel(): # 엑셀 파일로 생성
     
-    wb=openpyxl.load_workbook('Gbob.xlsx',data_only=True) # 엑셀 기본 형식
-    sh=wb['통계']
-    j=0
+    wb = openpyxl.load_workbook('Gbob.xlsx',data_only=True) # 엑셀 기본 형식
+    sh = wb['통계']
+    j = 0
     for sheet in wb:
         if not(sheet.title in classn): continue
-        T=sheet.title; N=str(classN[j]+3)
-        sh.cell(j+2,2).value=T
-        sh.cell(j+2,3).value="=COUNTA("+T+"!D4:E"+N+","+T+"!G4:H"+N+","+T+"!J4:K"+N+","+T+"!M4:N"+N+","+T+"!P4:P"+N+")/((2*'통계'!$F$2-1)*("+N+"-3))"
-        sh.cell(j+2,3).number_format="0.00%"
+        T = sheet.title; N = str(classN[j]+3)
+        sh.cell(j+2,2).value = T
+        sh.cell(j+2,3).value = "=COUNTA("+T+"!D4:E"+N+","+T+"!G4:H"+N+","+T+"!J4:K"+N+","+T+"!M4:N"+N+","+T+"!P4:P"+N+")/((2*'통계'!$F$2-1)*("+N+"-3))"
+        sh.cell(j+2,3).number_format = "0.00%"
         #sheet['B3'].value="학번"; sheet['C3'].value="이름"; sheet['Q3'].value="참여율"
         #for k in range(4,17): 
         #    sheet.cell(2,k).value=Days[(k)//3][:1];
@@ -409,10 +410,10 @@ def to_excel(): # 엑셀 파일로 생성
         for k in range(4,4+classN[j]):
         #    if k-3<10: sheet.cell(k,2).value=classn[j]+"0"+str(k-3)
         #    else : sheet.cell(k,2).value=classn[j]+str(k-3)
-            K=str(k)
-            sheet.cell(k,17).value="=COUNTA(D"+K+":E"+K+",G"+K+":H"+K+",J"+K+":K"+K+",M"+K+":N"+K+",P"+K+")/(2*'통계'!$F$2-1)"
-            sheet.cell(k,17).number_format="0%"
-        j+=1
+            K = str(k)
+            sheet.cell(k,17).value = "=COUNTA(D"+K+":E"+K+",G"+K+":H"+K+",J"+K+":K"+K+",M"+K+":N"+K+",P"+K+")/(2*'통계'!$F$2-1)"
+            sheet.cell(k,17).number_format = "0%"
+        j += 1
 
     fr=open("/home/ubuntu/dg1s_bot/final save.txt","r") # 엑셀 채워 넣기
     lines=fr.readlines()
@@ -437,57 +438,60 @@ def to_excel(): # 엑셀 파일로 생성
 @application.route('/menu', methods=['POST'])
 def response_menu(): # 메뉴 대답 함수 made by 1316, 1301
     
-    KST = timezone('Asia/Seoul') # 오늘, 내일 날짜
-    now = datetime.datetime.utcnow()
+    global Menu, Menu_saved_date
+    now = datetime.datetime.utcnow() # 오늘, 내일 날짜
     today = utc.localize(now).astimezone(KST)
     tomorrow = today + timedelta(days=1)
+    today_name = " "+str(today.month)+"월 "+str(today.day)+"일 " # 추후 비교용 날짜명 텍스트("_N월_N일_")
+    tomorrow_name = " "+str(tomorrow.month)+"월 "+str(tomorrow.day)+"일 "
+    
+    if Menu_saved_date == "" or Menu_saved_date != today_name :
+      Menu_saved_date = today_name
+      
+      url = 'https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=%EB%8C%80%EA%B5%AC%EC%9D%BC%EA%B3%BC%ED%95%99%EA%B3%A0%EB%93%B1%ED%95%99%EA%B5%90&oquery=eorndlfrhkrh+rmqtlr&tqi=U%2Ftz5wprvOssslHyxuossssssLN-415573'
+      response = requests.get(url) # url로부터 가져오기
+      if response.status_code == 200:  
 
-    url = 'https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=%EB%8C%80%EA%B5%AC%EC%9D%BC%EA%B3%BC%ED%95%99%EA%B3%A0%EB%93%B1%ED%95%99%EA%B5%90&oquery=eorndlfrhkrh+rmqtlr&tqi=U%2Ftz5wprvOssslHyxuossssssLN-415573'
-    response = requests.get(url) # url로부터 가져오기
-    if response.status_code == 200:  
+          source = response.text # menu_info class 내용 가져오기
+          soup = BeautifulSoup(source,'html.parser')
+          a = soup.select('.menu_info')
 
-        source = response.text # menu_info class 내용 가져오기
-        soup = BeautifulSoup(source,'html.parser')
-        a = soup.select('.menu_info')
+          for menu in a:
+              menu_text = menu.get_text()
+              bracket_i = menu_text.find('[')
+              bracket_j = menu_text.find(']')
+              menu_day = menu_text[:bracket_i]
+              menu_when = menu_text[bracket_i+1:bracket_j]
+              menu_content = menu_text[bracket_j+3:].rstrip().replace(" ","\n")
 
-        today_name = " "+str(today.month)+"월 "+str(today.day)+"일 " # 추후 비교용 날짜명 텍스트
-        tomorrow_name = " "+str(tomorrow.month)+"월 "+str(tomorrow.day)+"일 "
+              if menu_when == "조식": save_i = 0
+              elif menu_when == "중식": save_i = 1
+              elif menu_when == "석식": save_i = 2
 
-        for menu in a:
-            menu_text = menu.get_text()
-            bracket_i = menu_text.find('[')
-            bracket_j = menu_text.find(']')
-            menu_day = menu_text[:bracket_i]
-            menu_when = menu_text[bracket_i+1:bracket_j]
-            menu_content = menu_text[bracket_j+3:].rstrip().replace(" ","\n")
-
-            if menu_when == "조식": save_i = 0
-            elif menu_when == "중식": save_i = 1
-            elif menu_when == "석식": save_i = 2
-
-            if menu_day == today_name: Menu[0][save_i]=menu_content
-            elif menu_day == tomorrow_name: Menu[1][save_i]=menu_content
+              if menu_day == today_name: Menu[0][save_i]=menu_content
+              elif menu_day == tomorrow_name: Menu[1][save_i]=menu_content
 
     req=request.get_json() # 파라미터 값 불러오기
     askmenu=req["action"]["detailParams"]["ask_menu"]["value"]
-    hour=int(utc.localize(now).astimezone(KST).strftime("%H"))
+    
+    hour=int(utc.localize(now).astimezone(KST).strftime("%H")) # Meal 계산
     minu=int(utc.localize(now).astimezone(KST).strftime("%M"))
     if (hour==13 and minu<20) or (hour>=8 and hour<=12): Meal="아침" # 아침을 먹은 후
     elif (hour==13 and minu>=20) or (hour>=14 and hour<=18) or (hour==19 and minu<20): Meal="점심" # 점심을 먹은 후
     else: Meal="저녁" # 저녁을 먹은 후
 
-    today=0
+    i = 0
 
-    if Meal=="아침": fi=1; si=2; ti=0 # 아침 점심 저녁 정보 불러오기 및 배열
-    elif Meal=="점심": fi=2; si=0; ti=1
-    elif Meal=="저녁": fi=0; si=1; ti=2
-    if askmenu=="내일 급식": fi=0; si=1; ti=2; today=1;
-    first=Menu[today][fi]
-    second=Menu[today][si]
-    third=Menu[today][ti]
-    if Menu[today][fi]=="": first="등록된 급식이 없습니다."
-    if Menu[today][si]=="": second="등록된 급식이 없습니다."
-    if Menu[today][ti]=="": third="등록된 급식이 없습니다."
+    if Meal == "아침": fi=1; si=2; ti=0 # 아침 점심 저녁 정보 불러오기 및 배열
+    elif Meal == "점심": fi=2; si=0; ti=1
+    elif Meal == "저녁": fi=0; si=1; ti=2
+    if askmenu == "내일 급식": fi=0; si=1; ti=2; i=1
+    first = Menu[i][fi]
+    second = Menu[i][si]
+    third = Menu[i][ti]
+    if Menu[i][fi] == "": first = "등록된 급식이 없습니다."
+    if Menu[i][si] == "": second = "등록된 급식이 없습니다."
+    if Menu[i][ti] == "": third = "등록된 급식이 없습니다."
 
     res={ # 답변
         "version": "2.0",
@@ -497,9 +501,9 @@ def response_menu(): # 메뉴 대답 함수 made by 1316, 1301
                     "carousel": {
                         "type": "basicCard",
                         "items": [
-                            { "title": Msg[today][fi], "description": first },
-                            { "title": Msg[today][si], "description": second },
-                            { "title": Msg[today][ti], "description": third }
+                            { "title": Msg[i][fi], "description": first },
+                            { "title": Msg[i][si], "description": second },
+                            { "title": Msg[i][ti], "description": third }
                         ]
                     }
                 }
