@@ -24,6 +24,7 @@
         }
     </style>
     <script>
+        function default(img){ img.src="{{url_for('static',filename='/images/main_img_default.png')}}" }
         function hover(e,img){
             var x=e.offsetX, y=e.offsetY;
             if(1<=y && y<=31){
@@ -43,7 +44,7 @@
 </head>
 <body>
     <div>
-        <img src="{{url_for('static',filename='/images/main_img_default.png')}}" onmousemove="hover(event, this)" onclick="click(event)" onmouseout="this.src="{{url_for('static',filename='/images/main_img_default.png')}}";">
+        <img src="{{url_for('static',filename='/images/main_img_default.png')}}" onmousemove="hover(event, this)" onclick="click(event)" onmouseout="default(this)">
     </div>
 </body>
 </html>
