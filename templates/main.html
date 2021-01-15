@@ -26,18 +26,18 @@
 </head>
 <body>
     <div>
-        <img src="default_cmd.png" id="cmdimg" onclick="fclick(event, this)">
+        <img src="/static/images/default_cmd.png" id="cmdimg" onclick="fclick(event, this)">
     </div>
     <script>
         document.getElementById("cmdimg").addEventListener("mousemove", function hover(e){
             var x=e.offsetX, y=e.offsetY, w=this.width, h=this.height;
             if(1<=y && y<=31*h/381){
-                if(w*426/575<=x && x<=w*475/575) this.src="minimize_cmd.png";
-                else if(w*476/575<=x && x<=w*525/575) this.src="maximize_cmd.png";
-                else if(w*526/575<=x && x<=w) this.src="close_cmd.png";
-                else this.src="default_cmd.png"
+                if(w*426/575<=x && x<=w*475/575) this.src="/static/images/minimize_cmd.png";
+                else if(w*476/575<=x && x<=w*525/575) this.src="/static/images/maximize_cmd.png";
+                else if(w*526/575<=x && x<=w) this.src="/static/images/close_cmd.png";
+                else this.src="/static/images/default_cmd.png"
             }
-            else this.src="default_cmd.png"
+            else this.src="/static/images/default_cmd.png"
         });
         document.getElementById("cmdimg").addEventListener("mouseout", function defaultimg(){ this.src="default_cmd.png"; });
         function fclick(e, img){
