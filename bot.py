@@ -453,7 +453,6 @@ def response_menu(): # 메뉴 대답 함수 made by 1316, 1301
         today_name = " "+str(today.month)+"월 "+str(today.day)+"일 " # 추후 비교용 날짜명 텍스트
         tomorrow_name = " "+str(tomorrow.month)+"월 "+str(tomorrow.day)+"일 "
 
-        fw=open("/workspace/dg1s_bot/basic_function/menu.txt","w") 
         for menu in a:
             menu_text = menu.get_text()
             bracket_i = menu_text.find('[')
@@ -468,8 +467,6 @@ def response_menu(): # 메뉴 대답 함수 made by 1316, 1301
 
             if menu_day == today_name: Menu[0][save_i]=menu_content
             elif menu_day == tomorrow_name: Menu[1][save_i]=menu_content
-
-        fw.close()
 
     req=request.get_json() # 파라미터 값 불러오기
     askmenu=req["action"]["detailParams"]["ask_menu"]["value"]
