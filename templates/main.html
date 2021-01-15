@@ -39,7 +39,7 @@
             }
             else this.src="/static/images/default_cmd.png"
         });
-        document.getElementById("cmdimg").addEventListener("mouseout", function defaultimg(){ this.src="default_cmd.png"; });
+        document.getElementById("cmdimg").addEventListener("mouseout", function defaultimg(){ this.src="/static/images/default_cmd.png"; });
         function fclick(e, img){
             var x=e.offsetX, y=e.offsetY, w=img.width, h=img.height;
             if(1<=y && y<=31*h/381){
