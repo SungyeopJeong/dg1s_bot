@@ -3,7 +3,6 @@
 <html lang="en" xmlns="http://www.w3.org/1999/Xhtml"><head>
     <meta charset="utf-8">
     <title>main</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <style>
         body {
             width: 100vw;
@@ -24,37 +23,33 @@
             cursor: default;
         }
     </style>
+</head>
+<body>
+    <div>
+        <img src="default_cmd.png" id="cmdimg" onclick="fclick(event, this)">
+    </div>
     <script>
-        function defaultimg(img){ img.src="{{url_for('static',filename='/images/default_cmd.png')}}" }
-        function hover(e,img){
+        document.getElementById("cmdimg").addEventListener("mousemove", function hover(e){
+            var x=e.offsetX, y=e.offsetY, w=this.width, h=this.height;
+            if(1<=y && y<=31*h/381){
+                if(w*426/575<=x && x<=w*475/575) this.src="minimize_cmd.png";
+                else if(w*476/575<=x && x<=w*525/575) this.src="maximize_cmd.png";
+                else if(w*526/575<=x && x<=w) this.src="close_cmd.png";
+                else this.src="default_cmd.png"
+            }
+            else this.src="default_cmd.png"
+        });
+        document.getElementById("cmdimg").addEventListener("mouseout", function defaultimg(){ this.src="default_cmd.png"; });
+        function fclick(e, img){
             var x=e.offsetX, y=e.offsetY, w=img.width, h=img.height;
             if(1<=y && y<=31*h/381){
                 if(w*426/575<=x && x<=w*475/575) img.src="{{url_for('static',filename='/images/minimize_cmd.png')}}";
                 else if(w*476/575<=x && x<=w*525/575) img.src="{{url_for('static',filename='/images/maximize_cmd.png')}}";
                 else if(w*526/575<=x && x<=w) img.src="{{url_for('static',filename='/images/close_cmd.png')}}";
-                else img.src="{{url_for('static',filename='/images/default_cmd.png')}}"
-            }
-            else img.src="{{url_for('static',filename='/images/default_cmd.png')}}"
-        }
-        $("#cmdimg").click(function fclick(e){
-            alert("youclicked!");
-            if(e.button==1){
-                alert("youclickedwithleftbtn!");
-                var x=e.offsetX, y=e.offsetY, w=img.width, h=img.height;
-                if(1<=y && y<=31*h/381){
-                    if(w*426/575<=x && x<=w*475/575) img.src="{{url_for('static',filename='/images/minimize_cmd.png')}}";
-                    else if(w*476/575<=x && x<=w*525/575) img.src="{{url_for('static',filename='/images/maximize_cmd.png')}}";
-                    else if(w*526/575<=x && x<=w) img.src="{{url_for('static',filename='/images/close_cmd.png')}}";
-                    else location.href="/index";
-                }
                 else location.href="/index";
             }
-        });
+            else location.href="/index";
+        }
     </script>
-</head>
-<body>
-    <div>
-        <img src="{{url_for('static',filename='/images/default_cmd.png')}}" id="cmdimg" onmousemove="hover(event, this)" onmouseout="defaultimg(this)">
-    </div>
 </body>
 </html>
