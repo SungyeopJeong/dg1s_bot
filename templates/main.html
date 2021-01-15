@@ -53,7 +53,9 @@
 </head>
 <body>
     <div>
-        <img src="{{url_for('static',filename='/images/default_cmd.png')}}" onmousedown="click(event)" onmousemove="hover(event, this)" onmouseout="defaultimg(this)">
+        <a href="#" onclick="click(event)">
+            <img src="{{url_for('static',filename='/images/default_cmd.png')}}" onmousemove="hover(event, this)" onmouseout="defaultimg(this)">
+        </a>
     </div>
 </body>
 </html>
