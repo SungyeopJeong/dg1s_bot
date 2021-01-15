@@ -513,6 +513,10 @@ def response_menu(): # 메뉴 대답 함수 made by 1316, 1301
     return jsonify(res)
 
 @application.route('/')
+def main():
+    return render_template("main.html")
+  
+@application.route('/index')
 def index():
     return render_template("index.html")
   
