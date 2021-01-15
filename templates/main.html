@@ -36,7 +36,7 @@
             }
             else img.src="{{url_for('static',filename='/images/default_cmd.png')}}"
         }
-        $("#imgbox").click(function click(e){
+        $("#cmdimg").click(function click(e){
             alert("youclicked!");
             if(e.button==1){
                 alert("youclickedwithleftbtn!");
@@ -53,8 +53,8 @@
     </script>
 </head>
 <body>
-    <div id="imgbox">
-        <img src="{{url_for('static',filename='/images/default_cmd.png')}}" onmousemove="hover(event, this)" onmouseout="defaultimg(this)">
+    <div>
+        <img src="{{url_for('static',filename='/images/default_cmd.png')}}" id="cmdimg" onmousemove="hover(event, this)" onmouseout="defaultimg(this)">
     </div>
 </body>
 </html>
