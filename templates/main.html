@@ -18,13 +18,27 @@
         }
         img {
             height: 50vh;
-        }</style>
+        }
+        img:hover {
+            cursor: default;
+        }
+    </style>
+    <script>
+        function hover(e){
+            var x=e.offsetX, y=e.offsetY;
+            document.getElementById("span").innerHTML=x+" "+y;
+        }
+        function click(e){
+            if(e.button==1){
+                
+            }
+        }
+    </script>
 </head>
 <body>
     <div>
-        <a href="/index">
-            <img src="{{url_for('static',filename='/images/main_img.png')}}">
-        </a>
+        <img src="{{url_for('static',filename='/images/main_img_default.png')}}" onmouseover="hover(event)" onclick="click(event)">
     </div>
+    <span></span>
 </body>
 </html>
