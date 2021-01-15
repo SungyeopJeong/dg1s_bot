@@ -43,7 +43,7 @@
 </head>
 <body>
     <div>
-        <img src="{{url_for('static',filename='/images/main_img_default.png')}}" onmousemove="hover(event, this)" onclick="click(event)">
+        <img src="{{url_for('static',filename='/images/main_img_default.png')}}" onmousemove="hover(event, this)" onclick="click(event)" onmouseout="this.src="{{url_for('static',filename='/images/main_img_default.png')}}";">
     </div>
 </body>
 </html>
