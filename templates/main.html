@@ -27,7 +27,7 @@
         function defaultimg(img){ img.src="{{url_for('static',filename='/images/default_cmd.png')}}" }
         function hover(e,img){
             var x=e.offsetX, y=e.offsetY, w=img.width, h=img.height;
-            if(h/575<=y && y<=31*h/575){
+            if(1<y && y<=31*h/381){
                 if(w*426/575<=x && x<=w*475/575) img.src="{{url_for('static',filename='/images/minimize_cmd.png')}}";
                 else if(w*476/575<=x && x<=w*525/575) img.src="{{url_for('static',filename='/images/maximize_cmd.png')}}";
                 else if(w*526/575<=x && x<=w) img.src="{{url_for('static',filename='/images/close_cmd.png')}}";
@@ -38,7 +38,7 @@
         function click(e){
             if(e.button==1){
                 var x=e.offsetX, y=e.offsetY, w=img.width, h=img.height;
-                if(h/575<=y && y<=31*h/575){
+                if(1<=y && y<=31*h/381){
                     if(w*426/575<=x && x<=w*475/575) img.src="{{url_for('static',filename='/images/minimize_cmd.png')}}";
                     else if(w*476/575<=x && x<=w*525/575) img.src="{{url_for('static',filename='/images/maximize_cmd.png')}}";
                     else if(w*526/575<=x && x<=w) img.src="{{url_for('static',filename='/images/close_cmd.png')}}";
