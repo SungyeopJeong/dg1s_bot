@@ -27,10 +27,11 @@
         function hover(e,img){
             var x=e.offsetX, y=e.offsetY;
             if(1<=y && y<=31){
-                if(426<=x && x<=475) img.src="{{url_for('static',filename='/images/main_img_minimize.png')}}";
-                else if(476<=x && x<=525) img.src="{{url_for('static',filename='/images/main_img_maximize.png')}}";
-                else if(526<=x && x<=575) img.src="{{url_for('static',filename='/images/main_img_close.png')}}";
+                if(426<=x && x<=475) img.src="{{url_for('static',filename='/images/main_img_minimize.png')}}", return;
+                else if(476<=x && x<=525) img.src="{{url_for('static',filename='/images/main_img_maximize.png')}}", return;
+                else if(526<=x && x<=575) img.src="{{url_for('static',filename='/images/main_img_close.png')}}", return;
             }
+            img.src="{{url_for('static',filename='/images/main_img_default.png')}}"
         }
         function click(e){
             if(e.button==1){
