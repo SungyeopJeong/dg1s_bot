@@ -41,6 +41,16 @@
           -webkit-animation: loader 3s linear infinite;
               animation: loader 3s linear infinite;
         }
+        .loader1:after{
+          content: "";
+          position: absolute;
+          top: -5px;
+          left: 20px;
+          width: 11px;
+          height: 11px;
+          border-radius: 10px;
+          background-color: #fff;
+        }
         @-webkit-keyframes loader{
             0%{-webkit-transform:rotate(0deg);}
             100%{-webkit-transform:rotate(360deg);}
