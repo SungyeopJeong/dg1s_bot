@@ -65,11 +65,14 @@
             height: 20px;
         }
         ul {
-            margin: 0 0 0 0;
-            width: 50%;
+            margin: 10px 0 0 0;
+            width: 100vw;
+            padding: 0 0 0 0;
         }
         li {
             color: rgba(235,235,235,1);
+            list-style: none;
+            width: 100vw;
         }
     </style>
     <script>
@@ -105,7 +108,7 @@
     <form method="POST" action="http://15.164.222.88:5000/dnldfile" target="_blank" onsubmit="return chkdownload();">
         <input type="text" id="downloadname" name="downloadname" Placeholder="Enter the name of the file you want to download">
         <input type="submit" value="Download" id="downloadbtn">
-        <span id="filelist">File List</span>
+        <span id="filelist" style="font-size: 20px">File List</span>
         <ul>
             {% for file in files %}
             <li>{{file}}</li>
