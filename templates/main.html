@@ -47,7 +47,6 @@
                 else if(w*476/575<=x && x<=w*525/575) this.src="{{url_for('static',filename='/images/maximize_cmd.png')}}";
                 else if(w*526/575<=x && x<=w){
                     this.src="/static/images/loading_img.gif";
-                    this.removeEventListener("mouseout", function (){ this.src="/static/images/default_cmd.png"; });
                     setTimeout(function(){ location.href="/index"; }, 3000);
                 }
             }
