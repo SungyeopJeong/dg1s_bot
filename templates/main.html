@@ -18,9 +18,21 @@
         }
         img {
             width: 50vw;
+            animation-duration: 0.5s;
+            animation-iteration-count: 1;
         }
         img:hover {
             cursor: default;
+        }
+        @keyframes minimize {
+            0% { width: 50vw; }    
+            50% { width: 15vw; }
+            100% { width: 0vw; }
+        }
+        @keyframes maximize {
+            0% { width: 50vw; }    
+            50% { width: 15vw; }
+            100% { width: 100vw; }
         }
     </style>
 </head>
@@ -49,8 +61,12 @@
         document.getElementById("cmdimg").addEventListener("click", function (e){
             var x=e.offsetX, y=e.offsetY, w=this.width, h=this.height;
             if(1<=y && y<=31*h/381){
-                if(w*426/575<=x && x<=w*475/575) this.src="{{url_for('static',filename='/images/minimize_cmd.png')}}";
-                else if(w*476/575<=x && x<=w*525/575) this.src="{{url_for('static',filename='/images/maximize_cmd.png')}}";
+                if(w*426/575<=x && x<=w*475/575){
+                    this.style.animationName="minimize";
+                }
+                else if(w*476/575<=x && x<=w*525/575){
+                    this.style.animationName="maximize";
+                }
                 else if(w*526/575<=x && x<=w){
                     this.src="/static/images/loading_img.gif";
                     document.getElementById("cmdimg").removeEventListener("mousemove", movelistener);
