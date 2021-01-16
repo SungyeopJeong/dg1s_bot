@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, flash
 from werkzeug.utils import secure_filename
 import datetime
 from datetime import timedelta
@@ -560,18 +560,20 @@ def save_as_file(): # txt file 저장하기
         text=str(text)
         with open(filename,"w",encoding='utf-8') as f:
             f.write(text)
-    return render_template("saved.html")
+        flash('file is successfully saved!')
+    return redirect(request.url)
   
 @application.route('/xlsave', methods=['GET','POST'])
 def save_as_xlfile(): # excel file 저장하기
     if request.method == 'POST':
         if 'xlfile' not in request.files:
-            return "no files"
+            flash('Warning: there is no file')
         f=request.files['xlfile']
         if f.filename == '':
-            return "nothing selected"
+            flash('Warning: nothing uploaded')
         f.save(secure_filename(f.filename))
-    return render_template("saved.html")
+        flash('file is successfully saved!')
+    return redirect(request.url)
 
 @application.route('/load')
 def upload_n_download():
