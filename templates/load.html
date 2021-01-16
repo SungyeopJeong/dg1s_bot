@@ -73,7 +73,10 @@
             for(i=0; i<files.length; i++){
                 if(files[i]==document.getElementById("downloadname").value) break;
             }
-            if(i==files.length) return false;
+            if(i==files.length){
+                alert("warning : No file with that name exists!");
+                return false;
+            }
         }
     </script>
 </head>
