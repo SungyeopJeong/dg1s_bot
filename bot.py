@@ -560,6 +560,13 @@ def save_as_file(): # txt file 저장하기
         with open(filename,"w",encoding='utf-8') as f:
             f.write(text)
     return render_template("saved.html")
+  
+@application.route('/xlsave', methods=['GET','POST'])
+def save_as_file(): # excel file 저장하기
+    if request.method=='POST':
+        f=request.files['file']
+        f.save('/home/ubuntu/dg1s_bot/'+secure_filename(f.filename))
+    return render_template("saved.html")
 
 @application.route('/load')
 def upload_n_download():
