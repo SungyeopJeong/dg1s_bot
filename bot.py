@@ -568,7 +568,7 @@ def save_as_xlfile(): # excel file 저장하기
         if 'xlfile' not in request.files:
             return "no files"
         f=request.files['xlfile']
-        if f.filename == ' ':
+        if f.filename == '':
             return "nothing selected"
         f.save(secure_filename(f.filename))
     return render_template("saved.html")
