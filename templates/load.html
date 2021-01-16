@@ -68,6 +68,13 @@
                 return false;
             }
         }
+        function chkdownload(){
+            var files={{files}}, i;
+            for(i=0; i<files.length; i++){
+                if(files[i]==document.getElementById("downloadname").value) break;
+            }
+            if(i==files.length) return false;
+        }
     </script>
 </head>
 <body>
@@ -78,7 +85,7 @@
         <input type="submit" value="Upload" id="submitbtn">
     </form>
     <form method="POST" action="http://15.164.222.88:5000/dnldfile" target="_blank" onsubmit="return chkdownload();">
-        <input type="text" id="downloadname" name="downloadname" value="Enter the name of the file you want to download">
+        <input type="text" id="downloadname" name="downloadname" Placeholder="Enter the name of the file you want to download">
         <input type="submit" value="Download" id="downloadbtn">
         <span>File List</span>
         <ul>
