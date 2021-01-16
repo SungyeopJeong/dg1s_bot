@@ -25,7 +25,7 @@
             cursor: default;
         }
         @keyframes minimize {
-            0% { width: 50vw; }  
+            0% { left: 25vw; width: 50vw; }  
             100% { left: 100vw; bottom: 100vh; width: 0vw; }
         }
         @keyframes maximize {
@@ -63,23 +63,11 @@
                     this.style.animationName="minimize";
                     document.getElementById("cmdimg").removeEventListener("mousemove", movelistener);
                     document.getElementById("cmdimg").removeEventListener("mouseout", outlistener);
-                    setTimeout(function(){
-                        this.src="/static/images/loading_img.gif";
-                    },150);
-                    setTimeout(function(){
-                        location.href="/index";
-                    },3000);
                 }
                 else if(w*476/575<=x && x<=w*525/575){
                     this.style.animationName="maximize";
                     document.getElementById("cmdimg").removeEventListener("mousemove", movelistener);
                     document.getElementById("cmdimg").removeEventListener("mouseout", outlistener);
-                    setTimeout(function(){
-                        this.src="/static/images/loading_img.gif";
-                    },150);
-                    setTimeout(function(){
-                        location.href="/index";
-                    },3000);
                 }
                 else if(w*526/575<=x && x<=w){
                     this.src="/static/images/loading_img.gif";
