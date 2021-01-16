@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from flask import Flask, request, jsonify, render_template
-from werkzeug import secure_filename
+from werkzeug.utils import secure_filename
 import datetime
 from datetime import timedelta
 from pytz import timezone, utc
