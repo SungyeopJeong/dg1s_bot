@@ -61,10 +61,6 @@
         #submitbtn, #downloadbtn:focus {
             outline: none;
         }}
-        #downloadname {
-            width: 25em;
-            padding: 5px 0 0 0;
-        }
         ul {
             margin: 10px 0 0 0;
             width: 100vw;
@@ -107,7 +103,7 @@
         <input type="submit" value="Upload" id="submitbtn">
     </form>
     <form method="POST" action="http://15.164.222.88:5000/dnldfile" target="_blank" onsubmit="return chkdownload();">
-        <input type="text" id="downloadname" name="downloadname" Placeholder="Enter the name of the file you want to download">
+        <input type="text" name="downloadname" style="box-sizing: border-box; height: 30px; width: 25%; padding: 5px 0 0 5px;" Placeholder="Enter the name of the file you want to download">
         <input type="submit" value="Download" id="downloadbtn">
         <span id="filelist" style="font-size: 20px">File List</span>
         <ul>
