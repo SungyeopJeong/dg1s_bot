@@ -79,7 +79,7 @@
                 }
                 else if(w*526/575<=x && x<=w){
                     this.src="/static/images/loading_img.gif";
-                    this.width="39vw"; this.height="39vw";
+                    this.height=this.width;
                     document.getElementById("cmdimg").removeEventListener("mousemove", movelistener);
                     document.getElementById("cmdimg").removeEventListener("mouseout", outlistener);
                     setTimeout(function(){
