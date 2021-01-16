@@ -40,8 +40,7 @@
     </style>
     <script>
         function rename(file){
-            alert(file.value);
-            document.getElementById("filename").innerHTML=file.value;
+            document.getElementById("filename").innerHTML=file.value.substr(12,file.value.length);
         }
     </script>
 </head>
