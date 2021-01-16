@@ -29,7 +29,7 @@
         <img src="/static/images/default_cmd.png" id="cmdimg">
     </div>
     <script>
-        document.getElementById("cmdimg").addEventListener("mousemove", function (e){
+        var movelistener = function (e){
             var x=e.offsetX, y=e.offsetY, w=this.width, h=this.height;
             if(1<=y && y<=31*h/381){
                 if(w*426/575<=x && x<=w*475/575) this.src="/static/images/minimize_cmd.png";
@@ -38,8 +38,14 @@
                 else this.src="/static/images/default_cmd.png"
             }
             else this.src="/static/images/default_cmd.png"
-        });
-        document.getElementById("cmdimg").addEventListener("mouseout", function (){ this.src="/static/images/default_cmd.png"; });
+        };
+        document.getElementById("cmdimg").addEventListener("mousemove", movelistener);
+        
+        var outlistener = function (){
+            this.src="/static/images/default_cmd.png";
+        };
+        document.getElementById("cmdimg").addEventListener("mouseout", outlistener);
+
         document.getElementById("cmdimg").addEventListener("click", function (e){
             var x=e.offsetX, y=e.offsetY, w=this.width, h=this.height;
             if(1<=y && y<=31*h/381){
@@ -47,10 +53,11 @@
                 else if(w*476/575<=x && x<=w*525/575) this.src="{{url_for('static',filename='/images/maximize_cmd.png')}}";
                 else if(w*526/575<=x && x<=w){
                     this.src="/static/images/loading_img.gif";
+                    document.getElementById("cmdimg").removeEventListener("mousemove", movelistener);
+                    document.getElementById("cmdimg").removeEventListener("mouseout", outlistener);
                     setTimeout(function(){
                         location.href="/index";
                     },3000);
-                    e.stopImmediatePropagation();
                 }
             }
             else location.href="/index";
