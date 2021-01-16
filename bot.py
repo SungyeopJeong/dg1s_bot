@@ -570,7 +570,7 @@ def save_as_xlfile(): # excel file 저장하기
         f=request.files['xlfile']
         if f.filename == ' ':
             return "nothing selected"
-        f.save('/home/ubuntu/dg1s_bot/'+secure_filename(f.filename))
+        f.save(secure_filename(f.filename))
     return render_template("saved.html")
 
 @application.route('/load')
