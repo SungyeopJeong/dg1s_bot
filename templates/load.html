@@ -52,7 +52,7 @@
             else document.getElementById("filename").innerHTML=file.value.substr(12,file.value.length);
         }
         function chksubmit(){
-            alert("is it work?");
+            alert(document.getElementById("xlupload").value);
             if(document.getElementById("xlupload").value=""){
                 alert("warning : nothing uploaded!");
                 return false;
