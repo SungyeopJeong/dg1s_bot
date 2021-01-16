@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, redirect
 from werkzeug.utils import secure_filename
 import datetime
 from datetime import timedelta
@@ -567,11 +567,11 @@ def save_as_xlfile(): # excel file 저장하기
     if request.method == 'POST':
         if 'xlfile' not in request.files:
             print('Message: there is no file')
-            return render_template("load.html")
+            return redirect("http://15.164.222.88:5000/load")
         f=request.files['xlfile']
         if f.filename == '':
             print('Message: nothing uploaded')
-            return render_template("load.html")
+            return redirect("http://15.164.222.88:5000/load")
         f.save(secure_filename(f.filename))
     return render_template("saved.html")
 
