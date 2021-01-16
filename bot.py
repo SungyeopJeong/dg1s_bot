@@ -565,13 +565,7 @@ def save_as_file(): # txt file 저장하기
 @application.route('/xlsave', methods=['GET','POST'])
 def save_as_xlfile(): # excel file 저장하기
     if request.method == 'POST':
-        if 'xlfile' not in request.files:
-            print('Message: there is no file')
-            return redirect("http://15.164.222.88:5000/load")
         f=request.files['xlfile']
-        if f.filename == '':
-            print('Message: nothing uploaded')
-            return redirect("http://15.164.222.88:5000/load")
         f.save(secure_filename(f.filename))
     return render_template("saved.html")
 
