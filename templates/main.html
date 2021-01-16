@@ -47,7 +47,13 @@
                 else if(w*476/575<=x && x<=w*525/575) this.src="{{url_for('static',filename='/images/maximize_cmd.png')}}";
                 else if(w*526/575<=x && x<=w){
                     this.src="/static/images/loading_img.gif";
-                    setTimeout(function(){ location.href="/index"; }, 3000);
+                    new Promise(function(resolve, reject){
+                        setTimeout(function(){
+                            resolve("/index");
+                        }, 3000);
+                    }).then(function(url){
+                        location.href=url;
+                    });
                 }
             }
             else location.href="/index";
