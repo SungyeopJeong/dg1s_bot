@@ -571,7 +571,7 @@ def save_as_xlfile(): # excel file 저장하기
         return render_template("saved.html")
   
 @application.route('/dnldfile', methods=['GET','POST'])
-def save_as_xlfile(): # excel file 저장하기
+def download_file(): # excel file 저장하기
     if request.method == 'POST':
         filename=request.form['downloadname']
         return send_file(filename, attachment_filename=filename, as_attachment=True)
