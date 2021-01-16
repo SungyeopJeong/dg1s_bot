@@ -38,6 +38,18 @@
             display: none;
         }
     </style>
+    <script>
+        function rename(file){
+            if(file.value=="") document.getElementById("filename").innerHTML="(nothing uploaded)";
+            else document.getElementById("filename").innerHTML=file.value.substr(12,file.value.length);
+        }
+        function chksubmit(){
+            if(document.getElementById("xlupload").value==""){
+                alert("warning : nothing uploaded!");
+                return false;
+            }
+        }
+    </script>
 </head>
 <body>
     <form method="POST" action="http://15.164.222.88:5000/xlsave" target="_blank" enctype="multipart/form-data" onsubmit="return chksubmit();">
@@ -46,18 +58,5 @@
         <input type="file" id="xlupload" onchange="rename(this);" name="xlfile">
         <input type="submit" value="업로드">
     </form>
-    <script>
-        function rename(file){
-            if(file.value=="") document.getElementById("filename").innerHTML="(nothing uploaded)";
-            else document.getElementById("filename").innerHTML=file.value.substr(12,file.value.length);
-        }
-        function chksubmit(){
-            alert(document.getElementById("xlupload").value);
-            if(document.getElementById("xlupload").value=""){
-                alert("warning : nothing uploaded!");
-                return false;
-            }
-        }
-    </script>
 </body>
 </html>
