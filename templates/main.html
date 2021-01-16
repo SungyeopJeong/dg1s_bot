@@ -26,15 +26,19 @@
             cursor: default;
         }
         @keyframes minimize {
-            0% { width: 39vw; }  
-            100% { 
+            100% {
                 width: 0vw; 
+                height: 0vh;
+                transform-origin: top right;
+                opacity: 0;
                 transform: translate(30.5vw, -37vw);
             }
         }
         @keyframes maximize {
-            0% { width: 50vw; }  
-            100% { width: 100vw; }
+            100% { 
+                width: 100vw; 
+                height: 66vw;
+            }
         }
     </style>
 </head>
