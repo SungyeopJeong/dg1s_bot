@@ -561,19 +561,21 @@ def save_as_file(): # txt file 저장하기
         with open(filename,"w",encoding='utf-8') as f:
             f.write(text)
         flash('file is successfully saved!')
-    return redirect(request.url)
+    return render_template("saved.html")
   
 @application.route('/xlsave', methods=['GET','POST'])
 def save_as_xlfile(): # excel file 저장하기
     if request.method == 'POST':
         if 'xlfile' not in request.files:
             flash('Warning: there is no file')
+            return redirect(request.url)
         f=request.files['xlfile']
         if f.filename == '':
             flash('Warning: nothing uploaded')
+            return redirect(request.url)
         f.save(secure_filename(f.filename))
         flash('file is successfully saved!')
-    return redirect(request.url)
+    return render_template("saved.html")
 
 @application.route('/load')
 def upload_n_download():
