@@ -69,13 +69,13 @@
                 return false;
             }
         }
-        //function chkdownload(){
-            //var files={{files}}, i;
-            //for(i=0; i<files.length; i++){
-                //if(files[i]==document.getElementById("downloadname").value) break;
-            //}
-            //if(i==files.length) return false;
-        //}
+        function chkdownload(){
+            var files={{files|tojson}}, i;
+            for(i=0; i<files.length; i++){
+                if(files[i]==document.getElementById("downloadname").value) break;
+            }
+            if(i==files.length) return false;
+        }
     </script>
 </head>
 <body>
