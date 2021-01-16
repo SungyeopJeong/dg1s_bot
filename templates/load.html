@@ -25,6 +25,7 @@
         #uploadbtn {
             width: 10vh;
             height: 10vh;
+            margin: 15vh 0 0 0;
         }
         #uploadbtn:hover {
             cursor: pointer;
@@ -103,9 +104,9 @@
         <input type="submit" value="Upload" id="submitbtn">
     </form>
     <form method="POST" action="http://15.164.222.88:5000/dnldfile" target="_blank" onsubmit="return chkdownload();">
-        <input type="text" id="downloadname" name="downloadname" style="box-sizing: border-box; height: 30px; width: 25%; padding: 5px 0 0 5px;" 
+        <input type="text" id="downloadname" name="downloadname" style="box-sizing: border-box; height: 30px; width: 30%; padding: 5px 0 0 5px;" 
                Placeholder="Enter the name of the file you want to download">
-        <input type="submit" value="Download" id="downloadbtn">
+        <input type="submit" value="Download" id="downloadbtn" style="margin: 5vh 0 0 0">
         <span id="filelist" style="font-size: 20px">File List</span>
         <ul>
             {% for file in files %}
