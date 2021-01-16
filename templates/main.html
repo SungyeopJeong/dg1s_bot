@@ -20,77 +20,51 @@
         img {
             width: 39vw;
             height: 26vw;
-            animation-duration: 1s;
-            animation-iteration-count: 1;
         }
         img:hover {
             cursor: default;
-        }
-        @keyframes minimize {
-            100% {
-                width: 0vw; 
-                height: 0vh;
-                opacity: 0;
-                bottom: 100vh;
-                left: 100vw;
-                transform: translate(-100%, 100%);
-            }
-        }
-        @keyframes maximize {
-            100% { 
-                width: 100vw; 
-                height: 66vw;
-            }
         }
     </style>
 </head>
 <body>
     <div>
-        <img src="/static/images/default_cmd.png" id="cmdimg">
+        <img src="/bot/static/images/default_cmd.png" id="cmdimg">
     </div>
     <script>
+        var img=document.getElementById("cmdimg");
         var movelistener = function (e){
-            var x=e.offsetX, y=e.offsetY, w=this.width, h=this.height;
+            var x=e.offsetX, y=e.offsetY, w=img.width, h=img.height;
             if(1<=y && y<=31*h/381){
-                if(w*426/575<=x && x<=w*475/575) this.src="/static/images/minimize_cmd.png";
-                else if(w*476/575<=x && x<=w*525/575) this.src="/static/images/maximize_cmd.png";
-                else if(w*526/575<=x && x<=w) this.src="/static/images/close_cmd.png";
-                else this.src="/static/images/default_cmd.png"
+                if(w*426/575<=x && x<=w*475/575) img.src="/bot/static/images/minimize_cmd.png";
+                else if(w*476/575<=x && x<=w*525/575) img.src="/bot/static/images/maximize_cmd.png";
+                else if(w*526/575<=x && x<=w) img.src="/bot/static/images/close_cmd.png";
+                else img.src="/bot/static/images/default_cmd.png"
             }
-            else this.src="/static/images/default_cmd.png"
+            else img.src="/bot/static/images/default_cmd.png"
         };
-        document.getElementById("cmdimg").addEventListener("mousemove", movelistener);
+        img.addEventListener("mousemove", movelistener);
         
         var outlistener = function (){
-            this.src="/static/images/default_cmd.png";
+            img.src="/bot/static/images/default_cmd.png";
         };
-        document.getElementById("cmdimg").addEventListener("mouseout", outlistener);
+        img.addEventListener("mouseout", outlistener);
 
-        document.getElementById("cmdimg").addEventListener("click", function (e){
-            var x=e.offsetX, y=e.offsetY, w=this.width, h=this.height;
+        var clicklistener = function (e){
+            var x=e.offsetX, y=e.offsetY, w=img.width, h=img.height;
             if(1<=y && y<=31*h/381){
-                if(w*426/575<=x && x<=w*475/575){
-                    this.style.animationName="minimize";
-                    document.getElementById("cmdimg").removeEventListener("mousemove", movelistener);
-                    document.getElementById("cmdimg").removeEventListener("mouseout", outlistener);
-                }
-                else if(w*476/575<=x && x<=w*525/575){
-                    this.style.animationName="maximize";
-                    document.getElementById("cmdimg").removeEventListener("mousemove", movelistener);
-                    document.getElementById("cmdimg").removeEventListener("mouseout", outlistener);
-                }
-                else if(w*526/575<=x && x<=w){
-                    this.src="/static/images/loading_img.gif";
-                    this.style.height="39vw";
-                    document.getElementById("cmdimg").removeEventListener("mousemove", movelistener);
-                    document.getElementById("cmdimg").removeEventListener("mouseout", outlistener);
+                if(w*426/575<=x && x<=w){
+                    img.src="/bot/static/images/loading_img.gif";
+                    img.style.height="39vw";
+                    img.removeEventListener("mousemove", movelistener);
+                    img.removeEventListener("mouseout", outlistener);
+                    img.removeEventListener("click", clicklistener);
                     setTimeout(function(){
-                        location.href="/index";
+                        location.href="http://15.164.222.88:5000/index";
                     },3000);
                 }
             }
-            else location.href="/index";
-        });
+        };
+        img.addEventListener("click", clicklistener);
     </script>
 </body>
 </html>
