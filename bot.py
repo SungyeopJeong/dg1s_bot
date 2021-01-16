@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, send_file
 from werkzeug.utils import secure_filename
+import os
 import datetime
 from datetime import timedelta
 from pytz import timezone, utc
@@ -571,7 +572,8 @@ def save_as_xlfile(): # excel file 저장하기
 
 @application.route('/load')
 def upload_n_download():
-    return render_template("load.html")
+    files=os.listdir()
+    return render_template("load.html", files=files)
   
 @application.route('/ball')
 def ball():
