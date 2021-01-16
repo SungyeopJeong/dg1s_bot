@@ -18,7 +18,7 @@
         }
         img {
             width: 50vw;
-            animation-duration: 100ms;
+            animation-duration: 150ms;
             animation-iteration-count: 1;
         }
         img:hover {
@@ -61,9 +61,11 @@
             if(1<=y && y<=31*h/381){
                 if(w*426/575<=x && x<=w*475/575){
                     this.style.animationName="minimize";
+                    this.style.animationName="";
                 }
                 else if(w*476/575<=x && x<=w*525/575){
                     this.style.animationName="maximize";
+                    this.style.animationName="";
                 }
                 else if(w*526/575<=x && x<=w){
                     this.src="/static/images/loading_img.gif";
