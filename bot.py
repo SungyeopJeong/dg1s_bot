@@ -561,14 +561,20 @@ def save_as_file(): # txt file 저장하기
         text=str(text)
         with open(filename,"w",encoding='utf-8') as f:
             f.write(text)
-    return render_template("saved.html")
+        return render_template("saved.html")
   
 @application.route('/xlsave', methods=['GET','POST'])
 def save_as_xlfile(): # excel file 저장하기
     if request.method == 'POST':
         f=request.files['xlfile']
         f.save(secure_filename(f.filename))
-    return render_template("saved.html")
+        return render_template("saved.html")
+  
+@application.route('/dnldfile', methods=['GET','POST'])
+def save_as_xlfile(): # excel file 저장하기
+    if request.method == 'POST':
+        filename=request.form['downloadname']
+        return send_file(filename, attachment_filename=filename, as_attachment=True)
 
 @application.route('/load')
 def upload_n_download():
