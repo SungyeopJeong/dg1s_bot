@@ -71,6 +71,8 @@
             color: rgba(235,235,235,1);
             list-style: none;
             width: 100vw;
+            font-family: sans-serif;
+            font-size: 15px;
         }
     </style>
     <script>
@@ -85,6 +87,10 @@
             }
         }
         function chkdownload(){
+            if(document.getElementById("downloadname").value==""){
+                alert("warning : Please enter the name first!");
+                return false;
+            }
             var files={{files|tojson}}, i;
             for(i=0; i<files.length; i++){
                 if(files[i]==document.getElementById("downloadname").value) break;
