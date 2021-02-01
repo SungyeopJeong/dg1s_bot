@@ -29,17 +29,17 @@ def prin(datas,classN):
     
     now=datetime.datetime.utcnow() #현재 시간
     day=int(utc.localize(now).astimezone(KST).strftime("%w"))
-    answer=""
+    title=""; answer=""
     subName=datas[0]; subType=datas[1]; #datas: 0=name, 1=type, 2=zoomid, 3=zoompwd, 4=hangoutid, 5=class, 6=teacher
     if subType=="daymeeting":
-        answer+=Days[day]+" ["+subName
-        if classN==0 : answer+=" 조례]\n"
-        elif classN==8 : answer+=" 종례]\n"
+        title+=Days[day]+" ["+subName
+        if classN==0 : title+=" 조례]"
+        elif classN==8 : title+=" 종례]"
         answer+="https://zoom.us/j/"+datas[2]+"?pwd="+datas[3];
     elif subType=="club":
-        answer+=Days[day]+" "+str(classN)+"교시 지금은 동아리 시간입니다."
+        title+=Days[day]+" "+str(classN)+"교시 : [동아리]"
     else :
-        answer+=Days[day]+" "+str(classN)+"교시 : ["+subName+"]\n"
+        title+=Days[day]+" "+str(classN)+"교시 : ["+subName+"]"
         if subType=="none":
             answer+="(해당 클래스룸이 개설되지 않았습니다.)"
         else :
@@ -48,7 +48,7 @@ def prin(datas,classN):
             elif subType=="hangout":
                 answer+="행아웃 : https://meet.google.com/lookup/"+datas[4]+"\n"
             answer+="클래스룸 : https://classroom.google.com/u/0/c/"+datas[5]
-    return answer
+    return title, answer
 
 @application.route('/link', methods=['POST'])
 def response_link(): # 온라인 클래스 링크 대답 함수
@@ -103,24 +103,36 @@ def response_link(): # 온라인 클래스 링크 대답 함수
         if day==6 or day==0 or classN==9: answer="진행 중인 수업이 없습니다."
         else :
             grade=int(stid[0]); classn=int(stid[1])
-            subjectName=Timetable[grade-1][classn-1][day-1][classN]
             fr=open("/home/ubuntu/dg1s_bot/subject data.txt","r") # 과목 정보 불러오기
             lines=fr.readlines()
             fr.close()
-            fw=open("/home/ubuntu/dg1s_bot/subject data.txt","w")
-            for line in lines:
-                datas=line.split(" ")
-                dname=datas[0];
-                if dname==subjectName: answer=prin(datas,classN)
-                fw.write(line)
-            fw.close()
-        res={
-            "version": "2.0",
-            "template": {
-                "outputs": [ { "simpleText": { "text": answer } } ]
+            items=[]
+            for i in range(9):
+                subjectName=Timetable[grade-1][classn-1][day-1][(classN+i)%9]
+                fw=open("/home/ubuntu/dg1s_bot/subject data.txt","w")
+                for line in lines:
+                    datas=line.split(" ")
+                    dname=datas[0];
+                    if dname==subjectName: 
+                        title, answer=prin(datas,classN)
+                        var item={ "title": title, "description": answer }
+                        items.append(item)
+                    fw.write(line)
+                fw.close()
+            res={ # 답변
+                "version": "2.0",
+                "template": {
+                    "outputs": [
+                        {
+                            "carousel": {
+                                "type": "basicCard",
+                                "items": items
+                            }
+                        }
+                    ]
+                }
             }
-        }
-    return jsonify(res)
+            return jsonify(res)
 
 @application.route('/seat', methods=['POST'])
 def input_seat(): # 좌석 입력 함수
