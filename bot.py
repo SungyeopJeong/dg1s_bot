@@ -114,7 +114,7 @@ def response_link(): # 온라인 클래스 링크 대답 함수
                     datas=line.split(" ")
                     dname=datas[0];
                     if dname==subjectName: 
-                        title, answer=prin(datas,classN)
+                        title, answer=prin(datas,(classN+i)%9)
                         item={ "title": title, "description": answer }
                         items.append(item)
                     fw.write(line)
