@@ -115,7 +115,7 @@ def response_link(): # 온라인 클래스 링크 대답 함수
                     dname=datas[0];
                     if dname==subjectName: 
                         title, answer=prin(datas,classN)
-                        var item={ "title": title, "description": answer }
+                        item={ "title": title, "description": answer }
                         items.append(item)
                     fw.write(line)
                 fw.close()
