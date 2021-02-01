@@ -38,10 +38,11 @@ def prin(datas,classN):
         answer+="https://zoom.us/j/"+datas[2]+"?pwd="+datas[3];
     elif subType=="club":
         title+=Days[day]+" "+str(classN)+"교시 : [동아리]"
+        answer+="동아리 클래스룸을 참고하세요."
     else :
         title+=Days[day]+" "+str(classN)+"교시 : ["+subName+"]"
         if subType=="none":
-            answer+="(해당 클래스룸이 개설되지 않았습니다.)"
+            answer+="해당 클래스룸이 개설되지 않았습니다."
         else :
             if subType=="zoom":
                 answer+="줌 : https://zoom.us/j/"+datas[2]+"?pwd="+datas[3]+"\n"
