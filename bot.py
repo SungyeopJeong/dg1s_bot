@@ -105,7 +105,12 @@ def response_link(): # 온라인 클래스 링크 대답 함수
             }
         }
     else :
-        if day==6 or day==0 or classN==9: answer="진행 중인 수업이 없습니다."
+        if day==6 or day==0 or classN==9: 
+            res={
+                "version": "2.0",
+                "template": { "outputs": [ { "simpleText": { "text": "진행 중인 수업이 없습니다." } } ] }
+            }
+            return jsonify(res)
         else :
             grade=int(stid[0]); classn=int(stid[1])
             fr=open("/home/ubuntu/dg1s_bot/subject data.txt","r") # 과목 정보 불러오기
