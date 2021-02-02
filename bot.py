@@ -63,12 +63,14 @@ def response_link(): # 온라인 클래스 링크 대답 함수
     hour = int(utc.localize(now).astimezone(KST).strftime("%H"))
     minutes = int(utc.localize(now).astimezone(KST).strftime("%M"))
     classN = 0
+    # 기본 : 시작시간 - 20 ~ 종료시간 - 10
+    # 예외 : 조례, 종례, 5교시(점심시간)
     if (3 <= hour <= 7) or (hour == 8 and minutes < 23): classN = 0 # 8:20~8:30
     elif ((hour == 8 and minutes >= 23) or (hour == 9 and minutes < 20)): classN = 1 # 8:40~9:30
     elif ((hour == 9 and minutes >= 20) or (hour == 10 and minutes < 20)): classN = 2 # 9:40~10:30
     elif ((hour == 10 and minutes >= 20) or (hour == 11 and minutes < 20)): classN = 3 # 10:40~11:30
     elif ((hour == 11 and minutes >= 20) or (hour == 12 and minutes < 20)): classN = 4 # 11:40~12:30
-    elif (hour == 13): classN = 5 # 13:20~14:10
+    elif (hour == 12 and minutes >= 20) or (hour == 13): classN = 5 # 13:20~14:10
     elif (hour == 14): classN = 6 # 14:20~15:10
     elif (hour == 15): classN = 7 # 15:20~16:10
     elif (hour == 16 and minutes <= 20): classN = 8 # 16:10~16:20
