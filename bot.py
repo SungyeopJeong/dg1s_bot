@@ -50,7 +50,7 @@ def prin(datas,classN):
             elif subType=="hangout":
                 answer+="행아웃 : https://meet.google.com/lookup/"+datas[4]+"\n"
             answer+="클래스룸 : https://classroom.google.com/u/0/c/"+datas[5]
-    title+=" ("+classtime[classN][0]+" ~ "+classtime[classN][1]+")"
+    title+="\n("+classtime[classN][0]+" ~ "+classtime[classN][1]+")"
     return title, answer
 
 @application.route('/link', methods=['POST'])
