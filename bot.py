@@ -32,10 +32,12 @@ def prin(datas,classN):
     day=int(utc.localize(now).astimezone(KST).strftime("%w"))
     title=""; answer=""
     subName=datas[0]; subType=datas[1]; #datas: 0=name, 1=type, 2=zoomid, 3=zoompwd, 4=hangoutid, 5=class, 6=teacher
+    trimi=subName.find('(');
+    if trimi!=-1: subName=subName[:trimi]
     if subType=="daymeeting":
         title+=Days[day]+" ["+subName
-        if classN==0 : title+=" 조례]"
-        elif classN==8 : title+=" 종례]"
+        if classN==0: title+=" 조례]"
+        elif classN==8: title+=" 종례]"
         answer+="https://zoom.us/j/"+datas[2]+"?pwd="+datas[3];
     elif subType=="club":
         title+=Days[day]+" "+str(classN)+"교시 : [동아리]"
@@ -50,7 +52,7 @@ def prin(datas,classN):
             elif subType=="hangout":
                 answer+="행아웃 : https://meet.google.com/lookup/"+datas[4]+"\n"
             answer+="클래스룸 : https://classroom.google.com/u/0/c/"+datas[5]
-    title+="\n("+classtime[classN][0]+" ~ "+classtime[classN][1]+")"
+    title+=" ("+classtime[classN][0]+" ~ "+classtime[classN][1]+")"
     return title, answer
 
 @application.route('/link', methods=['POST'])
