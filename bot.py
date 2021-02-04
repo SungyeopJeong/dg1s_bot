@@ -140,9 +140,7 @@ def response_link(): # 온라인 클래스 링크 대답 함수
                                 "type": "basicCard",
                                 "items": items
                             }
-                        }
-                    ],
-                    "outpus": [
+                        },
                         {
                             "simpleText":{
                                 "text": "수업이 없거나 시간표 변동이 크게 일어나는 경우, 위의 정보보다 선생님의 안내에 따라주시기 바랍니다."
