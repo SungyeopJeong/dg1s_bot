@@ -539,42 +539,11 @@ filename=""
 def text_editor(): # 원하는 파일 사이트에서 보여주고 편집
     global filename
     filename=request.args.get('filename')
-    print(filename)
     fr=open("/home/ubuntu/dg1s_bot/"+filename+".txt","r")
     data_send=fr.readlines()
     fr.close()
     return render_template("texteditor.html",data=data_send, name=filename)
-'''
-@application.route('/userdata')
-def show_userdata(): # user data 사이트에서 보여주기
-  
-    fr=open("/home/ubuntu/dg1s_bot/user data.txt","r")
-    data_send=fr.readlines()
-    fr.close()
-    global filename
-    filename="user data.txt"
-    return render_template("texteditor.html",data=data_send, name="user data")
-  
-@application.route('/finalsave')
-def show_finalsave(): # final save 사이트에서 보여주기
-  
-    fr=open("/home/ubuntu/dg1s_bot/final save.txt","r")
-    data_send=fr.readlines()
-    fr.close()
-    global filename
-    filename="final save.txt"
-    return render_template("texteditor.html",data=data_send, name="final save")
-  
-@application.route('/subjectdata')
-def show_subjectdata(): # subject data 사이트에서 보여주기
-  
-    fr=open("/home/ubuntu/dg1s_bot/subject data.txt","r")
-    data_send=fr.readlines()
-    fr.close()
-    global filename
-    filename="subject data.txt"
-    return render_template("texteditor.html",data=data_send, name="subject data")
-'''
+
 @application.route('/filesave', methods=['GET','POST'])
 def save_as_file(): # txt file 저장하기
     if request.method=='POST':
