@@ -532,9 +532,18 @@ def main():
 @application.route('/index')
 def index():
     return render_template("index.html")
-  
+
 filename=""
 
+@application.route('/textedit')
+def text_editor(): # 원하는 파일 사이트에서 보여주고 편집
+    global filename
+    filename=request.args.get('filename')
+    fr=open("/home/ubuntu/dg1s_bot/"+filename+".txt","r")
+    data_send=fr.readlines()
+    fr.close()
+    return render_template("texteditor.html",data=data_send, name=filename)
+'''
 @application.route('/userdata')
 def show_userdata(): # user data 사이트에서 보여주기
   
@@ -546,7 +555,7 @@ def show_userdata(): # user data 사이트에서 보여주기
     return render_template("texteditor.html",data=data_send, name="user data")
   
 @application.route('/finalsave')
-def show_finalsave(): # user data 사이트에서 보여주기
+def show_finalsave(): # final save 사이트에서 보여주기
   
     fr=open("/home/ubuntu/dg1s_bot/final save.txt","r")
     data_send=fr.readlines()
@@ -556,7 +565,7 @@ def show_finalsave(): # user data 사이트에서 보여주기
     return render_template("texteditor.html",data=data_send, name="final save")
   
 @application.route('/subjectdata')
-def show_subjectdata(): # user data 사이트에서 보여주기
+def show_subjectdata(): # subject data 사이트에서 보여주기
   
     fr=open("/home/ubuntu/dg1s_bot/subject data.txt","r")
     data_send=fr.readlines()
@@ -564,7 +573,7 @@ def show_subjectdata(): # user data 사이트에서 보여주기
     global filename
     filename="subject data.txt"
     return render_template("texteditor.html",data=data_send, name="subject data")
-  
+'''
 @application.route('/filesave', methods=['GET','POST'])
 def save_as_file(): # txt file 저장하기
     if request.method=='POST':
@@ -582,7 +591,7 @@ def save_as_xlfile(): # excel file 저장하기
         return render_template("saved.html")
   
 @application.route('/dnldfile', methods=['GET','POST'])
-def download_file(): # excel file 저장하기
+def download_file(): # excel file 다운받기
     if request.method == 'POST':
         filename=request.form['downloadname']
         return send_file(filename, attachment_filename=filename, as_attachment=True)
