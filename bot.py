@@ -539,6 +539,7 @@ filename=""
 def text_editor(): # 원하는 파일 사이트에서 보여주고 편집
     global filename
     filename=request.args.get('filename')
+    print(filename)
     fr=open("/home/ubuntu/dg1s_bot/"+filename+".txt","r")
     data_send=fr.readlines()
     fr.close()
