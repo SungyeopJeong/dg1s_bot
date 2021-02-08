@@ -568,7 +568,7 @@ def download_file(): # excel file 다운받기
 
 @application.route('/load')
 def upload_n_download():
-    files=os.listdir()
+    files=os.listdir("/home/ubuntu/dg1s_bot")
     return render_template("load.html", files=files)
   
 @application.route('/ball')
