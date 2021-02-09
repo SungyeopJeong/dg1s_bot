@@ -173,9 +173,9 @@ def input_seat(): # 좌석 입력 함수
     p2=req["action"]["detailParams"]["student_id1"]["value"]
     stid="none"; invt=False; cday=0; ciday=0
     
-    if day!="7": # 유효한 날짜값인지 계산
-        print(day)
-        if day.split('"')[3]=="dateTag" : invt=True # 1~9998년이 아닌 경우
+    if day!="7": # 유효한 날짜값인지 계산(유효한 날짜값: 이번주 월~어제)
+        if day.split('"')[3]=="dateTag": invt=True # 1~9998년이 아닌 경우
+        elif Day==0 or Day==6: invt=True # 오늘이 토, 일인 경우
         else :
             iyear=int(day.split('"')[3][:4]) # 입력한 날짜와 현재 날짜가 1년 1월 1일부터 몇일째인지 계산
             imonth=int(day.split('"')[3][5:7])
@@ -188,19 +188,25 @@ def input_seat(): # 좌석 입력 함수
             for i in range(0,imonth-1): ciday+=mday[i]
             cday+=date; ciday+=idate
             if (hour==6 and minu<50) or hour<=5 : cday-=1
-            print(cday,ciday)
-            if cday-ciday>=0 and cday-ciday<=(Day+6)%7 : invt=False
+            
+            if cday-ciday>=0 and cday-ciday<=Day-1 : invt=False
             else : invt=True
             day=ciday%7
-    if meal!="none" and cday==ciday: 
+    if meal!="none" and cday==ciday: # 유효한 식사인지 계산
         if Meal=="아침" and meal!="아침": invt=True
         elif Meal=="점심" and meal=="저녁": invt=True
             
     if invt==True: #유효하지 않은 날짜값
-        res={
-            "version": "2.0",
-            "template": { "outputs": [ { "simpleText": { "text": "유효하지 않은 날짜/시간 값입니다." } } ] }
-        }
+        if Day==0 or Day==6:
+            res={
+                "version": "2.0",
+                "template": { "outputs": [ { "simpleText": { "text": "오늘은 주말이므로 좌석 번호 기록이 없습니다." } } ] }
+            }
+        else :
+            res={
+                "version": "2.0",
+                "template": { "outputs": [ { "simpleText": { "text": "유효하지 않은 날짜/시간 값입니다." } } ] }
+            }
     else :
         fr=open("/home/ubuntu/dg1s_bot/user data.txt","r") # userdata 저장 및 변경
         lines=fr.readlines()
