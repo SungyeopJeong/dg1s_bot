@@ -525,7 +525,7 @@ def response_menu(): # 메뉴 대답 함수 made by 1316, 1301
 @application.route('/upst', methods=['POST'])
 def update_stid():
     
-    updatestr="1316 3301"
+    updatestr=""
     
     fr=open("/home/ubuntu/dg1s_bot/user data.txt","r")
     lines=fr.readlines()
