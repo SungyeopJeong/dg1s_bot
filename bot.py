@@ -435,9 +435,9 @@ def to_excel(): # 엑셀 파일로 생성
     lines=fr.readlines()
     for line in lines:
         print(line)
-        if '7' in line or "none" in line: continue
+        if " 7 " in line or "none" in line: continue
         datas=line.split(" ")
-        print(len(datas))
+        print("길이:"+str(len(datas)))
         if len(datas)!=5: continue
         dstid=datas[0]; dday=int(datas[1]); dmeal=int(datas[2]); dseat=datas[3]
         col=dday*3+dmeal; row=int(dstid[2:])+3 
