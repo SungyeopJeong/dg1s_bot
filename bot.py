@@ -438,7 +438,7 @@ def to_excel(): # 엑셀 파일로 생성
         if '7' in line or "none" in line: continue
         datas=line.split(" ")
         print(len(datas))
-        if len(datas)!=4: continue
+        if len(datas)!=5: continue
         dstid=datas[0]; dday=int(datas[1]); dmeal=int(datas[2]); dseat=datas[3]
         col=dday*3+dmeal; row=int(dstid[2:])+3 
         if 4<=col and col<=16:
