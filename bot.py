@@ -535,7 +535,7 @@ def update_stid():
         former_stid=line.split(" ")[1]
         i=updatestr.find(former_stid)+5
         new_stid=updatestr[i:i+4]
-        line.replace(former_stid,new_stid)
+        line=line.replace(former_stid,new_stid)
         fw.write(line)
     fw.close()
     
