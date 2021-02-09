@@ -545,7 +545,7 @@ def text_editor(): # 원하는 파일 사이트에서 보여주고 편집
     fr=open("/home/ubuntu/dg1s_bot/"+filename+".txt","r")
     data_send=fr.readlines()
     fr.close()
-    if filename=="user data": data_send.sort(key=lambda x:int(x[13:17]))
+    if filename=="user data": data_send.sort(key=lambda x:x[13:17])
     return render_template("texteditor.html",data=data_send, name=filename)
 
 @application.route('/filesave', methods=['GET','POST'])
