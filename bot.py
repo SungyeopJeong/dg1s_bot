@@ -11,12 +11,15 @@ from bs4 import BeautifulSoup
 
 application=Flask(__name__)
 
+# 참고 사항
+# 변수명 앞에 d가 붙은 것은 저장된 데이터에서 불러온 값, d가 붙지 않은 것은 현재 or 입력한 데이터 값
+
 KST=timezone('Asia/Seoul')
 Days = ["일요일","월요일","화요일","수요일","목요일","금요일","토요일"] # 요일 이름
 mday = [31,28,31,30,31,30,31,31,30,31,30,31] # 매월 일 수
 Msg = [["[오늘 아침]","[오늘 점심]","[오늘 저녁]"],["[내일 아침]","[내일 점심]","[내일 저녁]"]] # 급식 title
 Menu = [["","",""],["","",""]] # 오늘, 내일 급식
-Menu_saved_date = ""
+Menu_saved_date = "" # 급식 불러온 날짜
 classn = ["11","12","13","14","21","22","23","24","31","32","33","34"] # 반 이름
 classN = [20,20,20,21,20,19,19,19,14,13,10,11] # 반 학생 수
 classtime = [["08:20","08:30"],["08:40","09:30"],["9:40","10:30"],["10:40","11:30"],["11:40","12:30"],["13:20","14:10"],["14:20","15:10"],["15:20","16:10"]]
@@ -25,24 +28,25 @@ Timetable = [[[["1반","생명B(1,2반)","수학A","물리B","물리B","수학B"
             [[["1반","생명B(1,2반)","수학A","물리B","물리B","수학B","봉사","자율","1반"],["1반","음악","음악","영어A(1,2반)","국어B","화학B","화학B","동아리","1반"],["1반","수학B","수학A","체육(1반)","화학A","진로","지학B","지학B","1반"],["1반","물리A","생명A","국어A","수학A","","","","1반"],["1반","지학A","영어A(1,2반)","국어A","","","","","1반"]],[["2반","진로","국어B","화학B","화학B","영어A(1,2반)","봉사","자율","2반"],["2반","생명B(1,2반)","생명A","수학A","수학B","지학A","지학A","동아리","2반"],["2반","영어A(1,2반)","화학A","음악","음악","체육(2반)","수학B","수학A","2반"],["2반","수학A","미술","미술","국어A","","","","2반"],["2반","물리A","생명B(1,2반)","생명B(1,2반)","","","","","2반"]],[["3반","음악","음악","수학B","영어A(3,4반)","국어B","봉사","자율","3반"],["3반","물리B","물리B","생명B(3,4반)","화학A","지학B","지학B","동아리","3반"],["3반","체육(3반)","생명B(3,4반)","생명B(3,4반)","수학A","화학B","화학B","진로","3반"],["3반","국어A","수학B","영어A(3,4반)","생명A","","","","3반"],["3반","미술","국어A","수학A","","","","","3반"]],[["4반","국어B","지학A","지학A","수학A","체육(4반)","봉사","자율","4반"],["4반","영어A(3,4반)","수학A","수학B","진로","음악","음악","동아리","4반"],["4반","수학A","수학B","물리B","물리B","영어A(3,4반)","화학A","생명B(3,4반)","4반"],["4반","생명B(3,4반)","생명B(3,4반)","생명A","수학B","","","","4반"],["4반","국어A","지학B","지학B","","","","","4반"]]]]
 
 # 시간표 변동사항 적는 곳
+#
 
-def prin(datas,classN):
+def prin(datas,classN): # 시간표 출력 함수
     
-    now=datetime.datetime.utcnow() #현재 시간
+    now=datetime.datetime.utcnow() # 현재 시간
     day=int(utc.localize(now).astimezone(KST).strftime("%w"))
     title=""; answer=""
-    subName=datas[0]; subType=datas[1]; #datas: 0=name, 1=type, 2=zoomid, 3=zoompwd, 4=hangoutid, 5=class, 6=teacher
+    subName=datas[0]; subType=datas[1]; # datas: 0=name, 1=type, 2=zoomid, 3=zoompwd, 4=hangoutid, 5=class, 6=teacher
     trimi=subName.find('(');
-    if trimi!=-1: subName=subName[:trimi]
-    if subType=="daymeeting":
+    if trimi!=-1: subName=subName[:trimi] # 과목명 출력할 때는 괄호 없애기
+    if subType=="daymeeting": # 조종례일 경우
         title+=Days[day]+" ["+subName
         if classN==0: title+=" 조례]"
         elif classN==8: title+=" 종례]"
         answer+="https://zoom.us/j/"+datas[2]+"?pwd="+datas[3];
-    elif subType=="club":
+    elif subType=="club": # 동아리일 경우
         title+=Days[day]+" "+str(classN)+"교시 : [동아리]"
         answer+="동아리 클래스룸을 참고하세요."
-    else :
+    else : # 기타 과목
         title+=Days[day]+" "+str(classN)+"교시 : ["+subName+"]"
         if subType=="none":
             answer+="해당 클래스룸이 개설되지 않았습니다."
@@ -52,13 +56,13 @@ def prin(datas,classN):
             elif subType=="hangout":
                 answer+="행아웃 : https://meet.google.com/lookup/"+datas[4]+"\n"
             answer+="클래스룸 : https://classroom.google.com/u/0/c/"+datas[5]
-    if classN!=8: title+=" ("+classtime[classN][0]+" ~ "+classtime[classN][1]+")"
+    if classN!=8: title+=" ("+classtime[classN][0]+" ~ "+classtime[classN][1]+")" # 종례 제외 시간표시
     return title, answer
 
 @application.route('/link', methods=['POST'])
-def response_link(): # 온라인 클래스 링크 대답 함수
+def response_link(): # 온라인 시간표 대답 함수
     
-    now = datetime.datetime.utcnow() #현재 시간
+    now = datetime.datetime.utcnow() # 현재 시간
     day = int(utc.localize(now).astimezone(KST).strftime("%w"))
     hour = int(utc.localize(now).astimezone(KST).strftime("%H"))
     minutes = int(utc.localize(now).astimezone(KST).strftime("%M"))
@@ -104,7 +108,7 @@ def response_link(): # 온라인 클래스 링크 대답 함수
             }
         }
     else :
-        if day==6 or day==0 or classN==9: 
+        if day==6 or day==0 or classN==9: # 수업이 없는 경우
             res={
                 "version": "2.0",
                 "template": { "outputs": [ { "simpleText": { "text": "진행 중인 수업이 없습니다." } } ] }
@@ -113,11 +117,11 @@ def response_link(): # 온라인 클래스 링크 대답 함수
         else :
             grade=int(stid[0]); classn=int(stid[1])
             items=[]
-            for i in range(9):
+            for i in range(9): # 해당 요일의 시간표 모두 출력
                 subjectName=Timetable[grade-1][classn-1][day-1][(classN+i)%9]
                 fr=open("/home/ubuntu/dg1s_bot/subject data.txt","r")
                 lines=fr.readlines()
-                isgrade=False
+                isgrade=False # 과목명이 겹칠 경우를 대비해 해당 학년의 과목명이 맞는지 확인하는 변수
                 for line in lines:
                     datas=line.split(" ")
                     dname=datas[0];
@@ -149,16 +153,16 @@ def response_link(): # 온라인 클래스 링크 대답 함수
             return jsonify(res)
 
 @application.route('/seat', methods=['POST'])
-def input_seat(): # 좌석 입력 함수
+def input_seat(): # 좌석 번호 입력 함수
     
-    now=datetime.datetime.utcnow() # Meal 계산
+    now=datetime.datetime.utcnow()
     Day=int(utc.localize(now).astimezone(KST).strftime("%w"))
     hour=int(utc.localize(now).astimezone(KST).strftime("%H"))
     minu=int(utc.localize(now).astimezone(KST).strftime("%M"))
     date=int(utc.localize(now).astimezone(KST).strftime("%d"))
     month=int(utc.localize(now).astimezone(KST).strftime("%m"))
     year=int(utc.localize(now).astimezone(KST).strftime("%Y"))
-    if (hour==6 and minu>=50) or (hour>=7 and hour<12) or (hour==12 and minu<10): Meal="아침"
+    if (hour==6 and minu>=50) or (hour>=7 and hour<12) or (hour==12 and minu<10): Meal="아침" # 가장 최근 식사가 언제인지 자동 계산
     elif (hour==12 and minu>=10) or (hour>=13 and hour<18) or (hour==18 and minu<10): Meal="점심"
     else:
         Meal="저녁"
@@ -169,11 +173,11 @@ def input_seat(): # 좌석 입력 함수
     day=req["action"]["detailParams"]["sys_date"]["value"] # 형식: {"date": "2021-02-09", "dateTag": "today", "dateHeadword": null, "year": null, "month": null, "day": null}
     meal=req["action"]["detailParams"]["seat_menu"]["value"]
     seat=int(req["action"]["detailParams"]["table_seat"]["value"])
-    p1=req["action"]["detailParams"]["student_id"]["value"]
-    p2=req["action"]["detailParams"]["student_id1"]["value"]
+    p1=req["action"]["detailParams"]["student_id"]["value"] # 같이 앉은 사람
+    p2=req["action"]["detailParams"]["student_id1"]["value"] # 같이 앉은 사람
     stid="none"; invt=False; cday=0; ciday=0
     
-    if day!="7": # 유효한 날짜값인지 계산(유효한 날짜값: 이번주 월~어제)
+    if day!="7": # 유효한 날짜값인지 계산(유효한 날짜값: 이번주 월~오늘)
         if day.split('"')[3]=="dateTag": invt=True # 1~9998년이 아닌 경우
         elif Day==0 or Day==6: invt=True # 오늘이 토, 일인 경우
         else :
@@ -214,25 +218,25 @@ def input_seat(): # 좌석 입력 함수
         fw=open("/home/ubuntu/dg1s_bot/user data.txt","w")
         for line in lines:
             datas=line.split(" ")
-            dusid=datas[0]; dstid=datas[1]; dday=datas[2]; dmeal=datas[3]
+            dusid=datas[0]; dstid=datas[1]; dday=datas[2]; dmeal=datas[3] # data 불러오기
             dseat=int(datas[4]); dp1=datas[5]; dp2=datas[6].rstrip()
             if dusid==userid:
                 stid=dstid
-                if dday!="7" and day=="7": day=int(dday)
+                if dday!="7" and day=="7": day=int(dday) # 요일
                 if dday=="7" and day=="7": day=Day
-                if dmeal!="none" and meal=="none": meal=dmeal
+                if dmeal!="none" and meal=="none": meal=dmeal # 식사
                 if dmeal=="none" and meal=="none": meal=Meal
-                seat=dseat if seat==0 else seat
-                if p1=="none" and p2=="none":
+                if seat==0: seat=dseat # 좌석 
+                if p1=="none" and p2=="none": # 같이 앉은 사람
                     p1=dp1; p2=dp2
-                elif p1!="none" and p2=="none":
+                elif p1!="none" and p2=="none": # 항상 p1이 p2보다 우선적으로 채워지도록
                     if dp1=="none" and dp2=="none": p1=p1; p2=dp2
                     elif dp1!="none" and dp2=="none": p2=p1; p1=dp1
                     elif dp1!="none" and dp2!="none": p2=p1; p1=dp2
             else : fw.write(line)
         if day=="7": day=Day
         if meal=="none": meal=Meal
-        if p2==stid or p2==p1: p2="none"
+        if p2==stid or p2==p1: p2="none" # 입력한 사람이 자기 자신이거나 중복일 경우
         if p1==stid: p1="none"
         fw.write(userid+" "+stid+" "+str(day)+" "+meal+" "+str(seat)+" "+p1+" "+p2+"\n")
         fw.close()
@@ -252,8 +256,8 @@ def input_seat(): # 좌석 입력 함수
                     ]
                 }
             }
-        else:
-            stids=stid # 저장 확인
+        else: # 
+            stids=stid
             if p1!="none" and p1!=stid: stids+=", "+p1 
             if p2!="none" and p2!=stid and p2!=p1: stids+=", "+p2
             res={
@@ -311,17 +315,7 @@ def input_stid(): # 학번 입력 함수
 
 @application.route('/save', methods=['POST'])
 def final_save(): # 최종 저장 함수
-    
-    now=datetime.datetime.utcnow() # Meal 계산
-    Day=int(utc.localize(now).astimezone(KST).strftime("%w"))
-    hour=int(utc.localize(now).astimezone(KST).strftime("%H"))
-    minu=int(utc.localize(now).astimezone(KST).strftime("%M"))
-    if (hour==6 and minu>=50) or (hour>=7 and hour<12) or (hour==12 and minu<10): Meal="아침"
-    elif (hour==12 and minu>=10) or (hour>=13 and hour<18) or (hour==18 and minu<10): Meal="점심"
-    else:
-        Meal="저녁"
-        if (hour==6 and minu<50) or hour<=5 : Day=(Day+6)%7
-    
+        
     req=request.get_json() # 파라미터 값 불러오기
     userid=req["userRequest"]["user"]["properties"]["plusfriendUserKey"]
     
@@ -419,9 +413,9 @@ def to_excel(): # 엑셀 파일로 생성
     for sheet in wb:
         if not(sheet.title in classn): continue
         T = sheet.title; N = str(classN[j]+3)
-        sh.cell(j+2,2).value = T
-        sh.cell(j+2,3).value = "=COUNTA("+T+"!D4:E"+N+","+T+"!G4:H"+N+","+T+"!J4:K"+N+","+T+"!M4:N"+N+","+T+"!P4:P"+N+")/((2*'통계'!$F$2-1)*("+N+"-3))"
-        sh.cell(j+2,3).number_format = "0.00%"
+        # 통계 칸 채우기
+        sh.cell(j+2,4).value = "=COUNTA("+T+"!D4:E"+N+","+T+"!G4:H"+N+","+T+"!J4:K"+N+","+T+"!M4:N"+N+","+T+"!P4:P"+N+")/('통계'!$F$2*("+N+"-3))"
+        sh.cell(j+2,4).number_format = "0.00%"
         #sheet['B3'].value="학번"; sheet['C3'].value="이름"; sheet['Q3'].value="참여율"
         #for k in range(4,17): 
         #    sheet.cell(2,k).value=Days[(k)//3][:1];
@@ -431,8 +425,9 @@ def to_excel(): # 엑셀 파일로 생성
         for k in range(4,4+classN[j]):
         #    if k-3<10: sheet.cell(k,2).value=classn[j]+"0"+str(k-3)
         #    else : sheet.cell(k,2).value=classn[j]+str(k-3)
+            # 참여율 칸 채우기
             K = str(k)
-            sheet.cell(k,17).value = "=COUNTA(D"+K+":E"+K+",G"+K+":H"+K+",J"+K+":K"+K+",M"+K+":N"+K+",P"+K+")/(2*'통계'!$F$2-1)"
+            sheet.cell(k,17).value = "=COUNTA(D"+K+":E"+K+",G"+K+":H"+K+",J"+K+":K"+K+",M"+K+":N"+K+",P"+K+")/'통계'!$F$2"
             sheet.cell(k,17).number_format = "0%"
         j += 1
 
@@ -534,9 +529,9 @@ def response_menu(): # 메뉴 대답 함수 made by 1316, 1301
     return jsonify(res)
 
 @application.route('/upst', methods=['POST'])
-def update_stid():
+def update_stid(): # 학번 갱신 함수
     
-    updatestr=""
+    updatestr="" # 형식: "이전 학번_새 학번_..." ex) "1301 2301 1316 2316" 
     
     fr=open("/home/ubuntu/dg1s_bot/user data.txt","r")
     lines=fr.readlines()
@@ -576,7 +571,7 @@ def text_editor(): # 원하는 파일 사이트에서 보여주고 편집
     fr=open("/home/ubuntu/dg1s_bot/"+filename+".txt","r")
     data_send=fr.readlines()
     fr.close()
-    if filename=="user data": data_send.sort(key=lambda x:x[13:17])
+    if filename=="user data": data_send.sort(key=lambda x:x[13:17]) # 학번 순 정렬
     return render_template("texteditor.html",data=data_send, name=filename)
 
 @application.route('/filesave', methods=['GET','POST'])
