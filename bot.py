@@ -177,7 +177,7 @@ def input_seat(): # 좌석 입력 함수
         print(day)
         if day.split('"')[3]=="dateTag" : invt=True # 1~9998년이 아닌 경우
         else :
-            iyear=int(day.split('"')[3][:4])
+            iyear=int(day.split('"')[3][:4]) # 입력한 날짜와 현재 날짜가 1년 1월 1일부터 몇일째인지 계산
             imonth=int(day.split('"')[3][5:7])
             idate=int(day.split('"')[3][8:])
             cday=(year-1)*365+(year-1)//4-(year-1)//100+(year-1)//400;
@@ -188,7 +188,7 @@ def input_seat(): # 좌석 입력 함수
             for i in range(0,imonth-1): ciday+=mday[i]
             cday+=date; ciday+=idate
             if (hour==6 and minu<50) or hour<=5 : cday-=1
-            print(cday,ciday,Day)
+            
             if cday-ciday>=0 and cday-ciday<=(Day+6)%7 : invt=False
             else : invt=True
             day=ciday%7
