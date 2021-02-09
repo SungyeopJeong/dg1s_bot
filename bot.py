@@ -174,6 +174,7 @@ def input_seat(): # 좌석 입력 함수
     stid="none"; invt=False; cday=0; ciday=0
     
     if day!="7": # 유효한 날짜값인지 계산
+        print(day)
         if day.split('"')[3]=="dateTag" : invt=True
         else :
             iyear=int(day.split('"')[3][:4])
@@ -187,6 +188,7 @@ def input_seat(): # 좌석 입력 함수
             for i in range(0,imonth-1): ciday+=mday[i]
             cday+=date+1; ciday+=idate
             if (hour==6 and minu<50) or hour<=5 : cday-=1
+            print(cday,ciday)
             if cday-ciday>=0 and cday-ciday<=(Day+6)%7 : invt=False
             else : invt=True
             day=ciday%7
