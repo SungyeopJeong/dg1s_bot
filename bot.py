@@ -188,7 +188,7 @@ def input_seat(): # 좌석 입력 함수
             for i in range(0,imonth-1): ciday+=mday[i]
             cday+=date; ciday+=idate
             if (hour==6 and minu<50) or hour<=5 : cday-=1
-            
+            print(cday,ciday)
             if cday-ciday>=0 and cday-ciday<=(Day+6)%7 : invt=False
             else : invt=True
             day=ciday%7
