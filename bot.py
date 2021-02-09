@@ -155,6 +155,7 @@ def input_seat(): # 좌석 입력 함수
     Day=int(utc.localize(now).astimezone(KST).strftime("%w"))
     hour=int(utc.localize(now).astimezone(KST).strftime("%H"))
     minu=int(utc.localize(now).astimezone(KST).strftime("%M"))
+    date=int(utc.localize(now).astimezone(KST).strftime("%d"))
     month=int(utc.localize(now).astimezone(KST).strftime("%m"))
     year=int(utc.localize(now).astimezone(KST).strftime("%Y"))
     if (hour==6 and minu>=50) or (hour>=7 and hour<12) or (hour==12 and minu<10): Meal="아침"
