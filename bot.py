@@ -122,10 +122,13 @@ def response_link(): # 온라인 클래스 링크 대답 함수
             for i in range(9):
                 subjectName=Timetable[grade-1][classn-1][day-1][(classN+i)%9]
                 fw=open("/home/ubuntu/dg1s_bot/subject data.txt","w")
+                isgrade=False
                 for line in lines:
                     datas=line.split(" ")
                     dname=datas[0];
-                    if dname==subjectName: 
+                    if dname==str(grade)+"학년": isgrade=True
+                    if dname==str(grade+1)+"학년" or dname==str(grade+2)+"학년": isgrade=False
+                    if dname==subjectName and isgrade==True: 
                         title, answer=prin(datas,(classN+i)%9)
                         item={ "title": title, "description": answer }
                         items.append(item)
