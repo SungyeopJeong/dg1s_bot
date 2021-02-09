@@ -176,9 +176,8 @@ def input_seat(): # 좌석 번호 입력 함수
     p1=req["action"]["detailParams"]["student_id"]["value"] # 같이 앉은 사람
     p2=req["action"]["detailParams"]["student_id1"]["value"] # 같이 앉은 사람
     stid="none"; invt=False; cday=0; ciday=0
-    print(meal,seat,p1,p2)
+
     if day!="7": # 유효한 날짜값인지 계산(유효한 날짜값: 이번주 월~오늘)
-        print(day)
         if day.split('"')[3]=="dateTag": invt=True # 1~9998년이 아닌 경우
         elif Day==0 or Day==6: invt=True # 오늘이 토, 일인 경우
         else :
@@ -193,7 +192,7 @@ def input_seat(): # 좌석 번호 입력 함수
             for i in range(0,imonth-1): ciday+=mday[i]
             cday+=date; ciday+=idate
             if (hour==6 and minu<50) or hour<=5 : cday-=1
-            print(cday,ciday)
+
             if cday-ciday>=0 and cday-ciday<=Day-1 : invt=False
             else : invt=True
             day=ciday%7
