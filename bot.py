@@ -82,14 +82,11 @@ def response_link(): # 온라인 클래스 링크 대답 함수
     
     fr=open("/home/ubuntu/dg1s_bot/user data.txt","r") # 학번 불러오기
     lines=fr.readlines()
-    fr.close()
-    fw=open("/home/ubuntu/dg1s_bot/user data.txt","w")
     for line in lines:
         datas=line.split(" ")
         dusid=datas[0]; dstid=datas[1];
         if dusid==userid: stid=dstid
-        fw.write(line)
-    fw.close()
+    fr.close()
     
     if stid=="none":
         res={
@@ -115,13 +112,11 @@ def response_link(): # 온라인 클래스 링크 대답 함수
             return jsonify(res)
         else :
             grade=int(stid[0]); classn=int(stid[1])
-            fr=open("/home/ubuntu/dg1s_bot/subject data.txt","r") # 과목 정보 불러오기
-            lines=fr.readlines()
-            fr.close()
             items=[]
             for i in range(9):
                 subjectName=Timetable[grade-1][classn-1][day-1][(classN+i)%9]
-                fw=open("/home/ubuntu/dg1s_bot/subject data.txt","w")
+                fr=open("/home/ubuntu/dg1s_bot/subject data.txt","r")
+                lines=fr.readlines()
                 isgrade=False
                 for line in lines:
                     datas=line.split(" ")
@@ -132,8 +127,7 @@ def response_link(): # 온라인 클래스 링크 대답 함수
                         title, answer=prin(datas,(classN+i)%9)
                         item={ "title": title, "description": answer }
                         items.append(item)
-                    fw.write(line)
-                fw.close()
+                fr.close()
             res={ # 답변
                 "version": "2.0",
                 "template": {
@@ -450,7 +444,7 @@ def to_excel(): # 엑셀 파일로 생성
         }
     }
     return jsonify(res)
-    
+
 @application.route('/menu', methods=['POST'])
 def response_menu(): # 메뉴 대답 함수 made by 1316, 1301
     
@@ -527,6 +521,15 @@ def response_menu(): # 메뉴 대답 함수 made by 1316, 1301
         }
     }
     return jsonify(res)
+
+@application.route('/upst', methods=['POST'])
+def update_stid():
+    
+    fr=open("/home/ubuntu/dg1s_bot/user data.txt","r") # 엑셀 채워 넣기
+    lines=fr.readlines()
+    for line in lines:
+        dstid=line.split(" ")[1]
+    fr.close()
 
 @application.route('/')
 def main():
