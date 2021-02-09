@@ -435,6 +435,7 @@ def to_excel(): # 엑셀 파일로 생성
     lines=fr.readlines()
     for line in lines:
         datas=line.split(" ")
+        print(datas)
         dstid=datas[0]; dday=int(datas[1]); dmeal=int(datas[2]); dseat=datas[3]
         col=dday*3+dmeal; row=int(dstid[2:])+3 
         if 4<=col and col<=16:
