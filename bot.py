@@ -166,7 +166,7 @@ def input_seat(): # 좌석 입력 함수
         
     req=request.get_json() # 파라미터 값 불러오기
     userid=req["userRequest"]["user"]["properties"]["plusfriendUserKey"]
-    day=req["action"]["detailParams"]["sys_date"]["value"]
+    day=req["action"]["detailParams"]["sys_date"]["value"] # 형식: {"date": "2021-02-09", "dateTag": "today", "dateHeadword": null, "year": null, "month": null, "day": null}
     meal=req["action"]["detailParams"]["seat_menu"]["value"]
     seat=int(req["action"]["detailParams"]["table_seat"]["value"])
     p1=req["action"]["detailParams"]["student_id"]["value"]
@@ -175,7 +175,7 @@ def input_seat(): # 좌석 입력 함수
     
     if day!="7": # 유효한 날짜값인지 계산
         print(day)
-        if day.split('"')[3]=="dateTag" : invt=True
+        if day.split('"')[3]=="dateTag" : invt=True # 1~9998년이 아닌 경우
         else :
             iyear=int(day.split('"')[3][:4])
             imonth=int(day.split('"')[3][5:7])
@@ -186,9 +186,9 @@ def input_seat(): # 좌석 입력 함수
             if (iyear%4==0 and iyear%100!=0) or iyear%400==0: ciday+=1
             for i in range(0,month-1): cday+=mday[i]
             for i in range(0,imonth-1): ciday+=mday[i]
-            cday+=date+1; ciday+=idate
+            cday+=date; ciday+=idate
             if (hour==6 and minu<50) or hour<=5 : cday-=1
-            print(cday,ciday)
+            print(cday,ciday,Day)
             if cday-ciday>=0 and cday-ciday<=(Day+6)%7 : invt=False
             else : invt=True
             day=ciday%7
