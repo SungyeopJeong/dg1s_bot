@@ -533,9 +533,10 @@ def update_stid():
     fw=open("/home/ubuntu/dg1s_bot/user data.txt","w")
     for line in lines:
         former_stid=line.split(" ")[1]
-        i=updatestr.find(former_stid)+5
-        new_stid=updatestr[i:i+4]
-        line=line.replace(former_stid,new_stid)
+        i=updatestr.find(former_stid)
+        if i!=-1: 
+            new_stid=updatestr[i+5:i+9]
+            line=line.replace(former_stid,new_stid)
         fw.write(line)
     fw.close()
     
