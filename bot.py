@@ -178,6 +178,7 @@ def input_seat(): # 좌석 번호 입력 함수
     stid="none"; invt=False; cday=0; ciday=0
     
     if day!="7": # 유효한 날짜값인지 계산(유효한 날짜값: 이번주 월~오늘)
+        print(day)
         if day.split('"')[3]=="dateTag": invt=True # 1~9998년이 아닌 경우
         elif Day==0 or Day==6: invt=True # 오늘이 토, 일인 경우
         else :
