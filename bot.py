@@ -549,7 +549,7 @@ def save_as_file(): # txt file 저장하기
     if request.method=='POST':
         text=request.form['content']
         text=str(text)
-        with open(filename+".txt","w",encoding='utf-8') as f:
+        with open("/home/ubuntu/dg1s_bot/"+filename+".txt","w",encoding='utf-8') as f:
             f.write(text)
         return render_template("saved.html")
   
@@ -557,7 +557,7 @@ def save_as_file(): # txt file 저장하기
 def save_as_xlfile(): # excel file 저장하기
     if request.method == 'POST':
         f=request.files['xlfile']
-        f.save(secure_filename(f.filename))
+        f.save("/home/ubuntu/dg1s_bot/"+secure_filename(f.filename))
         return render_template("saved.html")
   
 @application.route('/dnldfile', methods=['GET','POST'])
