@@ -461,11 +461,11 @@ def response_menu(): # 메뉴 대답 함수 made by 1316, 1301
       url = 'https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=%EB%8C%80%EA%B5%AC%EC%9D%BC%EA%B3%BC%ED%95%99%EA%B3%A0%EB%93%B1%ED%95%99%EA%B5%90&oquery=eorndlfrhkrh+rmqtlr&tqi=U%2Ftz5wprvOssslHyxuossssssLN-415573'
       response = requests.get(url) # url로부터 가져오기
       if response.status_code == 200:  
-
+          
           source = response.text # menu_info class 내용 가져오기
           soup = BeautifulSoup(source,'html.parser')
           a = soup.select('.menu_info')
-
+          
           for menu in a:
               menu_text = menu.get_text()
               bracket_i = menu_text.find('[')
@@ -473,14 +473,14 @@ def response_menu(): # 메뉴 대답 함수 made by 1316, 1301
               menu_day = menu_text[:bracket_i]
               menu_when = menu_text[bracket_i+1:bracket_j]
               menu_content = menu_text[bracket_j+3:].rstrip().replace(" ","\n")
-
+              
               if menu_when == "조식": save_i = 0
               elif menu_when == "중식": save_i = 1
               elif menu_when == "석식": save_i = 2
-
+              
               if menu_day == today_name: Menu[0][save_i]=menu_content
               elif menu_day == tomorrow_name: Menu[1][save_i]=menu_content
-
+    
     req=request.get_json() # 파라미터 값 불러오기
     askmenu=req["action"]["detailParams"]["ask_menu"]["value"]
     
@@ -489,9 +489,9 @@ def response_menu(): # 메뉴 대답 함수 made by 1316, 1301
     if (hour==13 and minu<20) or (hour>=8 and hour<=12): Meal="아침" # 아침을 먹은 후
     elif (hour==13 and minu>=20) or (hour>=14 and hour<=18) or (hour==19 and minu<20): Meal="점심" # 점심을 먹은 후
     else: Meal="저녁" # 저녁을 먹은 후
-
+    
     i = 0
-
+    
     if Meal == "아침": fi=1; si=2; ti=0 # 아침 점심 저녁 정보 불러오기 및 배열
     elif Meal == "점심": fi=2; si=0; ti=1
     elif Meal == "저녁": fi=0; si=1; ti=2
@@ -502,7 +502,7 @@ def response_menu(): # 메뉴 대답 함수 made by 1316, 1301
     if Menu[i][fi] == "": first = "등록된 급식이 없습니다."
     if Menu[i][si] == "": second = "등록된 급식이 없습니다."
     if Menu[i][ti] == "": third = "등록된 급식이 없습니다."
-
+    
     res={ # 답변
         "version": "2.0",
         "template": {
@@ -525,11 +525,27 @@ def response_menu(): # 메뉴 대답 함수 made by 1316, 1301
 @application.route('/upst', methods=['POST'])
 def update_stid():
     
-    fr=open("/home/ubuntu/dg1s_bot/user data.txt","r") # 엑셀 채워 넣기
+    updatestr="1316 3301"
+    
+    fr=open("/home/ubuntu/dg1s_bot/user data.txt","r")
     lines=fr.readlines()
-    for line in lines:
-        dstid=line.split(" ")[1]
     fr.close()
+    fw=open("/home/ubuntu/dg1s_bot/user data.txt","w")
+    for line in lines:
+        former_stid=line.split(" ")[1]
+        i=updatestr.find(former_stid)+5
+        new_stid=updatestr[i:i+4]
+        line.replace(former_stid,new_stid)
+        fw.write(line)
+    fw.close()
+    
+    res={
+        "version": "2.0",
+        "template": {
+            "outputs": [ { "simpleText": { "text": "학번 갱신 완료" } } ]
+        }
+    }
+    return jsonify(res)
 
 @application.route('/')
 def main():
