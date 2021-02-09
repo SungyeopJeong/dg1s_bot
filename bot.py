@@ -434,6 +434,7 @@ def to_excel(): # 엑셀 파일로 생성
     fr=open("/home/ubuntu/dg1s_bot/final save.txt","r") # 엑셀 채워 넣기
     lines=fr.readlines()
     for line in lines:
+        print(line)
         if '7' in line or "none" in line: continue
         datas=line.split(" ")
         print(len(datas))
