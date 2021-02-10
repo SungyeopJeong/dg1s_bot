@@ -123,15 +123,12 @@ def response_link(): # 온라인 시간표 대답 함수
                 for line in lines:
                     datas=line.split(" ")
                     dname=datas[0];
-                    print(dname,str(grade)+"학년",str(grade+1)+"학년",str(grade+2)+"학년",isgrade)
-                    if dname==str(grade)+"학년": isgrade=True
-                    if dname==str(grade+1)+"학년" or dname==str(grade+2)+"학년": isgrade=False
-                    print(dname,str(grade)+"학년",str(grade+1)+"학년",str(grade+2)+"학년",isgrade)
+                    if dname==str(grade)+"학년\n": isgrade=True
+                    if dname==str(grade+1)+"학년\n" or dname==str(grade+2)+"학년\n": isgrade=False
                     if dname==subjectName and isgrade==True: 
                         title, answer=prin(datas,(classN+i)%9)
                         item={ "title": title, "description": answer }
                         items.append(item)
-                print()
                 fr.close()
             res={ # 답변
                 "version": "2.0",
