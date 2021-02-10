@@ -123,6 +123,7 @@ def response_link(): # 온라인 시간표 대답 함수
                 for line in lines:
                     datas=line.split(" ")
                     dname=datas[0];
+                    print(isgrade)
                     if dname==str(grade)+"학년": isgrade=True
                     if dname==str(grade+1)+"학년" or dname==str(grade+2)+"학년": isgrade=False
                     if dname==subjectName and isgrade==True: 
@@ -130,7 +131,6 @@ def response_link(): # 온라인 시간표 대답 함수
                         item={ "title": title, "description": answer }
                         items.append(item)
                 fr.close()
-            print(items)
             res={ # 답변
                 "version": "2.0",
                 "template": {
