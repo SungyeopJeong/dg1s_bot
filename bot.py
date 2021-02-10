@@ -150,6 +150,87 @@ def response_link(): # 온라인 시간표 대답 함수
             }
             return jsonify(res)
 
+def what_is_menu():
+    
+    global Menu, Menu_saved_date
+    now = datetime.datetime.utcnow() # 오늘, 내일 날짜
+    today = utc.localize(now).astimezone(KST)
+    tomorrow = today + timedelta(days=1)
+    today_name = " "+str(today.month)+"월 "+str(today.day)+"일 " # 추후 비교용 날짜명 텍스트("_N월_N일_")
+    tomorrow_name = " "+str(tomorrow.month)+"월 "+str(tomorrow.day)+"일 "
+    
+    if Menu_saved_date == "" or Menu_saved_date != today_name :
+      Menu_saved_date = today_name
+      
+      url = 'https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=%EB%8C%80%EA%B5%AC%EC%9D%BC%EA%B3%BC%ED%95%99%EA%B3%A0%EB%93%B1%ED%95%99%EA%B5%90&oquery=eorndlfrhkrh+rmqtlr&tqi=U%2Ftz5wprvOssslHyxuossssssLN-415573'
+      response = requests.get(url) # url로부터 가져오기
+      if response.status_code == 200:  
+          
+          source = response.text # menu_info class 내용 가져오기
+          soup = BeautifulSoup(source,'html.parser')
+          a = soup.select('.menu_info')
+          
+          for menu in a:
+              menu_text = menu.get_text()
+              bracket_i = menu_text.find('[')
+              bracket_j = menu_text.find(']')
+              menu_day = menu_text[:bracket_i]
+              menu_when = menu_text[bracket_i+1:bracket_j]
+              menu_content = menu_text[bracket_j+3:].rstrip().replace(" ","\n")
+              
+              if menu_when == "조식": save_i = 0
+              elif menu_when == "중식": save_i = 1
+              elif menu_when == "석식": save_i = 2
+              
+              if menu_day == today_name: Menu[0][save_i]=menu_content
+              elif menu_day == tomorrow_name: Menu[1][save_i]=menu_content
+    
+    req=request.get_json() # 파라미터 값 불러오기
+    askmenu=req["action"]["detailParams"]["ask_menu"]["value"]
+    
+    hour=int(utc.localize(now).astimezone(KST).strftime("%H")) # Meal 계산
+    minu=int(utc.localize(now).astimezone(KST).strftime("%M"))
+    if (hour==13 and minu<20) or (hour>=8 and hour<=12): Meal="아침" # 아침을 먹은 후
+    elif (hour==13 and minu>=20) or (hour>=14 and hour<=18) or (hour==19 and minu<20): Meal="점심" # 점심을 먹은 후
+    else: Meal="저녁" # 저녁을 먹은 후
+    
+    i = 0
+    
+    if Meal == "아침": fi=1; si=2; ti=0 # 아침 점심 저녁 정보 불러오기 및 배열
+    elif Meal == "점심": fi=2; si=0; ti=1
+    elif Meal == "저녁": fi=0; si=1; ti=2
+    if askmenu == "내일 급식": fi=0; si=1; ti=2; i=1
+    first = Menu[i][fi]
+    second = Menu[i][si]
+    third = Menu[i][ti]
+    if Menu[i][fi] == "": first = "등록된 급식이 없습니다."
+    if Menu[i][si] == "": second = "등록된 급식이 없습니다."
+    if Menu[i][ti] == "": third = "등록된 급식이 없습니다."
+    return Msg[i][fi], Msg[i][si], Msg[i][ti], first, second, third
+
+@application.route('/menu', methods=['POST'])
+def response_menu(): # 메뉴 대답 함수 made by 1316, 1301
+    
+    msg1, msg2, msg3, menu1, menu2, menu3 = what_is_menu()
+    res={ # 답변
+        "version": "2.0",
+        "template": {
+            "outputs": [
+                {
+                    "carousel": {
+                        "type": "basicCard",
+                        "items": [
+                            { "title": msg1, "description": menu1 },
+                            { "title": msg2, "description": menu2 },
+                            { "title": msg3, "description": menu3 }
+                        ]
+                    }
+                }
+            ]
+        }
+    }
+    return jsonify(res)
+
 @application.route('/seat', methods=['POST'])
 def input_seat(): # 좌석 번호 입력 함수
     
@@ -177,7 +258,6 @@ def input_seat(): # 좌석 번호 입력 함수
 
     if day!="7": # 유효한 날짜값인지 계산(유효한 날짜값: 이번주 월~오늘)
         if day.split('"')[3]=="dateTag": invt=True # 1~9998년이 아닌 경우
-        elif Day==0 or Day==6: invt=True # 오늘이 토, 일인 경우
         else :
             iyear=int(day.split('"')[3][:4]) # 입력한 날짜와 현재 날짜가 1년 1월 1일부터 몇일째인지 계산
             imonth=int(day.split('"')[3][5:7])
@@ -197,6 +277,7 @@ def input_seat(): # 좌석 번호 입력 함수
     if meal!="none" and cday==ciday: # 유효한 식사인지 계산
         if Meal=="아침" and meal!="아침": invt=True
         elif Meal=="점심" and meal=="저녁": invt=True
+    
             
     if invt==True: #유효하지 않은 날짜값
         if Day==0 or Day==6:
@@ -447,83 +528,6 @@ def to_excel(): # 엑셀 파일로 생성
         "version": "2.0",
         "template": {
             "outputs": [ { "simpleText": { "text": "Excel 파일 생성 완료" } } ]
-        }
-    }
-    return jsonify(res)
-
-@application.route('/menu', methods=['POST'])
-def response_menu(): # 메뉴 대답 함수 made by 1316, 1301
-    
-    global Menu, Menu_saved_date
-    now = datetime.datetime.utcnow() # 오늘, 내일 날짜
-    today = utc.localize(now).astimezone(KST)
-    tomorrow = today + timedelta(days=1)
-    today_name = " "+str(today.month)+"월 "+str(today.day)+"일 " # 추후 비교용 날짜명 텍스트("_N월_N일_")
-    tomorrow_name = " "+str(tomorrow.month)+"월 "+str(tomorrow.day)+"일 "
-    
-    if Menu_saved_date == "" or Menu_saved_date != today_name :
-      Menu_saved_date = today_name
-      
-      url = 'https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=%EB%8C%80%EA%B5%AC%EC%9D%BC%EA%B3%BC%ED%95%99%EA%B3%A0%EB%93%B1%ED%95%99%EA%B5%90&oquery=eorndlfrhkrh+rmqtlr&tqi=U%2Ftz5wprvOssslHyxuossssssLN-415573'
-      response = requests.get(url) # url로부터 가져오기
-      if response.status_code == 200:  
-          
-          source = response.text # menu_info class 내용 가져오기
-          soup = BeautifulSoup(source,'html.parser')
-          a = soup.select('.menu_info')
-          
-          for menu in a:
-              menu_text = menu.get_text()
-              bracket_i = menu_text.find('[')
-              bracket_j = menu_text.find(']')
-              menu_day = menu_text[:bracket_i]
-              menu_when = menu_text[bracket_i+1:bracket_j]
-              menu_content = menu_text[bracket_j+3:].rstrip().replace(" ","\n")
-              
-              if menu_when == "조식": save_i = 0
-              elif menu_when == "중식": save_i = 1
-              elif menu_when == "석식": save_i = 2
-              
-              if menu_day == today_name: Menu[0][save_i]=menu_content
-              elif menu_day == tomorrow_name: Menu[1][save_i]=menu_content
-    
-    req=request.get_json() # 파라미터 값 불러오기
-    askmenu=req["action"]["detailParams"]["ask_menu"]["value"]
-    
-    hour=int(utc.localize(now).astimezone(KST).strftime("%H")) # Meal 계산
-    minu=int(utc.localize(now).astimezone(KST).strftime("%M"))
-    if (hour==13 and minu<20) or (hour>=8 and hour<=12): Meal="아침" # 아침을 먹은 후
-    elif (hour==13 and minu>=20) or (hour>=14 and hour<=18) or (hour==19 and minu<20): Meal="점심" # 점심을 먹은 후
-    else: Meal="저녁" # 저녁을 먹은 후
-    
-    i = 0
-    
-    if Meal == "아침": fi=1; si=2; ti=0 # 아침 점심 저녁 정보 불러오기 및 배열
-    elif Meal == "점심": fi=2; si=0; ti=1
-    elif Meal == "저녁": fi=0; si=1; ti=2
-    if askmenu == "내일 급식": fi=0; si=1; ti=2; i=1
-    first = Menu[i][fi]
-    second = Menu[i][si]
-    third = Menu[i][ti]
-    if Menu[i][fi] == "": first = "등록된 급식이 없습니다."
-    if Menu[i][si] == "": second = "등록된 급식이 없습니다."
-    if Menu[i][ti] == "": third = "등록된 급식이 없습니다."
-    
-    res={ # 답변
-        "version": "2.0",
-        "template": {
-            "outputs": [
-                {
-                    "carousel": {
-                        "type": "basicCard",
-                        "items": [
-                            { "title": Msg[i][fi], "description": first },
-                            { "title": Msg[i][si], "description": second },
-                            { "title": Msg[i][ti], "description": third }
-                        ]
-                    }
-                }
-            ]
         }
     }
     return jsonify(res)
