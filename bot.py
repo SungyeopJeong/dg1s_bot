@@ -83,7 +83,7 @@ def response_link(): # 온라인 시간표 대답 함수
     req=request.get_json() # 파라미터 값 불러오기
     userid=req["userRequest"]["user"]["properties"]["plusfriendUserKey"]
     stid="none"
-    
+    print("what")
     fr=open("/home/ubuntu/dg1s_bot/user data.txt","r") # 학번 불러오기
     lines=fr.readlines()
     for line in lines:
@@ -91,7 +91,7 @@ def response_link(): # 온라인 시간표 대답 함수
         dusid=datas[0]; dstid=datas[1];
         if dusid==userid: stid=dstid
     fr.close()
-    
+    print("what")
     if stid=="none":
         res={
             "version": "2.0",
@@ -117,6 +117,7 @@ def response_link(): # 온라인 시간표 대답 함수
         else :
             grade=int(stid[0]); classn=int(stid[1])
             items=[]
+            print("what")
             for i in range(9): # 해당 요일의 시간표 모두 출력
                 subjectName=Timetable[grade-1][classn-1][day-1][(classN+i)%9]
                 fr=open("/home/ubuntu/dg1s_bot/subject data.txt","r")
@@ -132,6 +133,7 @@ def response_link(): # 온라인 시간표 대답 함수
                         item={ "title": title, "description": answer }
                         items.append(item)
                 fr.close()
+            print("what")
             res={ # 답변
                 "version": "2.0",
                 "template": {
