@@ -4,86 +4,19 @@
 <head>
     <meta charset="utf-8" />
     <title>{{name}}</title>
-    <link rel="shortcut icon" href="./static/images/comat_favicon.ico" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <style>
         body {
             width: 100vw;
             height: 100vh;
-            margin: 0;
-        }
-        #header {
-            width: 100vw;
-            height: 10vh;
-        }
-        #logotype {
-            width: 16vw;
-            height: 10vh;
-            float: left;
-        }
-        #menu {
-            width: 84vw;
-            height: 10vh;
-            margin: 0;
-            padding: 0;
-            text-align: center;
-            float: left;
-        }
-        .menucontent {
-            width: 16vw;
-            height: 100%;
-            display: inline-block;
-            float: left;
-        }
-        .sidecontent {
-            background-color: rgba(51,63,80,1);
-        }
-        .menuname {
-            width: 100%;
-            height: 100%;
-            display: inline-block;
-            line-height: 10vh;
-            font-size: 15px;
-            font-weight: bold;
-            text-align: center;
-            text-decoration: none;
-        }
-        .menuname:link, .menuname:visited {
-            color: black;
-        }
-        .menuname:hover {
-            color: #2F5597;
-        }
-        .activedmenu {
-            background-color: rgba(51,63,80,1);
-            border-radius: 1vw 1vw 0 0;
-            color: white;
-        }
-        .activedmenu:link, .activedmenu:visited {
-            color: white;
-        }
-        .activedmenu:hover {
-            color: rgba(117,135,159,1);
-        }
-        .leftmenu {
-            background-color: white;
-            border-radius: 0 0 1vw 0;
-        }
-        .rightmenu {
-            background-color: white;
-            border-radius: 0 0 0 1vw;
+            margin: 0 0 0 0;
+            background-color: rgba(40,40,40,1);
         }
         form {
-            width: 100vw;
-            height: 85vh;
+            width: 100%;
+            height: 100%;
             display: flex;
             flex-direction: column;
-            background-color: rgba(51,63,80,1);
-        }
-        #btnbox {
-            width: 100vw;
-            height: 5vh;
-            text-align: right;
         }
         #savebtn {
             box-sizing: border-box;
@@ -96,161 +29,93 @@
         }
         #container {
             width: 100vw;
-            height: 80vh;
-            box-sizing: border-box;
+            height: 95vh;
             margin: 0 0 0 0;
             text-align: center;
             display: flex;
-            border-top: 1px solid black;
-            border-bottom: 1px solid black;
         }
-        #numberbox {
+        #number {
             width: 5%;
             height: 100%;
             display: inline-block;
         }
-        #number {
+        #numberbox {
             box-sizing: border-box;
             width: 100%;
             height: 100%;
-            padding: 10px 0 10px 0;
+            padding : 10px 0 10px 0;
             border: 0;
             font-family: monospace;
             font-weight: bold;
             text-align: right;
-            color: rgba(117,135,159,1);
+            color: grey;
             resize: none;
             background-color: rgba(0,0,0,0);
             overflow: hidden;
             -ms-overflow-style: none;
             scrollbar-width: none;
         }
-        #number:focus {
+        #numberbox:focus {
             outline: none;
         }
-        #number::-webkit-scrollbar {
+        #numberbox::-webkit-scrollbar {
             display: none;
         }
-        #textbox {
+        #text {
             width: 95%;
             height: 100%;
-            box-sizing: border-box;
-            border-left: 1px solid black;
             display: inline-block;
         }
-        #text {
+        #textbox {
             box-sizing: border-box;
             width: 100%;
             height: 100%;
-            padding: 10px 0 10px 10px;
+            padding : 10px 0 10px 10px;
             border: 0;
             font-family: monospace;
             color: white;
             resize: none;
-            background-color: rgba(34,42,53,1);
+            background-color: rgba(30,30,30,1);
         }
-        #text:focus {
+        #textbox:focus {
             outline: none;
-        }
-        #info {
-            width: 100vw;
-            height: 5vh;
-            text-align: right;
-            background-color: rgba(41,53,70,1);
-        }
-        #lnNcolN {
-            width: 16vw;
-            height: 100%;
-            padding: 0 0 0 10px;
-            line-height: 5vh;
-            display: inline-block;
-            font-size: 15px;
-            border-left: 1px solid black;
-            text-align: left;
-            color: white;
         }
     </style>
 </head>
 <body>
-    <div id="header">
-        <a href="http://15.164.222.88:5000/"><img id="logotype" src="./static/images/comat_logotype.png" /></a>
-        <ul id="menu">
-            <li class="menucontent">
-                <a class="menuname" id="user data" href="http://15.164.222.88:5000/texteditor?filename=user data">User Data</a>
-            </li>
-            <li class="menucontent">
-                <a class="menuname" id="final save" href="http://15.164.222.88:5000/texteditor?filename=final save">Final Save</a>
-            </li>
-            <li class="menucontent">
-                <a class="menuname" id="subject data" href="http://15.164.222.88:5000/texteditor?filename=subject data">Subject Data</a>
-            </li>
-            <li class="menucontent">
-                <a class="menuname" id="file management" href="http://15.164.222.88:5000/load">File Management</a>
-            </li>
-            <li class="menucontent">
-                <a class="menuname" id="ball" href="http://15.164.222.88:5000/ball">Ball</a>
-            </li>
-        </ul>
-    </div>
     <form action="http://15.164.222.88:5000/filesave" method="POST" target="_blank">
-        <div id="btnbox">
-            <input type="image" src="./static/images/download_icon.png" id="savebtn">
-        </div>
+        <input type="image" src="./static/images/download_icon.png" id="savebtn">
         <div id="container">
-            <div id="numberbox">
-                <textarea id="number" wrap="off" readonly disabled></textarea>
+            <div id="number">
+            <textarea id="numberbox" wrap="off" readonly disabled></textarea>
             </div>
-            <div id="textbox">
-                <textarea id="text" name="content" wrap="off">{% for line in data %}{{line}}{% endfor %}</textarea>
+            <div id="text">
+            <textarea id="textbox" name="content" wrap="off">{% for line in data %}{{line}}{% endfor %}</textarea>
             </div>
         </div>
     </form>
-    <div id="info">
-        <span id="lnNcolN">Ln 1, Col 1</span>
-    </div>
     <script>
-        var menulist = ["user data", "final save", "subject data", "file management", "ball"];
-        var menuname = {{name|tojson}};
-        var i = menulist.indexOf(menuname);
-        document.getElementById(menulist[i]).className += ' activedmenu';
-        if (i > 0) {
-            document.getElementById(menulist[i - 1]).className += ' leftmenu';
-            document.getElementById(menulist[i - 1]).parentNode.className += ' sidecontent';
-        }
-        if (i < 4) {
-            document.getElementById(menulist[i + 1]).className += ' rightmenu';
-            document.getElementById(menulist[i + 1]).parentNode.className += ' sidecontent';
-        }
-        $("#number").on('scroll touchmove mousewheel', function (event) {
+        $("#numberbox").on('scroll touchmove mousewheel',function(event){
             event.preventDefault();
         });
-        var text = $("#text").val();
-        var linenum = (text.match(/\n/g) || []).length + 1;
-        for (var i = 1; i < linenum; i++) {
-            $("#number").val($("#number").val() + String(i) + " \n");
+        var text=$("#textbox").val();
+        var linenum=(text.match(/\n/g) || []).length+1;
+        for(var i=1; i<linenum; i++){
+            $("#numberbox").val($("#numberbox").val()+String(i)+" \n");
         }
-        $("#number").val($("#number").val() + String(i) + ' ');
-        $("#text").on("propertychange change keydown click paste input", function () {
-            text = $(this).val();
-            linenum = (text.match(/\n/g) || []).length + 1;
-            $("#number").val("");
-            for (var i = 1; i < linenum; i++) {
-                $("#number").val($("#number").val() + String(i) + " \n");
+        $("#numberbox").val($("#numberbox").val()+String(i)+' ');
+        $("#textbox").on("propertychange change keyup paste input", function (){
+            text=$(this).val();
+            linenum=(text.match(/\n/g) || []).length+1;
+            $("#numberbox").val("");
+            for(var i=1; i<linenum; i++){
+                $("#numberbox").val($("#numberbox").val()+String(i)+" \n");
             }
-            $("#number").val($("#number").val() + String(i) + ' ');
-            var col = document.getElementById("text").selectionStart;
-            var lines = text.split('\n');
-            var ln;
-            for (ln = 0; ln <= lines.length; ln++) {
-                if (col - lines[ln].length - 1< 0) break;
-                col -= lines[ln].length + 1;
-            }
-            col += 1;
-            document.getElementById("lnNcolN").innerText = "Ln " + String(ln + 1) + ", Col " + String(col);
+            $("#numberbox").val($("#numberbox").val()+String(i)+' ');
         });
-        $("#text").scroll(function () {
-            var height = $("#text").scrollTop();
-            $("#number").scrollTop(height);
+        $("#textbox").scroll(function(){
+            var height=$("#textbox").scrollTop();
+            $("#numberbox").scrollTop(height);
         });
     </script>
 </body>
