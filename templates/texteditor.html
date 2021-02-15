@@ -238,7 +238,7 @@
                 $("#number").val($("#number").val() + String(i) + " \n");
             }
             $("#number").val($("#number").val() + String(i) + ' ');
-            var col = document.getElementById("text").selectionStart;
+            var col = document.getElementById("text").selectionEnd;
             var lines = text.split('\n');
             var ln;
             for (ln = 0; ln <= lines.length; ln++) {
