@@ -596,10 +596,10 @@ def download_file(): # excel file 다운받기
         filename=request.form['downloadname']
         return send_file(filename, attachment_filename=filename, as_attachment=True)
 
-@application.route('/load')
+@application.route('/file')
 def upload_n_download():
     files=os.listdir("/home/ubuntu/dg1s_bot")
-    return render_template("load.html", files=files)
+    return render_template("file.html", files=files)
   
 @application.route('/ball')
 def ball():
