@@ -230,7 +230,7 @@
             $("#number").val($("#number").val() + String(i) + " \n");
         }
         $("#number").val($("#number").val() + String(i) + ' ');
-        $("#text").on("propertychange change keydown click paste input", function () {
+        $("#text").on("propertychange change keydown select click paste input", function () {
             text = $(this).val();
             linenum = (text.match(/\n/g) || []).length + 1;
             $("#number").val("");
