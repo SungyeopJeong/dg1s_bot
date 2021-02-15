@@ -3,54 +3,114 @@
 <html lang="en" xmlns="http://www.w3.org/1999/Xhtml">
 <head>
     <meta charset="utf-8" />
-    <title>dg1s_bot index</title>
+    <title>COMAT</title>
+    <link rel="shortcut icon" href="./static/images/favicon.ico" />
     <style>
         body {
             width: 100vw;
             height: 100vh;
-            margin: 0 0 0 0;
-            background-color: rgba(40,40,40,1);
-            display: flex;
-            align-items: center;
+            margin: 0;
         }
-        ul {
+        #header {
             width: 100vw;
-            list-style: none;
-            padding: 0 0 0 0;   
+            height: 10vh;
+        }
+        #logotype {
+            width: 16vw;
+            height: 10vh;
+            float: left;
+        }
+        #menu {
+            width: 84vw;
+            height: 10vh;
+            margin: 0;
+            padding: 0;
             text-align: center;
+            float: left;
         }
-        li {
-            line-height: 15vh;
+        #menucontent {
+            width: 16vw;
+            height: 100%;
+            display: inline-block;
         }
-        button {
-            width: 320px;
-            height: auto;
-            font-family: sans-serif;
-            font-size: 30px;
-            color: rgba(235,235,235,1);
-            background-color: rgba(30,30,30,1);
-            cursor: pointer;
+        #menuname {
+            width: 100%;
+            height: 100%;
+            display: inline-block;
+            line-height: 10vh;
+            font-size: 15px;
+            font-weight: bold; 
             text-align: center;
-            border: none;
-            border-radius: 20px;
-            padding: 15px 20px 20px 20px;
+            text-decoration: none;
         }
-        button:hover {
-            background-color: rgba(10,10,10,1);
-            color: white;
+        #menuname:visited {
+            color: black;
         }
-        button:focus {
-            outline: none;
+        #menuname:hover {
+            color: #2F5597;
+        }
+        #imgbox {
+            width: 100vw;
+            height: 75vh;
+        }
+        .homeimg {
+            width: 100%;
+            height: 100%;
+        }
+        #footer {
+            width: 100vw;
+            height: 15vh;
+            box-sizing: border-box;
+            padding: 10px 10px 10px 10px;
+        }
+        .spanbox {
+            margin: 0;
+        }
+        .firstspan, .afterspan {
+            font-size: 10px;
+            color: #808080;
+        }
+        .afterspan::before {
+            content: " | "
         }
     </style>
 </head>
 <body>
-    <ul>
-        <li><button onclick="location.href='http://15.164.222.88:5000/textedit?filename=user data'">user data</button></li>
-        <li><button onclick="location.href='http://15.164.222.88:5000/textedit?filename=final save'">final save</button></li>
-        <li><button onclick="location.href='http://15.164.222.88:5000/textedit?filename=subject data'">subject data</button></li>
-        <li><button onclick="location.href='http://15.164.222.88:5000/load'">upload / download</button></li>
-        <li><button onclick="location.href='http://15.164.222.88:5000/ball'">ball</button></li>
-    </ul>
+    <div id="header">
+        <a href=""><img id="logotype" src="./static/images/logotype.png" /></a>
+        <ul id="menu">
+            <li id="menucontent">
+                <a id="menuname" href="http://15.164.222.88:5000/textedit?filename=user data">User Data</a>
+            </li>
+            <li id="menucontent">
+                <a id="menuname" href="http://15.164.222.88:5000/textedit?filename=final save">Final Save</a>
+            </li>
+            <li id="menucontent">
+                <a id="menuname" href="http://15.164.222.88:5000/textedit?filename=subject data">Subject Data</a>
+            </li>
+            <li id="menucontent">
+                <a id="menuname" href="http://15.164.222.88:5000/load">File Management</a>
+            </li>
+            <li id="menucontent">
+                <a id="menuname" href="http://15.164.222.88:5000/ball">Ball</a>
+            </li>
+        </ul>
+    </div>
+    <div id="imgbox">
+        <img class="homeimg" src="./static/images/homeimg1.png"/>
+    </div>
+    <div id="footer">
+        <p class="spanbox">
+            <span class="firstspan">부원 : 정성엽 김동현 김주원 서원준 이준엽</span>
+        </p>
+        <p class="spanbox">
+            <span class="firstspan">대표 연락처 : 010-4758-2011</span>
+            <span class="afterspan">카카오톡 ID : @eightateateight</span>
+            <span class="afterspan">카카오톡 채널명 : 일곽봇</span>
+        </p>
+        <p class="spanbox">
+            <span class="firstspan" style="font-weight:bold">Copyright ⓒ 2020-2021 COMAT. All Rights Reserved.</span>
+        </p>
+    </div>
 </body>
 </html>
