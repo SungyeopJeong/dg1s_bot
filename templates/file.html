@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/Xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>file management</title>
+    <link rel="shortcut icon" href="./static/images/comat_favicon.ico" />
+    <style>
+        body {
+            width: 100vw;
+            height: 100vh;
+            margin: 0 0 0 0;
+            background-color: rgba(40,40,40,1);
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+        }
+        form {
+            width: 100vw;
+            height: 50vh;
+            text-align: center;
+        }
+        #uploadform {
+            border-bottom: 3px solid rgba(100,100,100,1);   
+        }
+        #uploadbtn {
+            width: 10vh;
+            height: 10vh;
+            margin: 15vh 0 0 0;
+        }
+        #uploadbtn:hover {
+            cursor: pointer;
+        }
+        #filename, #filelist {
+            display: block;
+            font-family: sans-serif;
+            font-size: 15px;
+            color: rgba(235,235,235,1);
+            margin: 10px 0 0 0;
+        }
+        span, li:hover {
+            cursor: default;
+        }
+        #xlupload {
+            display: none;
+        }
+        #submitbtn, #downloadbtn {
+            margin: 10px 0 0 0;
+            font-family: sans-serif;
+            font-size: 20px;
+            color: rgba(235,235,235,1);
+            background-color: rgba(30,30,30,1);
+            cursor: pointer;
+            text-align: center;
+            border: none;
+            border-radius: 10px;
+            padding: 5px 10px 7px 10px;
+        }
+        #submitbtn, #downloadbtn:hover {
+            background-color: rgba(10,10,10,1);
+            color: white;
+        }
+        #submitbtn, #downloadbtn:focus {
+            outline: none;
+        }
+        ul {
+            margin: 10px 0 0 0;
+            width: 100vw;
+            padding: 0 0 0 0;
+        }
+        li {
+            color: rgba(235,235,235,1);
+            list-style: none;
+            width: 100vw;
+            font-family: sans-serif;
+            font-size: 15px;
+        }
+    </style>
+    <script>
+        function rename(file){
+            if(file.value=="") document.getElementById("filename").innerHTML="(No file selected)";
+            else document.getElementById("filename").innerHTML=file.value.substr(12,file.value.length);
+        }
+        function chksubmit(){
+            if(document.getElementById("xlupload").value==""){
+                alert("warning : Please select a file first!");
+                return false;
+            }
+        }
+        function chkdownload(){
+            if(document.getElementById("downloadname").value==""){
+                alert("warning : Please enter the name first!");
+                return false;
+            }
+            var files={{files|tojson}}, i;
+            for(i=0; i<files.length; i++){
+                if(files[i]==document.getElementById("downloadname").value) break;
+            }
+            if(i==files.length){
+                alert("warning : No file with that name exists!");
+                return false;
+            }
+        }
+    </script>
+</head>
+<body>
+    <form method="POST" action="http://15.164.222.88:5000/xlsave" target="_blank" enctype="multipart/form-data" onsubmit="return chksubmit();" id="uploadform">
+        <img src="/static/images/upload_icon.png" id="uploadbtn" onclick="document.getElementById('xlupload').click();">
+        <span id="filename">(No file selected)</span>
+        <input type="file" id="xlupload" onchange="rename(this);" name="xlfile">
+        <input type="submit" value="Upload" id="submitbtn">
+    </form>
+    <form method="POST" action="http://15.164.222.88:5000/dnldfile" target="_blank" onsubmit="return chkdownload();">
+        <input type="text" id="downloadname" name="downloadname" style="box-sizing: border-box; height: 30px; width: 30%; padding: 5px 0 0 5px;" 
+               Placeholder="Enter the name of the file you want to download">
+        <input type="submit" value="Download" id="downloadbtn" style="margin: 5vh 0 0 0">
+        <span id="filelist" style="font-size: 20px">File List</span>
+        <ul>
+            {% for file in files %}
+            <li>{{file}}</li>
+            {% endfor %}
+        </ul>
+    </form>
+</body>
+</html>
