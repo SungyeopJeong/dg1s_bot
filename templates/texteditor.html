@@ -210,7 +210,7 @@
     </div>
     <script>
         var menulist = ["user data", "final save", "subject data", "file management", "ball"];
-        var menuname = {{name|json}};
+        var menuname = {{name|tojson}};
         var i = menulist.indexOf(menuname);
         document.getElementById(menulist[i]).className += ' activedmenu';
         if (i > 0) {
