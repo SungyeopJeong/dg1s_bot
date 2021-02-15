@@ -564,7 +564,7 @@ def index():
 
 filename=""
 
-@application.route('/textedit')
+@application.route('/texteditor')
 def text_editor(): # 원하는 파일 사이트에서 보여주고 편집
     global filename
     filename=request.args.get('filename')
