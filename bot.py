@@ -557,12 +557,8 @@ def update_stid(): # 학번 갱신 함수
         }
     }
     return jsonify(res)
-
+ 
 @application.route('/')
-def main():
-    return render_template("main.html")
-  
-@application.route('/index')
 def index():
     return render_template("index.html")
 
