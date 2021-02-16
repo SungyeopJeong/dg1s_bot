@@ -100,6 +100,7 @@
         document.getElementById("ball").className += ' activedmenu';
         document.getElementById("file management").className += ' leftmenu';
         document.getElementById("file management").parentNode.className += ' sidecontent';
+        
         var canvas = document.getElementById("Canvas");
         var ctx = canvas.getContext("2d");
         var boxwidth, boxheight;
@@ -109,8 +110,8 @@
         var play;
         var ispassed = false;
 
-        canvas.width = document.body.clientWidth;
-        canvas.height = document.body.clientHeight;
+        canvas.width = document.body.clientHeight * 0.9;
+        canvas.height = document.body.clientHeight * 0.9;
         boxwidth = canvas.width * 0.5;
         boxheight = canvas.height * 0.5;
         X = canvas.width * 0.5;
