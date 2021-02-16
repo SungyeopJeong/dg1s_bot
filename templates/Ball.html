@@ -3,29 +3,104 @@
 <html lang="en" xmlns="http://www.w3.org/1999/Xhtml">
 <head>
     <meta charset="utf-8" />
-    <title>Ball</title>
+    <title>ball</title>
+    <link rel="shortcut icon" href="./static/images/comat_favicon.ico" />
     <style>
-        html {
-            width: 100%;
-            height: 100%;
-        }
-
         body {
-            margin: 0 0 0 0;
+            width: 100vw;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        #header {
+            width: 100vw;
+            height: 10vh;
+        }
+        #logotype {
+            width: 16vw;
+            height: 10vh;
+            float: left;
+        }
+        #menu {
+            width: 84vw;
+            height: 10vh;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            float: left;
+        }
+        .menucontent {
+            width: 16vw;
+            height: 100%;
+            display: inline-block;
+            float: left;
+        }
+        .sidecontent {
+            background-color: rgba(51,63,80,1);
+        }
+        .menuname {
             width: 100%;
             height: 100%;
-            overflow: hidden;
-            background-color: white;
+            display: inline-block;
+            line-height: 10vh;
+            font-size: 15px;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
         }
-
+        .menuname:link, .menuname:visited {
+            color: black;
+        }
+        .menuname:hover {
+            color: #2F5597;
+        }
+        .activedmenu {
+            background-color: rgba(51,63,80,1);
+            border-radius: 1vw 1vw 0 0;
+            color: white;
+        }
+        .activedmenu:link, .activedmenu:visited {
+            color: white;
+        }
+        .activedmenu:hover {
+            color: rgba(117,135,159,1);
+        }
+        .leftmenu {
+            background-color: white;
+            border-radius: 0 0 1vw 0;
+        }
         canvas {
-            background-color: rgba(30,30,30,1);
+            background-color: rgba(51,63,80,1);
         }
     </style>
 </head>
 <body>
-    <canvas id="Canvas" width="1920" height="1080">Error</canvas>
+    <div id="header">
+        <a href="http://15.164.222.88:5000/"><img id="logotype" src="./static/images/comat_logotype.png" /></a>
+        <ul id="menu">
+            <li class="menucontent">
+                <a class="menuname" id="user data" href="http://15.164.222.88:5000/texteditor?filename=user data">User Data</a>
+            </li>
+            <li class="menucontent">
+                <a class="menuname" id="final save" href="http://15.164.222.88:5000/texteditor?filename=final save">Final Save</a>
+            </li>
+            <li class="menucontent">
+                <a class="menuname" id="subject data" href="http://15.164.222.88:5000/texteditor?filename=subject data">Subject Data</a>
+            </li>
+            <li class="menucontent">
+                <a class="menuname" id="file management" href="http://15.164.222.88:5000/file">File Management</a>
+            </li>
+            <li class="menucontent">
+                <a class="menuname" id="ball" href="http://15.164.222.88:5000/ball">Ball</a>
+            </li>
+        </ul>
+    </div>
+    <canvas id="Canvas" width="1920" height="972">Error</canvas>
     <script>
+        document.getElementById("ball").className += ' activedmenu';
+        document.getElementById("file management").className += ' leftmenu';
+        document.getElementById("file management").parentNode.className += ' sidecontent';
+        
         var canvas = document.getElementById("Canvas");
         var ctx = canvas.getContext("2d");
         var boxwidth, boxheight;
@@ -36,7 +111,7 @@
         var ispassed = false;
 
         canvas.width = document.body.clientWidth;
-        canvas.height = document.body.clientHeight;
+        canvas.height = document.body.clientHeight * 0.9;
         boxwidth = canvas.width * 0.5;
         boxheight = canvas.height * 0.5;
         X = canvas.width * 0.5;
@@ -64,17 +139,17 @@
             if (!ispassed) {
                 ctx.beginPath();
                 ctx.arc(cursorX, cursorY, 3, 0, Math.PI * 2, false);
-                ctx.fillStyle = "coral";
+                ctx.fillStyle = "rgba(117,135,159,1)";
                 ctx.fill();
                 ctx.beginPath();
                 ctx.arc(cursorX, cursorY, 10, 0, Math.PI * 2, false);
                 ctx.lineWidth = 3;
-                ctx.strokeStyle = "coral";
+                ctx.strokeStyle = "rgba(117,135,159,1)";
                 ctx.stroke();
             }
             ctx.beginPath();
             ctx.arc(X, Y, 10, 0, Math.PI * 2, false);
-            ctx.fillStyle = "snow";
+            ctx.fillStyle = "white";
             ctx.fill(); 
         }
 
@@ -99,4 +174,4 @@
         play = setInterval(move, 10);
     </script>
 </body>
-</html>
+</html
