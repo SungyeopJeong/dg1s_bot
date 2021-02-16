@@ -69,8 +69,12 @@
             background-color: white;
             border-radius: 0 0 1vw 0;
         }
-        canvas {
+        #canvasbox {
             background-color: rgba(51,63,80,1);
+            padding: 5vh 5vh 5vh 5vh;
+        }
+        canvas {
+            background-color: #2F5597;
         }
     </style>
 </head>
@@ -95,7 +99,9 @@
             </li>
         </ul>
     </div>
-    <canvas id="Canvas" width="1920" height="972">Error</canvas>
+    <div id="canvasbox">
+        <canvas id="Canvas" width="1920" height="972">Error</canvas>
+    </div>
     <script>
         document.getElementById("ball").className += ' activedmenu';
         document.getElementById("file management").className += ' leftmenu';
@@ -110,8 +116,8 @@
         var play;
         var ispassed = false;
 
-        canvas.width = document.body.clientWidth;
-        canvas.height = document.body.clientHeight * 0.9;
+        canvas.width = document.body.clientWidth * 0.9;
+        canvas.height = document.body.clientHeight * 0.8;
         boxwidth = canvas.width * 0.5;
         boxheight = canvas.height * 0.5;
         X = canvas.width * 0.5;
@@ -139,12 +145,12 @@
             if (!ispassed) {
                 ctx.beginPath();
                 ctx.arc(cursorX, cursorY, 3, 0, Math.PI * 2, false);
-                ctx.fillStyle = "rgba(117,135,159,1)";
+                ctx.fillStyle = "white";
                 ctx.fill();
                 ctx.beginPath();
                 ctx.arc(cursorX, cursorY, 10, 0, Math.PI * 2, false);
                 ctx.lineWidth = 3;
-                ctx.strokeStyle = "rgba(117,135,159,1)";
+                ctx.strokeStyle = "white";
                 ctx.stroke();
             }
             ctx.beginPath();
@@ -163,7 +169,7 @@
         }
 
         function redirect(e) {
-            if (e.offsetX + 11 > maxX || e.offsetX - 11 < minX || e.offsetY + 11 > maxY || e.offsetY - 11 < minY) return;
+            if (e.offsetX + 12 > maxX || e.offsetX - 12 < minX || e.offsetY + 11 > maxY || e.offsetY - 11 < minY) return;
             cursorX = e.offsetX; cursorY = e.offsetY;
             ispassed = false;
             dX = 4 * (cursorX - X) / (Math.abs(cursorX - X) + Math.abs(cursorY - Y));
