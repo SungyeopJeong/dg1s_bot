@@ -69,12 +69,8 @@
             background-color: white;
             border-radius: 0 0 1vw 0;
         }
-        #canvasbox {
-            background-color: rgba(51,63,80,1);
-            padding: 5vh 5vh 5vh 5vh;
-        }
         canvas {
-            background-color: #2F5597;
+            background-color: rgba(51,63,80,1);
         }
     </style>
 </head>
@@ -116,7 +112,7 @@
         var play;
         var ispassed = false;
 
-        canvas.width = document.body.clientWidth - document.body.clientHeight * 0.1;
+        canvas.width = document.body.clientWidth;
         canvas.height = document.body.clientHeight * 0.8;
         boxwidth = canvas.width * 0.5;
         boxheight = canvas.height * 0.5;
@@ -145,12 +141,12 @@
             if (!ispassed) {
                 ctx.beginPath();
                 ctx.arc(cursorX, cursorY, 3, 0, Math.PI * 2, false);
-                ctx.fillStyle = "white";
+                ctx.fillStyle = "rgba(117,135,159,1)";
                 ctx.fill();
                 ctx.beginPath();
                 ctx.arc(cursorX, cursorY, 10, 0, Math.PI * 2, false);
                 ctx.lineWidth = 3;
-                ctx.strokeStyle = "white";
+                ctx.strokeStyle = "rgba(117,135,159,1)";
                 ctx.stroke();
             }
             ctx.beginPath();
