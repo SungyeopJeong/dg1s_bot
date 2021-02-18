@@ -202,6 +202,7 @@
         }
         .filename {
             height: 3vh;
+            display: inline-block;
             line-height: 3vh;
             color: white;
             font-size: 15px;
@@ -236,6 +237,7 @@
             }
         }
         function fillname(filename){
+            alert(filename.innerText);
             document.getElementById("downloadifilename").value=filename.innerText;   
         }
     </script>
