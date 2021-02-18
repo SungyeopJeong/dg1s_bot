@@ -254,7 +254,7 @@
             <div id="borderbox">
                 <div id="uploadformbox">
                     <img src="./static/images/upload_icon2.png" id="uploadimg" onclick="document.getElementById('uploadfile').click();">
-                    <span id="uploadfilename">No file selected</span>
+                    <p id="uploadfilename">No file selected</p>
                     <input type="file" id="uploadfile" onchange="rename(this);" name="xlfile">
                     <input type="submit" value="Upload" id="uploadbtn">
                 </div>
@@ -266,7 +266,7 @@
                     <input type="text" id="downloadfilename" name="downloadfilename" Placeholder="Enter the filename to download">
                     <input type="submit" value="Download" id="downloadbtn">
                 </div>
-                <p id="listtitle">File List</p>
+                <span id="listtitle">File List</span>
                 <ul id="filelist">
                     {% for file in files %}
                     <li class="file">{{file}}</li>
