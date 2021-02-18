@@ -584,17 +584,17 @@ def save_as_file(): # txt file 저장하기
         return render_template("saved.html")
   
 @application.route('/xlsave', methods=['GET','POST'])
-def save_as_xlfile(): # excel file 저장하기
+def save_as_xlfile(): # file 저장하기
     if request.method == 'POST':
         f=request.files['xlfile']
         f.save("/home/ubuntu/dg1s_bot/"+secure_filename(f.filename))
         return render_template("saved.html")
   
 @application.route('/dnldfile', methods=['GET','POST'])
-def download_file(): # excel file 다운받기
+def download_file(): # file 다운받기
     if request.method == 'POST':
         filename=request.form['downloadname']
-        return send_file(filename, attachment_filename=filename, as_attachment=True)
+        return send_file("/home/ubuntu/dg1s_bot"+filename, attachment_filename=filename, as_attachment=True)
 
 @application.route('/file')
 def upload_n_download():
