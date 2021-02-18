@@ -197,6 +197,10 @@
             list-style: none;
         }
         .file {
+            width: 39vw;
+            height: 3vh;
+        }
+        .filename {
             height: 3vh;
             line-height: 3vh;
             color: white;
@@ -271,7 +275,9 @@
                 <span id="listtitle">File List</span>
                 <ul id="filelist">
                     {% for file in files %}
-                    <li class="file">{{file}}</li>
+                    <li class="file">
+                        <span class="filename" onclick="fillname(this);">{{file}}</span>
+                    </li>
                     {% endfor %}
                 </ul>
             </div>
