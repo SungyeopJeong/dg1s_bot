@@ -9,92 +9,215 @@
         body {
             width: 100vw;
             height: 100vh;
-            margin: 0 0 0 0;
-            background-color: rgba(40,40,40,1);
-            display: flex;
-            align-items: center;
-            flex-direction: column;
+            margin: 0;
+        }
+        #header {
+            width: 100vw;
+            height: 10vh;
+        }
+        #logotype {
+            width: 16vw;
+            height: 10vh;
+            float: left;
+        }
+        #menu {
+            width: 84vw;
+            height: 10vh;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            float: left;
+        }
+        .menucontent {
+            width: 16vw;
+            height: 100%;
+            display: inline-block;
+            float: left;
+        }
+        .sidecontent {
+            background-color: rgba(51,63,80,1);
+        }
+        .menuname {
+            width: 100%;
+            height: 100%;
+            display: inline-block;
+            line-height: 10vh;
+            font-size: 15px;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+        }
+        .menuname:link, .menuname:visited {
+            color: black;
+        }
+        .menuname:hover {
+            color: #2F5597;
+        }
+        .activedmenu {
+            background-color: rgba(51,63,80,1);
+            border-radius: 1vw 1vw 0 0;
+            color: white;
+        }
+        .activedmenu:link, .activedmenu:visited {
+            color: white;
+        }
+        .activedmenu:hover {
+            color: rgba(117,135,159,1);
+        }
+        .leftmenu {
+            background-color: white;
+            border-radius: 0 0 1vw 0;
+        }
+        .rightmenu {
+            background-color: white;
+            border-radius: 0 0 0 1vw;
+        }
+        #contentbox {
+            width: 100vw;
+            height: 90vh;
+            background-color: rgba(51,63,80,1);
         }
         form {
-            width: 100vw;
-            height: 50vh;
+            width: 50vw;
+            height: 100%;
+            float: left;
+        }
+        #borderbox {
+            width: 50vw;
+            height: 85vh;
+            box-sizing: border-box;
+            margin: 2.5vh 0 2.5vh 0;
+            padding: 21vh 0 21vh 0;
+            border-right: 2px solid rgba(117,135,159,1);
             text-align: center;
         }
-        #uploadform {
-            border-bottom: 3px solid rgba(100,100,100,1);   
+        #uploadformbox {
+            width: 39vw;
+            box-sizing: border-box;
+            margin: 0 5.5vw 0 5.5vw;
+            padding: 2vh 2vh 2vh 2vh;
+            text-align: center;
+            background-color: white;
+            border-radius: 1vw;
+        }
+        #uploadimg {
+            width: 25vh;
+            height: 25vh;
+        }
+        #uploadimg:hover {
+            cursor: pointer;
+        }
+        #uploadfile {
+            display: none;
+        }
+        #uploadfilename {
+            height: 5vh;
+            line-height: 5vh;
+            color: rgba(51,63,80,1);
+            margin: 2vh 0 2vh 0;
+            font-size: 15px;
+        }
+        #uploadfilename:hover {
+            cursor: default;
         }
         #uploadbtn {
-            width: 10vh;
-            height: 10vh;
-            margin: 15vh 0 0 0;
+            width: 16vw;
+            height: 5vh;
+            box-sizing: border-box;
+            background-color: rgba(51,63,80,1);
+            color: white;
+            border: none;
+            border-radius: 1vw;
+            font-size: 15px;
+            outline: none;
         }
         #uploadbtn:hover {
             cursor: pointer;
+            background-color: rgba(34,42,53,1);
         }
-        #filename, #filelist {
-            display: block;
-            font-family: sans-serif;
-            font-size: 15px;
-            color: rgba(235,235,235,1);
-            margin: 10px 0 0 0;
-        }
-        span, li:hover {
-            cursor: default;
-        }
-        #xlupload {
-            display: none;
-        }
-        #submitbtn, #downloadbtn {
-            margin: 10px 0 0 0;
-            font-family: sans-serif;
-            font-size: 20px;
-            color: rgba(235,235,235,1);
-            background-color: rgba(30,30,30,1);
-            cursor: pointer;
+        #downloadformbox {
+            width: 39vw;
+            margin: 26vh 5.5vw 26vh 5.5vw;
             text-align: center;
+        }
+        #downloadbox {
+            width: 39vw;
+            height: 5vh;
+            box-sizing: border-box;
+            background-color: white;
+            border-radius: 1vw;
+        }
+        #downloadfilename {
+            width: 25vw;
+            height: 5vh;
+            margin: 0 0 0 1vw;
+            box-sizing: border-box;
+            float: left;
             border: none;
-            border-radius: 10px;
-            padding: 5px 10px 7px 10px;
-        }
-        #submitbtn, #downloadbtn:hover {
-            background-color: rgba(10,10,10,1);
-            color: white;
-        }
-        #submitbtn, #downloadbtn:focus {
+            border-radius: 1vw;
+            background-color: white;
             outline: none;
         }
-        ul {
-            margin: 10px 0 0 0;
-            width: 100vw;
-            padding: 0 0 0 0;
+        #downloadbtn {
+            width: 13vw;
+            height: 3vh;
+            margin: 1vh 0 1vh 0;
+            box-sizing: border-box;
+            float: left;
+            border: none;
+            border-radius: 0 1vw 1vw 0;
+            border-left: 2px solid rgba(51,63,80,1);
+            color: rgba(51,63,80,1);
+            font-size: 15px;
+            font-weight: bold;
+            background-color: white;
+            outline: none;
         }
-        li {
-            color: rgba(235,235,235,1);
+        #downloadbtn:hover {
+            cursor: pointer;
+            color: black;
+        }
+        #listtitle {
+            height: 5vh;
+            line-height: 5vh;
+            color: white;
+            margin: 2vh 0 2vh 0;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        #filelist {
+            width: 39vw;
+            height: 24vh;
+            margin: 0;
+            padding: 0;
             list-style: none;
-            width: 100vw;
-            font-family: sans-serif;
+        }
+        .file {
+            height: 3vh;
+            line-height: 3vh;
+            color: white;
             font-size: 15px;
         }
     </style>
     <script>
         function rename(file){
-            if(file.value=="") document.getElementById("filename").innerHTML="(No file selected)";
-            else document.getElementById("filename").innerHTML=file.value.substr(12,file.value.length);
+            if(file.value=="") document.getElementById("uploadfilename").innerHTML="No file selected";
+            else document.getElementById("uploadfilename").innerHTML=file.value.substr(12,file.value.length);
         }
-        function chksubmit(){
-            if(document.getElementById("xlupload").value==""){
+        function chksubmit() {
+            if(document.getElementById("uploadfile").value==""){
                 alert("warning : Please select a file first!");
                 return false;
             }
         }
         function chkdownload(){
-            if(document.getElementById("downloadname").value==""){
+            if(document.getElementById("downloadfilename").value==""){
                 alert("warning : Please enter the name first!");
                 return false;
             }
-            var files={{files|tojson}}, i;
+            var files = {{files|tojson}}, i;
             for(i=0; i<files.length; i++){
-                if(files[i]==document.getElementById("downloadname").value) break;
+                if(files[i]==document.getElementById("downloadfilename").value) break;
             }
             if(i==files.length){
                 alert("warning : No file with that name exists!");
@@ -104,22 +227,58 @@
     </script>
 </head>
 <body>
-    <form method="POST" action="http://15.164.222.88:5000/xlsave" target="_blank" enctype="multipart/form-data" onsubmit="return chksubmit();" id="uploadform">
-        <img src="/static/images/upload_icon.png" id="uploadbtn" onclick="document.getElementById('xlupload').click();">
-        <span id="filename">(No file selected)</span>
-        <input type="file" id="xlupload" onchange="rename(this);" name="xlfile">
-        <input type="submit" value="Upload" id="submitbtn">
-    </form>
-    <form method="POST" action="http://15.164.222.88:5000/dnldfile" target="_blank" onsubmit="return chkdownload();">
-        <input type="text" id="downloadname" name="downloadname" style="box-sizing: border-box; height: 30px; width: 30%; padding: 5px 0 0 5px;" 
-               Placeholder="Enter the name of the file you want to download">
-        <input type="submit" value="Download" id="downloadbtn" style="margin: 5vh 0 0 0">
-        <span id="filelist" style="font-size: 20px">File List</span>
-        <ul>
-            {% for file in files %}
-            <li>{{file}}</li>
-            {% endfor %}
+    <div id="header">
+        <a href="http://15.164.222.88:5000/"><img id="logotype" src="./static/images/comat_logotype.png" /></a>
+        <ul id="menu">
+            <li class="menucontent">
+                <a class="menuname" id="user data" href="http://15.164.222.88:5000/texteditor?filename=user data">User Data</a>
+            </li>
+            <li class="menucontent">
+                <a class="menuname" id="final save" href="http://15.164.222.88:5000/texteditor?filename=final save">Final Save</a>
+            </li>
+            <li class="menucontent">
+                <a class="menuname" id="subject data" href="http://15.164.222.88:5000/texteditor?filename=subject data">Subject Data</a>
+            </li>
+            <li class="menucontent">
+                <a class="menuname" id="file management" href="http://15.164.222.88:5000/file">File Management</a>
+            </li>
+            <li class="menucontent">
+                <a class="menuname" id="ball" href="http://15.164.222.88:5000/ball">Ball</a>
+            </li>
         </ul>
-    </form>
+    </div>
+    <div id="contentbox">
+        <form method="POST" action="http://15.164.222.88:5000/xlsave" target="_blank" enctype="multipart/form-data" onsubmit="return chksubmit();">
+            <div id="borderbox">
+                <div id="uploadformbox">
+                    <img src="./static/images/upload_icon2.png" id="uploadimg" onclick="document.getElementById('uploadfile').click();">
+                    <p id="uploadfilename">No file selected</p>
+                    <input type="file" id="uploadfile" onchange="rename(this);" name="xlfile">
+                    <input type="submit" value="Upload" id="uploadbtn">
+                </div>
+            </div>
+        </form>
+        <form method="POST" action="http://15.164.222.88:5000/dnldfile" target="_blank" onsubmit="return chkdownload();">
+            <div id="downloadformbox">
+                <div id="downloadbox">
+                    <input type="text" id="downloadfilename" name="downloadfilename" Placeholder="Enter the filename to download">
+                    <input type="submit" value="Download" id="downloadbtn">
+                </div>
+                <p id="listtitle">File List</p>
+                <ul id="filelist">
+                    {% for file in files %}
+                    <li>{{file}}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </form>
+    </div>
+    <script>
+        document.getElementById("file management").className += ' activedmenu';
+        document.getElementById("subject data").className += ' leftmenu';
+        document.getElementById("subject data").parentNode.className += ' sidecontent';
+        document.getElementById("ball").className += ' rightmenu';
+        document.getElementById("ball").parentNode.className += ' sidecontent';
+    </script>
 </body>
 </html>
