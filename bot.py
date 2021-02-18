@@ -599,8 +599,11 @@ def download_file(): # excel file 다운받기
 @application.route('/file')
 def upload_n_download():
     files=os.listdir("/home/ubuntu/dg1s_bot")
+    folders=[]
     for file in files:
-        if not '.' in file: files.remove(file)
+        if not '.' in file: folders.append(file)
+    for folder in folders:
+        files.remove(folder)
     return render_template("file.html", files=files)
   
 @application.route('/ball')
