@@ -206,6 +206,9 @@
             color: white;
             font-size: 15px;
         }
+        .filename:hover {
+            cursor: pointer;
+        }
     </style>
     <script>
         function rename(file){
@@ -231,6 +234,9 @@
                 alert("warning : No file with that name exists!");
                 return false;
             }
+        }
+        function fillname(filename){
+            document.getElementById("downloadifilename").value=filename.innerText;   
         }
     </script>
 </head>
