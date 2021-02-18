@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="./static/css/header.css" />
     <style>
         canvas {
+            width: 100vw;
+            height: 90vh;
             background-color: rgba(51,63,80,1);
         }
     </style>
@@ -34,7 +36,7 @@
         </ul>
     </div>
     <div id="canvasbox">
-        <canvas id="Canvas" width="1920" height="972">Error</canvas>
+        <canvas id="Canvas">Error</canvas>
     </div>
     <script>
         document.getElementById("ball").className += ' activedmenu';
@@ -49,9 +51,7 @@
         var cursorX, cursorY;
         var play;
         var ispassed = false;
-
-        canvas.width = document.body.clientWidth;
-        canvas.height = document.body.clientHeight * 0.9;
+        
         boxwidth = canvas.width * 0.5;
         boxheight = canvas.height * 0.5;
         X = canvas.width * 0.5;
