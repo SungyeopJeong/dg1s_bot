@@ -178,7 +178,9 @@
             color: black;
         }
         #listtitle {
+            width: 19.5vw;
             height: 5vh;
+            display: inline-block;
             line-height: 5vh;
             color: white;
             margin: 2vh 0 2vh 0;
@@ -252,7 +254,7 @@
             <div id="borderbox">
                 <div id="uploadformbox">
                     <img src="./static/images/upload_icon2.png" id="uploadimg" onclick="document.getElementById('uploadfile').click();">
-                    <p id="uploadfilename">No file selected</p>
+                    <span id="uploadfilename">No file selected</span>
                     <input type="file" id="uploadfile" onchange="rename(this);" name="xlfile">
                     <input type="submit" value="Upload" id="uploadbtn">
                 </div>
