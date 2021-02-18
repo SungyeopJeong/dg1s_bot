@@ -594,7 +594,7 @@ def save_as_xlfile(): # file 저장하기
 def download_file(): # file 다운받기
     if request.method == 'POST':
         filename=request.form['downloadfilename']
-        return send_file("/home/ubuntu/dg1s_bot"+filename, attachment_filename=filename, as_attachment=True)
+        return send_file("/home/ubuntu/dg1s_bot/"+filename, attachment_filename=filename, as_attachment=True)
 
 @application.route('/file')
 def upload_n_download():
