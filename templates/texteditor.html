@@ -120,6 +120,9 @@
                 <a class="menuname" id="subject data" href="http://15.164.222.88:5000/texteditor?filename=subject data">Subject Data</a>
             </li>
             <li class="menucontent">
+                <a class="menuname" id="timetable" href="http://15.164.222.88:5000/texteditor?filename=timetable">Timetable</a>
+            </li>
+            <li class="menucontent">
                 <a class="menuname" id="file management" href="http://15.164.222.88:5000/file">File Management</a>
             </li>
             <li class="menucontent">
@@ -144,7 +147,7 @@
         <span id="lnNcolN">Ln 1, Col 1</span>
     </div>
     <script>
-        var menulist = ["user data", "final save", "subject data", "file management", "ball"];
+        var menulist = ["user data", "final save", "subject data", "timetable", "file management", "ball"];
         var menuname = {{name|tojson}};
         var i = menulist.indexOf(menuname);
         document.getElementById(menulist[i]).className += ' activedmenu';
@@ -152,7 +155,7 @@
             document.getElementById(menulist[i - 1]).className += ' leftmenu';
             document.getElementById(menulist[i - 1]).parentNode.className += ' sidecontent';
         }
-        if (i < 4) {
+        if (i < 5) {
             document.getElementById(menulist[i + 1]).className += ' rightmenu';
             document.getElementById(menulist[i + 1]).parentNode.className += ' sidecontent';
         }
