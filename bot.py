@@ -122,10 +122,11 @@ def response_link(): # 온라인 시간표 대답 함수
             for j in range(3):
                 for k in range(4):
                     for l in range(5):
+                        global Timetable
                         line=lines[26*j+2+6*k+l].split(" ")
+                        Timetable[j][k][l]=[]
                         for sub in line:
                             sub=sub.replace("\n","")
-                            global Timetable
                             Timetable[j][k][l].append(sub)
             fr.close()
             for i in range(9): # 해당 요일의 시간표 모두 출력  
