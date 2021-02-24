@@ -129,13 +129,15 @@ def response_link(): # 온라인 시간표 대답 함수
             fr.close()
             for i in range(9): # 해당 요일의 시간표 모두 출력  
                 subjectName=Timetable[grade-1][classn-1][day-1][(classN+i)%9]
+                print(subjectName)
                 fr=open("/home/ubuntu/dg1s_bot/subject data.txt","r")
                 lines=fr.readlines()
                 isgrade=False # 과목명이 겹칠 경우를 대비해 해당 학년의 과목명이 맞는지 확인하기 위한 변수
                 for line in lines:
                     datas=line.split(" ")
                     dname=datas[0];
-                    if dname==str(grade)+"학년\n": isgrade=True
+                    if dname==str(grade)+"학년\n":
+                        isgrade=True; continue
                     if isgrade==True and "학년" in dname: break
                     if isgrade==True and dname==subjectName: 
                         title, answer=prin(datas,(classN+i)%9)
