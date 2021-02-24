@@ -142,7 +142,6 @@ def response_link(): # 온라인 시간표 대답 함수
                     if isgrade==True and dname==subjectName: 
                         title, answer=prin(datas,(classN+i)%9)
                         item={ "title": title, "description": answer }
-                        print(item)
                         items.append(item)
                         break
                 fr.close()
