@@ -124,6 +124,7 @@ def response_link(): # 온라인 시간표 대답 함수
                     for l in range(5):
                         line=lines[26*j+2+6*k+l].split(" ")
                         for sub in line:
+                            sub.replace("\n","")
                             global Timetable
                             Timetable[j][k][l].append(sub)
             fr.close()
