@@ -122,9 +122,9 @@ def response_link(): # 온라인 시간표 대답 함수
                     for k in range(4):
                         for l in range(5):
                             line=lines[26*j+2+6*k+l].split(" ")
-                            for t in range(9):
+                            for sub in line:
                                 global Timetable
-                                Timetable[j][k][l][t]=line[t]
+                                Timetable[j][k][l].append(sub)
                 fr.close()
                 subjectName=Timetable[grade-1][classn-1][day-1][(classN+i)%9]
                 fr=open("/home/ubuntu/dg1s_bot/subject data.txt","r")
