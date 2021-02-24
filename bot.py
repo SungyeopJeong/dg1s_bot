@@ -35,7 +35,7 @@ def prin(datas,classN): # 시간표 출력 함수
     now=datetime.datetime.utcnow() # 현재 시간
     day=int(utc.localize(now).astimezone(KST).strftime("%w"))
     title=""; answer=""
-    subName=datas[0]; subType=datas[1]; # datas: 0=name, 1=type, 2=zoomid, 3=zoompwd, 4=hangoutid, 5=class, 6=teacher
+    subName=datas[0]; subType=datas[1]; # datas: 0=name, 1=zoomid, 2=zoompwd, 3=hangoutid, 4=class, 5=teacher
     trimi=subName.find('(');
     if trimi!=-1: subName=subName[:trimi] # 과목명 출력할 때는 괄호 없애기
     if subType=="daymeeting": # 조종례일 경우
