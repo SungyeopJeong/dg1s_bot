@@ -106,7 +106,7 @@ def response_link(): # 온라인 시간표 대답 함수
             }
         }
     else :
-        if day==6 or day==0 or classN==9: # 수업이 없는 경우
+        if day==6 or day==0 :#or classN==9: # 수업이 없는 경우
             res={
                 "version": "2.0",
                 "template": { "outputs": [ { "simpleText": { "text": "진행 중인 수업이 없습니다." } } ] }
