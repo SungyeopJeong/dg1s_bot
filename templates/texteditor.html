@@ -155,10 +155,8 @@
             document.getElementById(menulist[i - 1]).className += ' leftmenu';
             document.getElementById(menulist[i - 1]).parentNode.className += ' sidecontent';
         }
-        if (i < 5) {
-            document.getElementById(menulist[i + 1]).className += ' rightmenu';
-            document.getElementById(menulist[i + 1]).parentNode.className += ' sidecontent';
-        }
+        document.getElementById(menulist[i + 1]).className += ' rightmenu';
+        document.getElementById(menulist[i + 1]).parentNode.className += ' sidecontent';
         $("#number").on('scroll touchmove mousewheel', function (event) {
             event.preventDefault();
         });
