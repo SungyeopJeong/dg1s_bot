@@ -39,24 +39,25 @@ def prin(datas,classN): # 시간표 출력 함수
     subHangout=datas[3]; subClassroom=datas[4]
     trimi=subName.find('(');
     if trimi!=-1: subName=subName[:trimi] # 과목명 출력할 때는 괄호 없애기
-    if subType=="daymeeting": # 조종례일 경우
+    
+    if "반" in subName: # 조종례일 경우
         title+=Days[day]+" ["+subName
         if classN==0: title+=" 조례]"
         elif classN==8: title+=" 종례]"
-        answer+="https://zoom.us/j/"+datas[2]+"?pwd="+datas[3];
-    elif subType=="club": # 동아리일 경우
-        title+=Days[day]+" "+str(classN)+"교시 : [동아리]"
-        answer+="동아리 클래스룸을 참고하세요."
     else : # 기타 과목
         title+=Days[day]+" "+str(classN)+"교시 : ["+subName+"]"
-        if subType=="none":
-            answer+="관련 접속 정보가 존재하지 않습니다."
-        else :
-            if subType=="zoom":
-                answer+="줌 : https://zoom.us/j/"+datas[2]+"?pwd="+datas[3]+"\n"
-            elif subType=="hangout":
-                answer+="행아웃 : https://meet.google.com/lookup/"+datas[4]+"\n"
-            answer+="클래스룸 : https://classroom.google.com/u/0/c/"+datas[5]
+    
+    if subName=="동아리": # 링크 첨부
+        answer+="동아리 클래스룸을 참고하세요."
+    if subZoomid!="none":
+        answer+="줌 : https://zoom.us/j/"+subZoomid+"?pwd="+subZoompwd
+    if subHangout!="none":
+        answer+="행아웃 : https://meet.google.com/lookup/"+subHangout
+    if subClassroom!="none":
+        answer+="\n"+"클래스룸 : https://classroom.google.com/u/0/c/"+subClassroom
+    if subZoomid=="none" and subHangout=="none" and subClassroom=="none":
+        answer+="관련 접속 정보가 존재하지 않습니다."
+    
     if classN!=8: title+=" ("+classtime[classN][0]+" ~ "+classtime[classN][1]+")" # 종례 제외 시간표시
     return title, answer
 
