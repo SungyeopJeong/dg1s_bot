@@ -49,7 +49,7 @@ def prin(datas,classN): # 시간표 출력 함수
     else : # 기타 과목
         title+=Days[day]+" "+str(classN)+"교시 : ["+subName+"]"
         if subType=="none":
-            answer+="해당 클래스룸이 개설되지 않았습니다."
+            answer+="관련 접속 정보가 존재하지 않습니다."
         else :
             if subType=="zoom":
                 answer+="줌 : https://zoom.us/j/"+datas[2]+"?pwd="+datas[3]+"\n"
