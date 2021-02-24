@@ -117,17 +117,17 @@ def response_link(): # 온라인 시간표 대답 함수
         else :
             grade=int(stid[0]); classn=int(stid[1])
             items=[]
-            for i in range(9): # 해당 요일의 시간표 모두 출력
-                fr=open("/home/ubuntu/dg1s_bot/timetable.txt","r")
-                lines=fr.readlines()
-                for j in range(3):
-                    for k in range(4):
-                        for l in range(5):
-                            line=lines[26*j+2+6*k+l].split(" ")
-                            for sub in line:
-                                global Timetable
-                                Timetable[j][k][l].append(sub)
-                fr.close()
+            fr=open("/home/ubuntu/dg1s_bot/timetable.txt","r")
+            lines=fr.readlines()
+            for j in range(3):
+                for k in range(4):
+                    for l in range(5):
+                        line=lines[26*j+2+6*k+l].split(" ")
+                        for sub in line:
+                            global Timetable
+                            Timetable[j][k][l].append(sub)
+            fr.close()
+            for i in range(9): # 해당 요일의 시간표 모두 출력  
                 subjectName=Timetable[grade-1][classn-1][day-1][(classN+i)%9]
                 fr=open("/home/ubuntu/dg1s_bot/subject data.txt","r")
                 lines=fr.readlines()
