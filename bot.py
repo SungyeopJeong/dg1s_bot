@@ -48,7 +48,7 @@ def prin(datas,classN): # 시간표 출력 함수
         title+=Days[day]+" "+str(classN)+"교시 : ["+subName+"]"
     
     if subName=="동아리": # 링크 첨부
-        answer+="동아리 클래스룸을 참고하세요."
+        answer+="동아리 활동 시간입니다."
     if not "none" in subZoomid:
         answer+="줌 : https://zoom.us/j/"+subZoomid+"?pwd="+subZoompwd
     if not "none" in subHangout:
