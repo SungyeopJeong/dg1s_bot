@@ -49,13 +49,13 @@ def prin(datas,classN): # 시간표 출력 함수
     
     if subName=="동아리": # 링크 첨부
         answer+="동아리 클래스룸을 참고하세요."
-    if subZoomid!="none":
+    if not "none" in subZoomid:
         answer+="줌 : https://zoom.us/j/"+subZoomid+"?pwd="+subZoompwd
-    if subHangout!="none":
+    if not "none" in subHangout:
         answer+="행아웃 : https://meet.google.com/lookup/"+subHangout
-    if subClassroom!="none":
+    if not "none" in subClassroom:
         answer+="\n"+"클래스룸 : https://classroom.google.com/u/0/c/"+subClassroom
-    if subZoomid=="none" and subHangout=="none" and subClassroom=="none":
+    if "none" in subZoomid and "none" in subHangout and "none" in subClassroom:
         answer+="관련 접속 정보가 존재하지 않습니다."
     
     if classN!=8: title+=" ("+classtime[classN][0]+" ~ "+classtime[classN][1]+")" # 종례 제외 시간표시
