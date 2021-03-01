@@ -55,7 +55,7 @@ def prin(datas,classN): # 시간표 출력 함수
         answer+="행아웃 : https://meet.google.com/lookup/"+subHangout
     if not "none" in subClassroom:
         answer+="\n"+"클래스룸 : https://classroom.google.com/u/0/c/"+subClassroom
-    if "none" in subZoomid and "none" in subHangout and "none" in subClassroom:
+    if subName!="동아리" and "none" in subZoomid and "none" in subHangout and "none" in subClassroom:
         answer+="관련 접속 정보가 존재하지 않습니다."
     
     if classN!=8: title+=" ("+classtime[classN][0]+" ~ "+classtime[classN][1]+")" # 종례 제외 시간표시
