@@ -166,7 +166,7 @@ def response_link(): # 온라인 시간표 대답 함수
             }
             return jsonify(res)
 
-def what_is_menu():
+def what_is_menu(): # made by 1316, 1301
     
     global Menu, Menu_saved_date
     now = datetime.datetime.utcnow() # 오늘, 내일 날짜
@@ -225,8 +225,20 @@ def what_is_menu():
     return Msg[i][fi], Msg[i][si], Msg[i][ti], first, second, third
 
 @application.route('/menu', methods=['POST'])
-def response_menu(): # 메뉴 대답 함수 made by 1316, 1301
+def response_menu(): # 메뉴 대답 함수
     
+    date=int(utc.localize(now).astimezone(KST).strftime("%d")) # 몇 번째 주인지 계산
+    month=int(utc.localize(now).astimezone(KST).strftime("%m"))
+    year=int(utc.localize(now).astimezone(KST).strftime("%Y")
+    cday=(year-1)*365+(year-1)//4-(year-1)//100+(year-1)//400
+    if (year%4==0 and year%100!=0) or year%400==0: cday+=1
+    for i in range(month-1): cday+=mday[i]
+    cday+=date
+    cweek=(cday-1)//7
+    cweek-=105407 # 2021-03-02 = 105407번째 주
+    classn=["1반","2반","3반","4반"]
+    boborder="급식 순서 : "+classn[cweek%4]
+    for i in range(1,4): boborder+='->'+classn[i+cweek%4]
     msg1, msg2, msg3, menu1, menu2, menu3 = what_is_menu()
     res={ # 답변
         "version": "2.0",
@@ -240,6 +252,11 @@ def response_menu(): # 메뉴 대답 함수 made by 1316, 1301
                             { "title": msg2, "description": menu2 },
                             { "title": msg3, "description": menu3 }
                         ]
+                    }
+                },
+                {
+                    "simpleText":{
+                         "text": boborder
                     }
                 }
             ]
