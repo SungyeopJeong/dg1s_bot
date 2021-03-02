@@ -229,7 +229,7 @@ def response_menu(): # 메뉴 대답 함수
     
     date=int(utc.localize(now).astimezone(KST).strftime("%d")) # 몇 번째 주인지 계산
     month=int(utc.localize(now).astimezone(KST).strftime("%m"))
-    year=int(utc.localize(now).astimezone(KST).strftime("%Y")
+    year=int(utc.localize(now).astimezone(KST).strftime("%Y"))
     cday=(year-1)*365+(year-1)//4-(year-1)//100+(year-1)//400
     if (year%4==0 and year%100!=0) or year%400==0: cday+=1
     for i in range(month-1): cday+=mday[i]
