@@ -645,7 +645,7 @@ def save_as_file(): # txt file 저장하기
         fw=open("/home/ubuntu/dg1s_bot/log.txt","w")
         fw.write('['+year+'-'+month+'-'+date+' '+hour+':'+minu+"] '"+filename+".txt' saved")
         for i in range(len(lines)):
-            if lines[i]!=text[i]: fw.write(lines+" -> "+text)
+            if lines[i]!=text[i]: fw.write(lines[i]+" -> "+text[i])
         fw.close()
         
         with open("/home/ubuntu/dg1s_bot/"+filename+".txt","w",encoding='utf-8') as f:
