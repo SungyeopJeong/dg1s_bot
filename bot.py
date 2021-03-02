@@ -648,7 +648,7 @@ def save_as_file(): # txt file 저장하기
         lines=lines.split('\n'); text=text.split('\n')
         for i in range(len(lines)):
             if lines[i]!=text[i]: fw.write(lines[i]+" -> "+text[i])
-        fw.write()
+        fw.write('\n')
         fw.close()
         
         return render_template("saved.html")
