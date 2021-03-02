@@ -204,6 +204,21 @@ def what_is_menu(): # made by 1316, 1301
     req=request.get_json() # 파라미터 값 불러오기
     askmenu=req["action"]["detailParams"]["ask_menu"]["value"]
     
+    now=datetime.datetime.utcnow() # 몇 번째 주인지 계산
+    date=int(utc.localize(now).astimezone(KST).strftime("%d"))
+    month=int(utc.localize(now).astimezone(KST).strftime("%m"))
+    year=int(utc.localize(now).astimezone(KST).strftime("%Y"))
+    cday=(year-1)*365+(year-1)//4-(year-1)//100+(year-1)//400
+    if (year%4==0 and year%100!=0) or year%400==0: cday+=1
+    for i in range(month-1): cday+=mday[i]
+    cday+=date
+    if askmenu=="내일 급식": cday+=1
+    cweek=(cday-1)//7
+    cweek-=105407 # 2021-03-02 = 105407번째 주
+    classn=["1반","2반","3반","4반"]
+    boborder="급식 순서 : "+classn[cweek%4]
+    for i in range(1,4): boborder+=' - '+classn[i+cweek%4]
+    
     hour=int(utc.localize(now).astimezone(KST).strftime("%H")) # Meal 계산
     minu=int(utc.localize(now).astimezone(KST).strftime("%M"))
     if (hour==13 and minu<20) or (hour>=8 and hour<=12): Meal="아침" # 아침을 먹은 후
@@ -222,47 +237,48 @@ def what_is_menu(): # made by 1316, 1301
     if Menu[i][fi] == "": first = "등록된 급식이 없습니다."
     if Menu[i][si] == "": second = "등록된 급식이 없습니다."
     if Menu[i][ti] == "": third = "등록된 급식이 없습니다."
-    return Msg[i][fi], Msg[i][si], Msg[i][ti], first, second, third
+    return Msg[i][fi], Msg[i][si], Msg[i][ti], first, second, third, boborder
 
 @application.route('/menu', methods=['POST'])
 def response_menu(): # 메뉴 대답 함수
-    
-    now=datetime.datetime.utcnow() # 몇 번째 주인지 계산
-    date=int(utc.localize(now).astimezone(KST).strftime("%d"))
-    month=int(utc.localize(now).astimezone(KST).strftime("%m"))
-    year=int(utc.localize(now).astimezone(KST).strftime("%Y"))
-    cday=(year-1)*365+(year-1)//4-(year-1)//100+(year-1)//400
-    if (year%4==0 and year%100!=0) or year%400==0: cday+=1
-    for i in range(month-1): cday+=mday[i]
-    cday+=date; cweek=(cday-1)//7
-    cweek-=105407 # 2021-03-02 = 105407번째 주
-    classn=["1반","2반","3반","4반"]
-    boborder="급식 순서 : "+classn[cweek%4]
-    for i in range(1,4): boborder+=' - '+classn[i+cweek%4]
-    
-    msg1, msg2, msg3, menu1, menu2, menu3 = what_is_menu()
-    res={ # 답변
-        "version": "2.0",
-        "template": {
-            "outputs": [
-                {
-                    "carousel": {
-                        "type": "basicCard",
-                        "items": [
-                            { "title": msg1, "description": menu1 },
-                            { "title": msg2, "description": menu2 },
-                            { "title": msg3, "description": menu3 }
-                        ]
+        
+    msg1, msg2, msg3, menu1, menu2, menu3, boborder = what_is_menu()
+    if menu1=="등록된 급식이 없습니다." and menu2=="등록된 급식이 없습니다." and menu3=="등록된 급식이 없습니다.":
+        res={
+            "version": "2.0",
+            "template": {
+                "outputs": [
+                    {
+                        "simpleText": {
+                            "text": "급식이 없는 날입니다."
+                        }
                     }
-                },
-                {
-                    "simpleText":{
-                         "text": boborder
-                    }
-                }
-            ]
+                ]
+            }
         }
-    }
+    else:
+        res={ # 답변
+            "version": "2.0",
+            "template": {
+                "outputs": [
+                    {
+                        "carousel": {
+                            "type": "basicCard",
+                            "items": [
+                                { "title": msg1, "description": menu1 },
+                                { "title": msg2, "description": menu2 },
+                                { "title": msg3, "description": menu3 }
+                            ]
+                        }
+                    },
+                    {
+                        "simpleText": {
+                             "text": boborder
+                        }
+                    }
+                ]
+            }
+        }
     return jsonify(res)
 
 @application.route('/seat', methods=['POST'])
