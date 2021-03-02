@@ -629,7 +629,7 @@ def text_editor(): # 원하는 파일 사이트에서 보여주고 편집
 def save_as_file(): # txt file 저장하기
     if request.method=='POST':
         fr=open("/home/ubuntu/dg1s_bot/"+filename+".txt","r")
-        lines=fr.read()
+        before=fr.read()
         fr.close()
         
         text=request.form['content']
@@ -645,10 +645,7 @@ def save_as_file(): # txt file 저장하기
         year=utc.localize(now).astimezone(KST).strftime("%Y")
         fw=open("/home/ubuntu/dg1s_bot/log.txt","a")
         fw.write('['+year+'-'+month+'-'+date+' '+hour+':'+minu+"] '"+filename+".txt' saved\n")
-        lines=lines.split('\n'); text=text.split('\n')
-        for i in range(len(lines)):
-            if lines[i]!=text[i]: fw.write(lines[i]+" -> "+text[i])
-        fw.write('\n')
+        fw.write(before+'\n')
         fw.close()
         
         return render_template("saved.html")
