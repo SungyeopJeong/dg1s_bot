@@ -637,11 +637,11 @@ def save_as_file(): # txt file 저장하기
         text=text.split('\n')
         
         now=datetime.datetime.utcnow()
-        hour=int(utc.localize(now).astimezone(KST).strftime("%H"))
-        minu=int(utc.localize(now).astimezone(KST).strftime("%M"))
-        date=int(utc.localize(now).astimezone(KST).strftime("%d"))
-        month=int(utc.localize(now).astimezone(KST).strftime("%m"))
-        year=int(utc.localize(now).astimezone(KST).strftime("%Y"))
+        hour=utc.localize(now).astimezone(KST).strftime("%H")
+        minu=utc.localize(now).astimezone(KST).strftime("%M")
+        date=utc.localize(now).astimezone(KST).strftime("%d")
+        month=utc.localize(now).astimezone(KST).strftime("%m")
+        year=utc.localize(now).astimezone(KST).strftime("%Y")
         fw=open("/home/ubuntu/dg1s_bot/log.txt","w")
         fw.write('['+year+'-'+month+'-'+date+' '+hour+':'+minu+"] '"+filename+".txt' saved")
         for i in range(len(lines)):
