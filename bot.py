@@ -628,8 +628,26 @@ def text_editor(): # 원하는 파일 사이트에서 보여주고 편집
 @application.route('/filesave', methods=['GET','POST'])
 def save_as_file(): # txt file 저장하기
     if request.method=='POST':
+        fr=open("/home/ubuntu/dg1s_bot/"+filename+".txt","r")
+        lines=fr.readlines()
+        fr.close()
+        
         text=request.form['content']
         text=str(text)
+        text=text.split('\n')
+        
+        now=datetime.datetime.utcnow()
+        hour=int(utc.localize(now).astimezone(KST).strftime("%H"))
+        minu=int(utc.localize(now).astimezone(KST).strftime("%M"))
+        date=int(utc.localize(now).astimezone(KST).strftime("%d"))
+        month=int(utc.localize(now).astimezone(KST).strftime("%m"))
+        year=int(utc.localize(now).astimezone(KST).strftime("%Y"))
+        fw=open("/home/ubuntu/dg1s_bot/log.txt","w")
+        fw.write('['+year+'-'+month+'-'+date+' '+hour+':'+minu+"] '"+filename+".txt' saved")
+        for i in range(len(lines)):
+            if lines[i]!=text[i]: fw.write(lines+" -> "+text)
+        fw.close()
+        
         with open("/home/ubuntu/dg1s_bot/"+filename+".txt","w",encoding='utf-8') as f:
             f.write(text)
         return render_template("saved.html")
