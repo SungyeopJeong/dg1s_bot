@@ -634,8 +634,9 @@ def save_as_file(): # txt file 저장하기
         
         text=request.form['content']
         text=str(text)
-        text=text.split('\n')
-        
+        with open("/home/ubuntu/dg1s_bot/"+filename+".txt","w",encoding='utf-8') as f:
+            f.write(text)
+    
         now=datetime.datetime.utcnow()
         hour=utc.localize(now).astimezone(KST).strftime("%H")
         minu=utc.localize(now).astimezone(KST).strftime("%M")
@@ -644,12 +645,11 @@ def save_as_file(): # txt file 저장하기
         year=utc.localize(now).astimezone(KST).strftime("%Y")
         fw=open("/home/ubuntu/dg1s_bot/log.txt","w")
         fw.write('['+year+'-'+month+'-'+date+' '+hour+':'+minu+"] '"+filename+".txt' saved")
+        text=text.split('\n')
         for i in range(len(lines)):
             if lines[i]!=text[i]: fw.write(lines[i]+" -> "+text[i])
         fw.close()
         
-        with open("/home/ubuntu/dg1s_bot/"+filename+".txt","w",encoding='utf-8') as f:
-            f.write(text)
         return render_template("saved.html")
   
 @application.route('/xlsave', methods=['GET','POST'])
