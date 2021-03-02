@@ -644,7 +644,7 @@ def save_as_file(): # txt file 저장하기
         month=utc.localize(now).astimezone(KST).strftime("%m")
         year=utc.localize(now).astimezone(KST).strftime("%Y")
         fw=open("/home/ubuntu/dg1s_bot/log.txt","a")
-        fw.write('['+year+'-'+month+'-'+date+' '+hour+':'+minu+"] '"+filename+".txt' saved\n")
+        fw.write('['+year+'-'+month+'-'+date+' '+hour+':'+minu+"] '"+filename+".txt' saved (Below is the contents before saving.)\n")
         fw.write(before+'\n')
         fw.close()
         
