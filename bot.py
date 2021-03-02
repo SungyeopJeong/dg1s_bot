@@ -238,7 +238,7 @@ def response_menu(): # 메뉴 대답 함수
     cweek-=105407 # 2021-03-02 = 105407번째 주
     classn=["1반","2반","3반","4반"]
     boborder="급식 순서 : "+classn[cweek%4]
-    for i in range(1,4): boborder+='->'+classn[i+cweek%4]
+    for i in range(1,4): boborder+=' - '+classn[i+cweek%4]
     
     msg1, msg2, msg3, menu1, menu2, menu3 = what_is_menu()
     res={ # 답변
