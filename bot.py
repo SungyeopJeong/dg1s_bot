@@ -174,7 +174,7 @@ def what_is_menu(): # made by 1316, 1301
     tomorrow = today + timedelta(days=1)
     today_name = " "+str(today.month)+"월 "+str(today.day)+"일 " # 추후 비교용 날짜명 텍스트("_N월_N일_")
     tomorrow_name = " "+str(tomorrow.month)+"월 "+str(tomorrow.day)+"일 "
-    
+    print(Menu_saved_date, today_name)
     if Menu_saved_date == "" or Menu_saved_date != today_name :
       Menu_saved_date = today_name
       
