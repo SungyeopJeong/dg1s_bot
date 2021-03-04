@@ -187,7 +187,7 @@ def what_is_menu(): # made by 1316, 1301
           a = soup.select('.menu_info')
           
           for menu in a:
-              menu_text = menu.get_text(); print(menu_text)
+              menu_text = menu.get_text(); print('"'+menu_text+'"')
               bracket_i = menu_text.find('[')
               bracket_j = menu_text.find(']')
               menu_day = menu_text[:bracket_i]; print('"'+menu_day+'"')
