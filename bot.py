@@ -218,7 +218,7 @@ def what_is_menu(): # made by 1316, 1301
     cweek-=105407 # 2021-03-02 = 105407번째 주
     classn=["1반","2반","3반","4반"]
     boborder="급식 순서 : "+classn[cweek%4]
-    for i in range(1,4): boborder+=' - '+classn[i+cweek%4]
+    for i in range(1,4): boborder+=' - '+classn[(i+cweek)%4]
     
     hour=int(utc.localize(now).astimezone(KST).strftime("%H")) # Meal 계산
     minu=int(utc.localize(now).astimezone(KST).strftime("%M"))
