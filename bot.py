@@ -709,7 +709,7 @@ def record_status():
     fr=open("/home/ubuntu/dg1s_bot/final save.txt", "r")
     lines=fr.readlines()
     for line in lines:
-        datas=line.split(' '); id=datas[0]; day=datas[1]; meal=datas[2]; seat=datas[3].rstrip('\n')
+        datas=line.split(' '); id=datas[0]; day=int(datas[1]); meal=int(datas[2]); seat=datas[3].rstrip('\n')
         if id[:2]==classn[index]:
             if 3*day+meal-4<0 or 3*day+meal-4>12: continue
             record[int(id[2:4])-1][3*day+meal-4]=seat
