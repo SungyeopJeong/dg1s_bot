@@ -688,7 +688,7 @@ def upload_n_download():
 
 @application.route('/status')
 def record_status():
-    index=request.args.get('index')
+    index=int(request.args.get('index'))
     n=classN[index]
     stid=[]
     for i in range(1,classN[index]+1):
