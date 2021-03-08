@@ -713,7 +713,7 @@ def record_status():
         if id[:2]==classn[index]:
             if 3*day+meal-4<0 or 3*day+meal-4>12: continue
             record[int(id[2:4])-1][3*day+meal-4]=seat
-            record[int(id[2:4])-1][13]+=1
+            if meal!=0: record[int(id[2:4])-1][13]+=1
     fr.close()
     for i in range(n):
         record[i][13]=str(round((record[i][13]/9)*100))+'%'
