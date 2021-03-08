@@ -91,45 +91,45 @@
             <a class="classname" id="33" href="http://15.164.222.88:5000/status?index=10">3 - 3</a>
             <a class="classname" id="34" href="http://15.164.222.88:5000/status?index=11">3 - 4</a>
         </div>
-    </div>
-    <div id="tablebox">
-        <table>
-            <tr>
-                <td rowspan="2">학번</td>
-                <td rowspan="2">이름</td>
-                <td colspan="2">월</td>
-                <td colspan="3">화</td>
-                <td colspan="3">수</td>
-                <td colspan="3">목</td>
-                <td colspan="2">금</td>
-                <td rowspan="2">참여율</td>
-            </tr>
-            <tr>
-                <td>중식</td>
-                <td>석식</td>
-                <td>조식</td>
-                <td>중식</td>
-                <td>석식</td>
-                <td>조식</td>
-                <td>중식</td>
-                <td>석식</td>
-                <td>조식</td>
-                <td>중식</td>
-                <td>석식</td>
-                <td>조식</td>
-                <td>중식</td>
-            </tr>
-            {% for i in range(n) %}
+        <div id="tablebox">
+            <table>
                 <tr>
-                    <td>{{stid[i]}}</td>
-                    <td>{{name[i]}}</td>
-                    {% for j in range(13) %}
-                        <td></td>
-                    {% endfor %}
-                    <td></td>
+                    <td rowspan="2">학번</td>
+                    <td rowspan="2">이름</td>
+                    <td colspan="2">월</td>
+                    <td colspan="3">화</td>
+                    <td colspan="3">수</td>
+                    <td colspan="3">목</td>
+                    <td colspan="2">금</td>
+                    <td rowspan="2">참여율</td>
                 </tr>
-            {% endfor %}
-        </table>
+                <tr>
+                    <td>중식</td>
+                    <td>석식</td>
+                    <td>조식</td>
+                    <td>중식</td>
+                    <td>석식</td>
+                    <td>조식</td>
+                    <td>중식</td>
+                    <td>석식</td>
+                    <td>조식</td>
+                    <td>중식</td>
+                    <td>석식</td>
+                    <td>조식</td>
+                    <td>중식</td>
+                </tr>
+                {% for i in range(n) %}
+                    <tr>
+                        <td>{{stid[i]}}</td>
+                        <td>{{name[i]}}</td>
+                        {% for j in range(13) %}
+                            <td></td>
+                        {% endfor %}
+                        <td></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
     </div>
 </body>
 </html>
