@@ -188,31 +188,31 @@ def what_is_menu(): # made by 1316, 1301
     tomorrow_name = " "+str(tomorrow.month)+"월 "+str(tomorrow.day)+"일 "
 
     if Menu_saved_date == "" or Menu_saved_date != today_name :
-      Menu_saved_date = today_name
-      Menu = [["","",""],["","",""]]
+        Menu_saved_date = today_name
+        Menu = [["","",""],["","",""]]
       
-      url = 'https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=%EB%8C%80%EA%B5%AC%EC%9D%BC%EA%B3%BC%ED%95%99%EA%B3%A0%EB%93%B1%ED%95%99%EA%B5%90&oquery=eorndlfrhkrh+rmqtlr&tqi=U%2Ftz5wprvOssslHyxuossssssLN-415573'
-      response = requests.get(url) # url로부터 가져오기
-      if response.status_code == 200:  
+        url = 'https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=%EB%8C%80%EA%B5%AC%EC%9D%BC%EA%B3%BC%ED%95%99%EA%B3%A0%EB%93%B1%ED%95%99%EA%B5%90&oquery=eorndlfrhkrh+rmqtlr&tqi=U%2Ftz5wprvOssslHyxuossssssLN-415573'
+        response = requests.get(url) # url로부터 가져오기
+        if response.status_code == 200:  
           
-          source = response.text # menu_info class 내용 가져오기
-          soup = BeautifulSoup(source,'html.parser')
-          a = soup.select('.menu_info')
+            source = response.text # menu_info class 내용 가져오기
+            soup = BeautifulSoup(source,'html.parser')
+            a = soup.select('.menu_info')
           
-          for menu in a:
-              menu_text = menu.get_text()
-              bracket_i = menu_text.find('[')
-              bracket_j = menu_text.find(']')
-              menu_day = menu_text[:bracket_i]
-              menu_when = menu_text[bracket_i+1:bracket_j]
-              menu_content = menu_text[bracket_j+3:].rstrip().replace(" ","\n")
+            for menu in a:
+                menu_text = menu.get_text()
+                bracket_i = menu_text.find('[')
+                bracket_j = menu_text.find(']')
+                menu_day = menu_text[:bracket_i]
+                menu_when = menu_text[bracket_i+1:bracket_j]
+                menu_content = menu_text[bracket_j+3:].rstrip().replace(" ","\n")
               
-              if menu_when == "조식": save_i = 0
-              elif menu_when == "중식": save_i = 1
-              elif menu_when == "석식": save_i = 2
+                if menu_when == "조식": save_i = 0
+                elif menu_when == "중식": save_i = 1
+                elif menu_when == "석식": save_i = 2
               
-              if menu_day == today_name: Menu[0][save_i]=menu_content
-              elif menu_day == tomorrow_name: Menu[1][save_i]=menu_content
+                if menu_day == today_name: Menu[0][save_i]=menu_content
+                elif menu_day == tomorrow_name: Menu[1][save_i]=menu_content
     
     req=request.get_json() # 파라미터 값 불러오기
     askmenu=req["action"]["detailParams"]["ask_menu"]["value"]
@@ -690,14 +690,34 @@ def upload_n_download():
 def record_status():
     index=int(request.args.get('index'))
     n=classN[index]
+    
     stid=[]
     for i in range(1,classN[index]+1):
         id=classn[index]
         if i<10: id+='0'
         id+=str(i)
         stid.append(id)
+    
     name=Name[index]
-    return render_template("status.html", n=n, stid=stid, name=name)
+    
+    record=[]
+    for i in range(25):
+        record.append([])
+        for j in range(14):
+            record[i].append('')
+    fr=open("/home/ubuntu/dg1s_bot/final save.txt", "r")
+    lines=fr.readlines()
+    for line in lines:
+        datas=line.split(' '); id=datas[0]; day=datas[1]; meal=datas[2]; seat=datas[3].rstrip('\n')
+        if id[:2]==classn[index]:
+            if 3*day+meal-4<0 or 3*day+meal-4>12: continue
+            record[int(id[2:4])-1][3*day+meal-4]=seat
+            record[int(id[2:4])-1][13]+=1
+    fr.close()
+    for i in range(n):
+        record[i][13]=str(round((record[i][13]/9)*100))+'%'
+    
+    return render_template("status.html", n=n, stid=stid, name=name, record=record)
 
 @application.route('/ball')
 def ball():
