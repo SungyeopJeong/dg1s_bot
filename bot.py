@@ -710,14 +710,14 @@ def record_status():
     fr=open("/home/ubuntu/dg1s_bot/final save.txt", "r")
     lines=fr.readlines()
     for line in lines:
-        if line==lines[1]: continue
+        if line==lines[0]: continue
         datas=line.split(' '); id=datas[0]; day=int(datas[1]); meal=int(datas[2]); seat=datas[3]
         if id[:2]==classn[index]:
             if 3*day+meal-4<0 or 3*day+meal-4>12: continue
             record[int(id[2:4])-1][3*day+meal-4]=seat
             if meal!=0: record[int(id[2:4])-1][13]+=1
     fr.close()
-    mealN=int(lines[1].rstrip('\n'))
+    mealN=int(lines[0].rstrip('\n'))
     for i in range(n):
         record[i][13]=str(round((record[i][13]/mealN)*100))+'%'
     
