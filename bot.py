@@ -703,8 +703,9 @@ def record_status():
     record=[]
     for i in range(25):
         record.append([])
-        for j in range(14):
+        for j in range(13):
             record[i].append('')
+        record[i].append(0)
     fr=open("/home/ubuntu/dg1s_bot/final save.txt", "r")
     lines=fr.readlines()
     for line in lines:
