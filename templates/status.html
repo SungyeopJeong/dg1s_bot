@@ -6,53 +6,128 @@
     <meta charset="utf-8" />
     <title></title>
     <style>
+        #contentbox {
+            width: 100vw;
+            height: 90vh;
+            background-color: rgba(51,63,80,1);
+        }
+        #selectbox {
+            width: 10vw;
+            height: 90vh;
+            float: left;
+        }
+        .classname {
+            width: 10vw;
+            height: 6vh;
+            line-height: 6vh;
+            display: inline-block;
+            margin: 0 0 1vh 0;
+            background-color: rgba(117,135,159,1);
+            text-align: center;
+            text-decoration: none;
+        }
+        .classname:link, .classname:visited {
+            color: white;
+        }
+        #tablebox {
+            width: 90vw;
+            height: 90vh;
+            display: flex;
+        }
         table {
+            width: 85vw;
+            height: 85vh;
+            margin: 2.5vh 2.5vw 2.5vh 2.5vw;
             border-collapse: collapse;
         }
         tr, td {
-            border: 1px solid black;
-            padding: 0;
+            border: 1px solid rgba(117,135,159,1);
             text-align: center;
+            color: white;
         }
     </style>
 </head>
 <body>
-    <table>
-        <tr>
-            <td rowspan="2">학번</td>
-            <td rowspan="2">이름</td>
-            <td colspan="2">월</td>
-            <td colspan="3">화</td>
-            <td colspan="3">수</td>
-            <td colspan="3">목</td>
-            <td colspan="2">금</td>
-            <td rowspan="2">참여율</td>
-        </tr>
-        <tr>
-            <td>중식</td>
-            <td>석식</td>
-            <td>조식</td>
-            <td>중식</td>
-            <td>석식</td>
-            <td>조식</td>
-            <td>중식</td>
-            <td>석식</td>
-            <td>조식</td>
-            <td>중식</td>
-            <td>석식</td>
-            <td>조식</td>
-            <td>중식</td>
-        </tr>
-        {% for i in range(n) %}
+    <div id="header">
+        <a href="http://15.164.222.88:5000/"><img id="logotype" src="./static/images/comat_logotype.png" /></a>
+        <ul id="menu">
+            <li class="menucontent">
+                <a class="menuname" id="user data" href="http://15.164.222.88:5000/texteditor?filename=user data">User Data</a>
+            </li>
+            <li class="menucontent">
+                <a class="menuname" id="final save" href="http://15.164.222.88:5000/texteditor?filename=final save">Final Save</a>
+            </li>
+            <li class="menucontent">
+                <a class="menuname" id="record status" href="http://15.164.222.88:5000/status?index=0">Record Status</a>
+            </li>
+            <li class="menucontent">
+                <a class="menuname" id="subject data" href="http://15.164.222.88:5000/texteditor?filename=subject data">Subject Data</a>
+            </li>
+            <li class="menucontent">
+                <a class="menuname" id="timetable" href="http://15.164.222.88:5000/texteditor?filename=timetable">Timetable</a>
+            </li>
+            <li class="menucontent">
+                <a class="menuname" id="file management" href="http://15.164.222.88:5000/file">File Management</a>
+            </li>
+            <li class="menucontent">
+                <a class="menuname" id="ball" href="http://15.164.222.88:5000/ball">Ball</a>
+            </li>
+        </ul>
+    </div>
+    <div id="contentbox">
+        <div id="selectbox">
+            <a class="classname" id="11" href="http://15.164.222.88:5000/status?index=0">1 - 1</a>
+            <a class="classname" id="12" href="http://15.164.222.88:5000/status?index=1">1 - 2</a>
+            <a class="classname" id="13" href="http://15.164.222.88:5000/status?index=2">1 - 3</a>
+            <a class="classname" id="14" href="http://15.164.222.88:5000/status?index=3">1 - 4</a>
+            <a class="classname" id="21" href="http://15.164.222.88:5000/status?index=4">2 - 1</a>
+            <a class="classname" id="22" href="http://15.164.222.88:5000/status?index=5">2 - 2</a>
+            <a class="classname" id="23" href="http://15.164.222.88:5000/status?index=6">2 - 3</a>
+            <a class="classname" id="24" href="http://15.164.222.88:5000/status?index=7">2 - 4</a>
+            <a class="classname" id="31" href="http://15.164.222.88:5000/status?index=8">3 - 1</a>
+            <a class="classname" id="32" href="http://15.164.222.88:5000/status?index=9">3 - 2</a>
+            <a class="classname" id="33" href="http://15.164.222.88:5000/status?index=10">3 - 3</a>
+            <a class="classname" id="34" href="http://15.164.222.88:5000/status?index=11">3 - 4</a>
+        </div>
+    </div>
+    <div id="tablebox">
+        <table>
             <tr>
-                <td>{{stid[i]}}</td>
-                <td>{{name[i]}}</td>
-                {% for j in range(13) %}
-                    <td></td>
-                {% endfor %}
-                <td></td>
+                <td rowspan="2">학번</td>
+                <td rowspan="2">이름</td>
+                <td colspan="2">월</td>
+                <td colspan="3">화</td>
+                <td colspan="3">수</td>
+                <td colspan="3">목</td>
+                <td colspan="2">금</td>
+                <td rowspan="2">참여율</td>
             </tr>
-        {% endfor %}
-    </table>
+            <tr>
+                <td>중식</td>
+                <td>석식</td>
+                <td>조식</td>
+                <td>중식</td>
+                <td>석식</td>
+                <td>조식</td>
+                <td>중식</td>
+                <td>석식</td>
+                <td>조식</td>
+                <td>중식</td>
+                <td>석식</td>
+                <td>조식</td>
+                <td>중식</td>
+            </tr>
+            {% for i in range(n) %}
+                <tr>
+                    <td>{{stid[i]}}</td>
+                    <td>{{name[i]}}</td>
+                    {% for j in range(13) %}
+                        <td></td>
+                    {% endfor %}
+                    <td></td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
 </body>
 </html>
