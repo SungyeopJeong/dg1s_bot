@@ -361,7 +361,7 @@ def input_seat(): # 좌석 번호 입력 함수
         for line in lines:
             datas=line.split(" ")
             dusid=datas[0]; dstid=datas[1]; dday=datas[2]; dmeal=datas[3] # data 불러오기
-            dseat=int(datas[4]); dp1=datas[5]; dp2=datas[6].rstrip()
+            dseat=int(datas[4]); dp1=datas[5]; dp2=datas[6].rstrip('\n')
             if dusid==userid:
                 stid=dstid
                 if dday!="7" and day=="7": day=int(dday) # 요일
@@ -467,9 +467,10 @@ def final_save(): # 최종 저장 함수
     rw=open("/home/ubuntu/dg1s_bot/user data.txt","w")
     fw=open("/home/ubuntu/dg1s_bot/final save.txt","a")
     for line in lines:
+        if line==lines[0]: continue
         datas=line.split(" ")
         dusid=datas[0]; dstid=datas[1]; dday=int(datas[2]); dmeal=datas[3]
-        dseat=int(datas[4]); dp1=datas[5]; dp2=datas[6].rstrip()
+        dseat=int(datas[4]); dp1=datas[5]; dp2=datas[6].rstrip('\n')
         if dmeal=="아침": dmeal="0"
         elif dmeal=="점심": dmeal="1"
         elif dmeal=="저녁": dmeal="2"
@@ -709,14 +710,16 @@ def record_status():
     fr=open("/home/ubuntu/dg1s_bot/final save.txt", "r")
     lines=fr.readlines()
     for line in lines:
-        datas=line.split(' '); id=datas[0]; day=int(datas[1]); meal=int(datas[2]); seat=datas[3].rstrip('\n')
+        if line==lines[1]: continue
+        datas=line.split(' '); id=datas[0]; day=int(datas[1]); meal=int(datas[2]); seat=datas[3]
         if id[:2]==classn[index]:
             if 3*day+meal-4<0 or 3*day+meal-4>12: continue
             record[int(id[2:4])-1][3*day+meal-4]=seat
             if meal!=0: record[int(id[2:4])-1][13]+=1
     fr.close()
+    mealN=int(lines[1].rstrip('\n'))
     for i in range(n):
-        record[i][13]=str(round((record[i][13]/9)*100))+'%'
+        record[i][13]=str(round((record[i][13]/mealN)*100))+'%'
     
     return render_template("status.html", n=n, stid=stid, name=name, record=record)
 
