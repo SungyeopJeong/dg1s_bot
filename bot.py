@@ -711,6 +711,7 @@ def record_status():
     lines=fr.readlines()
     for line in lines:
         if line==lines[0]: continue
+        if '7' in line or 'none' in line: continue
         datas=line.split(' '); id=datas[0]; day=int(datas[1]); meal=int(datas[2]); seat=datas[3]
         if id[:2]==classn[index]:
             if 3*day+meal-4<0 or 3*day+meal-4>12: continue
