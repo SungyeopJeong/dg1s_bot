@@ -714,8 +714,8 @@ def record_status():
         datas=line.split(' '); id=datas[0]; day=int(datas[1]); meal=int(datas[2]); seat=datas[3]
         if id[:2]==classn[index]:
             if 3*day+meal-4<0 or 3*day+meal-4>12: continue
+            if meal!=0 and record[int(id[2:4])-1][3*day+meal-4]=='': record[int(id[2:4])-1][13]+=1
             record[int(id[2:4])-1][3*day+meal-4]=seat
-            if meal!=0: record[int(id[2:4])-1][13]+=1
     fr.close()
     mealN=int(lines[0].rstrip('\n'))
     for i in range(n):
