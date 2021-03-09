@@ -577,7 +577,7 @@ def to_excel(): # 엑셀 파일로 생성
     fr=open("/home/ubuntu/dg1s_bot/final save.txt","r") # 엑셀 채워 넣기
     lines=fr.readlines()
     for line in lines:
-        if " 7 " in line or "none" in line: continue
+        if "none" in line: continue
         datas=line.split(" ")
         if len(datas)!=5: continue
         dstid=datas[0]; dday=int(datas[1]); dmeal=int(datas[2]); dseat=datas[3]
@@ -711,7 +711,7 @@ def record_status():
     lines=fr.readlines()
     for line in lines:
         if line==lines[0]: continue
-        if '7' in line or 'none' in line: continue
+        if "none" in line: continue
         datas=line.split(' '); id=datas[0]; day=int(datas[1]); meal=int(datas[2]); seat=datas[3]
         if id[:2]==classn[index]:
             if 3*day+meal-4<0 or 3*day+meal-4>12: continue
