@@ -10,8 +10,8 @@ body {
     height: 10vh;
 }
 #logotype {
-    width: 16vw;
-    height: 10vh;
+    width: auto;
+    max-height: 10vh;
     float: left;
 }
 #menu {
