@@ -467,7 +467,6 @@ def final_save(): # 최종 저장 함수
     rw=open("/home/ubuntu/dg1s_bot/user data.txt","w")
     fw=open("/home/ubuntu/dg1s_bot/final save.txt","a")
     for line in lines:
-        if line==lines[0]: continue
         datas=line.split(" ")
         dusid=datas[0]; dstid=datas[1]; dday=int(datas[2]); dmeal=datas[3]
         dseat=int(datas[4]); dp1=datas[5]; dp2=datas[6].rstrip('\n')
@@ -577,6 +576,7 @@ def to_excel(): # 엑셀 파일로 생성
     fr=open("/home/ubuntu/dg1s_bot/final save.txt","r") # 엑셀 채워 넣기
     lines=fr.readlines()
     for line in lines:
+        if line==lines[0]: continue
         if "none" in line: continue
         datas=line.split(" ")
         if len(datas)!=5: continue
