@@ -5,15 +5,23 @@
     <meta charset="utf-8" />
     <title>Code21</title>
     <link rel="shortcut icon" href="./static/images/code21_favicon.ico" />
-    <link rel="stylesheet" href="./static/css/header5.css" />
+    <link rel="stylesheet" href="./static/css/header6.css" />
     <style>
         #imgbox {
             width: 100vw;
             height: 75vh;
+            background-color: #2F5597;
+            position: relative;
+            text-align: center;
         }
         .homeimg {
-            width: 100%;
-            height: 100%;
+            width: auto;
+            height: auto;
+            max-width: 100%;
+            max-height: 20%;
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
         }
         #footer {
             width: 100vw;
@@ -35,7 +43,9 @@
 </head>
 <body>
     <div id="header">
-        <a href=""><img id="logotype" src="./static/images/code21_logotype.png" /></a>
+        <div id="logobox">
+        <a href="" id="logolink"><img id="logotype" src="./static/images/code21_logotype.png" /></a>
+        </div>
         <ul id="menu">
             <li class="menucontent">
                 <a class="menuname" href="http://15.164.222.88:5000/texteditor?filename=user data">User Data</a>
@@ -61,7 +71,7 @@
         </ul>
     </div>
     <div id="imgbox">
-        <img class="homeimg" src="./static/images/homeimg2.png"/>
+        <img class="homeimg" src="./static/images/homeimg3.png"/>
     </div>
     <div id="footer">
         <p class="spanbox">
