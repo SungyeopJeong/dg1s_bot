@@ -9,10 +9,21 @@ body {
     width: 100vw;
     height: 10vh;
 }
+#logobox, #logolink {
+    width: 16vw;
+    height: 10vh;
+    float: left;
+    position: relative;
+    text-align: center;
+}
 #logotype {
     width: auto;
+    height: auto;
+    max-width: 16vw;
     max-height: 10vh;
-    float: left;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
 }
 #menu {
     width: 84vw;
