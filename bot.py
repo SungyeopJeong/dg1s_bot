@@ -446,15 +446,7 @@ def input_seat(): # 좌석 번호 입력 함수
                                 }
                             }
                         ],
-                        "quickReplies": [
-                            {
-                                "action": "message",
-                                "label": "quick",
-                                "messageText": "message",
-                                "extra": {
-                                }
-                            }
-                        ]
+                        "quickReplies": quickreplies
                     }
                 }  
     return jsonify(res)
