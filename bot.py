@@ -410,9 +410,9 @@ def input_seat(): # 좌석 번호 입력 함수
             fr=open("/home/ubuntu/dg1s_bot/final save.txt","r")
             lines=fr.readlines()
             fr.close()
-            print("whatthe")
+            print(lines)
             for line in lines:
-                print('"'+line+'"')
+                print(line)
                 if line[:4]==stids[:4]: checkrecord[int(line[5])-1][int(line[7])]=True
             print(checkrecord)
             for i in range(5):
