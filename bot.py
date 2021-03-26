@@ -411,6 +411,7 @@ def input_seat(): # 좌석 번호 입력 함수
             datas=fr.readlines()
             for data in datas:
                 if data[:4]==stids[:4] and not "none" in data: checkrecord[data[5]][data[7]]=True
+            print(checkrecord)
             for i in range(5):
                 if i+1 > Day: break
                 for j in range(3):
