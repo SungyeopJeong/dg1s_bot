@@ -317,6 +317,8 @@ def input_seat(): # 좌석 번호 입력 함수
     seat=int(req["action"]["detailParams"]["table_seat"]["value"])
     p1=req["action"]["detailParams"]["student_id"]["value"] # 같이 앉은 사람
     p2=req["action"]["detailParams"]["student_id1"]["value"] # 같이 앉은 사람
+    blockid=req["intent"]["id"]
+    print(blockid)
     stid="none"; invt=False; cday=0; ciday=0
 
     if day!="7": # 유효한 날짜값인지 계산(유효한 날짜값: 이번주 월~오늘)
@@ -424,6 +426,16 @@ def input_seat(): # 좌석 번호 입력 함수
                                             } 
                                         }
                                     ]
+                                }
+                            },
+                            {
+                                "quickReplies": {
+                                    "type": "block",
+                                    "label": "test",
+                                    "message": "테스트",
+                                    "data": {
+                                      
+                                    }
                                 }
                             }
                         ]
