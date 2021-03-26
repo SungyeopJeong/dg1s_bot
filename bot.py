@@ -427,27 +427,19 @@ def input_seat(): # 좌석 번호 입력 함수
                                         }
                                     ]
                                 }
-                            },
-                            {
-                                "quickReplies": [
-                                    {
-                                      "type": "text",
-                                      "label": "quick",
-                                      "message": "message",
-                                      "data": {
-                                      }
-                                    },
-                                    {
-                                      "type": "url",
-                                      "label": "",
-                                      "message": "message",
-                                      "data": {
-                                         "url": ""
-                                      }
-                                    }
-                                ]
                             }
-                        ]
+                        ],
+                        {
+                            "quickReplies": [
+                                {
+                                    "type": "text",
+                                    "label": "quick",
+                                    "message": "message",
+                                    "data": {
+                                    }
+                                }
+                            ]
+                        }
                     }
                 }  
     return jsonify(res)
