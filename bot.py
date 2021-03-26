@@ -416,9 +416,9 @@ def input_seat(): # 좌석 번호 입력 함수
                 for j in range(3):
                     if i+1==Day and j>mealname.index(Meal): break
                     if checkrecord[i][j]==False: 
-                        quickreplies.append({ "action": "message", 
-                                              "label": Days[i-1]+mealname[j], 
-                                              "messageText": Days[i-1]+mealname[j], 
+                        quickreplies.append({ "action": "message",
+                                              "label": Days[i+1]+' '+mealname[j],
+                                              "messageText": Days[i+1]+' '+mealname[j],
                                               "extra": {}})
             fr.close()
             res={
