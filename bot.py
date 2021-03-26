@@ -409,6 +409,8 @@ def input_seat(): # 좌석 번호 입력 함수
             checkrecord=[[True,False,False],[False,False,False],[False,False,False],[False,False,False],[False,False,True]]
             fr=open("/home/ubuntu/dg1s_bot/final save.txt","r")
             lines=fr.readlines()
+            fr.close()
+            print("whatthe")
             for line in lines:
                 print('"'+line+'"')
                 if line[:4]==stids[:4]: checkrecord[int(line[5])-1][int(line[7])]=True
@@ -422,7 +424,6 @@ def input_seat(): # 좌석 번호 입력 함수
                                               "label": Days[i+1]+' '+mealname[j],
                                               "messageText": Days[i+1]+' '+mealname[j],
                                               "extra": {}})
-            fr.close()
             res={
                     "version": "2.0",
                     "template": {
