@@ -407,7 +407,7 @@ def input_seat(): # 좌석 번호 입력 함수
             if p2!="none" and p2!=stid and p2!=p1: stids+=", "+p2
             quickreplies=[]
             checkrecord=[[True,False,False],[False,False,False],[False,False,False],[False,False,False],[False,False,True]]
-            fr=open("/home/ubuntu/dg1s_bot/final save.txt","w")
+            fr=open("/home/ubuntu/dg1s_bot/final save.txt","r")
             datas=fr.readlines()
             for data in datas:
                 if data[:4]==stids[:4] and not "none" in data: checkrecord[data[5]][data[7]]=True
