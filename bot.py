@@ -429,14 +429,12 @@ def input_seat(): # 좌석 번호 입력 함수
                                 }
                             }
                         ],
-                        {
-                            "quickReplies": {
-                                "type": "block",
-                                "label": "test",
-                                "message": "테스트",
-                                "data": {
-                                  
-                                }
+                        "quickReplies": {
+                            "type": "block",
+                            "label": "test",
+                            "message": "테스트",
+                            "data": {
+                              
                             }
                         }
                     }
