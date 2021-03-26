@@ -16,6 +16,7 @@ application=Flask(__name__)
 
 KST=timezone('Asia/Seoul')
 Days = ["일요일","월요일","화요일","수요일","목요일","금요일","토요일"] # 요일 이름
+mealname = ["아침","점심","저녁"]
 mday = [31,28,31,30,31,30,31,31,30,31,30,31] # 매월 일 수
 Msg = [["[오늘 아침]","[오늘 점심]","[오늘 저녁]"],["[내일 아침]","[내일 점심]","[내일 저녁]"]] # 급식 title
 Menu = [["","",""],["","",""]] # 오늘, 내일 급식
@@ -404,6 +405,22 @@ def input_seat(): # 좌석 번호 입력 함수
             stids=stid
             if p1!="none" and p1!=stid: stids+=", "+p1 
             if p2!="none" and p2!=stid and p2!=p1: stids+=", "+p2
+            quickreplies=[]
+            checkrecord=[[True,False,False],[False,False,False],[False,False,False],[False,False,False],[False,False,True]]
+            fr=open("/home/ubuntu/dg1s_bot/final save.txt","w")
+            datas=fr.readlines
+            for data in datas:
+                if data[:4]==stids[:4] and not "none" in data: checkrecord[data[5]][data[7]]=True
+            for i in range(5):
+                if i+1 > Day: break
+                for j in range(3):
+                    if i+1==Day and j>mealname.index(Meal): break
+                    if checkrecord[i][j]==False: 
+                        quickreplies.append({ "action": "message", 
+                                              "label": Days[i-1]+mealname[j], 
+                                              "messageText": Days[i-1]+mealname[j], 
+                                              "extra": {}})
+            fr.close()
             res={
                     "version": "2.0",
                     "template": {
