@@ -410,7 +410,7 @@ def input_seat(): # 좌석 번호 입력 함수
             fr=open("/home/ubuntu/dg1s_bot/final save.txt","r")
             datas=fr.readlines()
             for data in datas:
-                if data[:4]==stids[:4] and not "none" in data: checkrecord[int(data[5])-1][int(data[7])]=True
+                if data[:4]==stids[:4] and not "none" in data: print(data),checkrecord[int(data[5])-1][int(data[7])]=True
             for i in range(5):
                 if i+1 > Day: break
                 for j in range(3):
