@@ -431,10 +431,10 @@ def input_seat(): # 좌석 번호 입력 함수
                         ],
                         "quickReplies": [
                             {
-                                "type": "text",
+                                "action": "message",
                                 "label": "quick",
-                                "message": "message",
-                                "data": {
+                                "messageText": "message",
+                                "extra": {
                                 }
                             }
                         ]
