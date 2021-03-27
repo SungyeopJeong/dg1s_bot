@@ -299,9 +299,6 @@ def input_seat(): # 좌석 번호 입력 함수
     Day=int(utc.localize(now).astimezone(KST).strftime("%w"))
     hour=int(utc.localize(now).astimezone(KST).strftime("%H"))
     minu=int(utc.localize(now).astimezone(KST).strftime("%M"))
-    #date=int(utc.localize(now).astimezone(KST).strftime("%d"))
-    #month=int(utc.localize(now).astimezone(KST).strftime("%m"))
-    #year=int(utc.localize(now).astimezone(KST).strftime("%Y"))
     if (hour==6 and minu>=50) or (hour>=7 and hour<12) or (hour==12 and minu<10): Meal="아침" # 가장 최근 식사가 언제인지 자동 계산
     elif (hour==12 and minu>=10) or (hour>=13 and hour<18) or (hour==18 and minu<10): Meal="점심"
     else:
@@ -310,48 +307,11 @@ def input_seat(): # 좌석 번호 입력 함수
         
     req=request.get_json() # 파라미터 값 불러오기
     userid=req["userRequest"]["user"]["properties"]["plusfriendUserKey"]
-    #day=req["action"]["detailParams"]["sys_date"]["value"] # 형식: {"date": "2021-02-09", "dateTag": "today", "dateHeadword": null, "year": null, "month": null, "day": null}
-    #meal=req["action"]["detailParams"]["seat_menu"]["value"]
     seat=int(req["action"]["detailParams"]["table_seat"]["value"])
     p1=req["action"]["detailParams"]["student_id"]["value"] # 같이 앉은 사람
     p2=req["action"]["detailParams"]["student_id1"]["value"] # 같이 앉은 사람
-    stid="none"; day=Day; meal=Meal#; invt=False; cday=0; ciday=0
+    stid="none"; day=Day; meal=Meal
 
-    '''if day!="7": # 유효한 날짜값인지 계산(유효한 날짜값: 이번주 월~오늘)
-        if day.split('"')[3]=="dateTag": invt=True # 1~9998년이 아닌 경우
-        else :
-            iyear=int(day.split('"')[3][:4]) # 입력한 날짜와 현재 날짜가 1년 1월 1일부터 몇일째인지 계산
-            imonth=int(day.split('"')[3][5:7])
-            idate=int(day.split('"')[3][8:])
-            cday=(year-1)*365+(year-1)//4-(year-1)//100+(year-1)//400;
-            ciday=(iyear-1)*365+(iyear-1)//4-(iyear-1)//100+(iyear-1)//400;
-            if (year%4==0 and year%100!=0) or year%400==0: cday+=1
-            if (iyear%4==0 and iyear%100!=0) or iyear%400==0: ciday+=1
-            for i in range(0,month-1): cday+=mday[i]
-            for i in range(0,imonth-1): ciday+=mday[i]
-            cday+=date; ciday+=idate
-            if (hour==6 and minu<50) or hour<=5 : cday-=1
-
-            if cday-ciday>=0 and cday-ciday<=Day-1 : invt=False
-            else : invt=True
-            day=ciday%7
-    if meal!="none" and cday==ciday: # 유효한 식사인지 계산
-        if Meal=="아침" and meal!="아침": invt=True
-        elif Meal=="점심" and meal=="저녁": invt=True
-    
-            
-    if invt==True: #유효하지 않은 날짜값
-        if Day==0 or Day==6:
-            res={
-                "version": "2.0",
-                "template": { "outputs": [ { "simpleText": { "text": "오늘은 주말이므로 좌석 번호 기록이 없습니다." } } ] }
-            }
-        else :
-            res={
-                "version": "2.0",
-                "template": { "outputs": [ { "simpleText": { "text": "유효하지 않은 날짜/시간 값입니다." } } ] }
-            }
-    else :'''
     fr=open("/home/ubuntu/dg1s_bot/user data.txt","r") # userdata 저장 및 변경
     lines=fr.readlines()
     fr.close()
@@ -374,7 +334,6 @@ def input_seat(): # 좌석 번호 입력 함수
         else : fw.write(line)
     if p2==stid or p2==p1: p2="none" # 입력한 사람이 자기 자신이거나 중복일 경우
     if p1==stid: p1="none"
-        #fw.write(userid+" "+stid+" "+str(day)+" "+meal+" "+str(seat)+" "+p1+" "+p2+"\n")
     fw.write(userid+" "+stid+" "+str(day)+" "+meal+" "+str(seat)+" "+p1+" "+p2+"\n")
     fw.close()
         
