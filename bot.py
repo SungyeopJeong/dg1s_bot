@@ -413,10 +413,11 @@ def input_seat(): # 좌석 번호 입력 함수
                 for j in range(3):
                     if i+1==Day and j>mealname.index(Meal): break
                     if checkrecord[i][j]==False: # 현재까지의 급식 중 기록을 하지 않았다면 목록에 추가
-                        quickreplies.append({ "action": "message",
+                        quickreplies.append({ "action": "block",
                                               "label": Days[i+1]+' '+mealname[j],
-                                              "messageText": Days[i+1]+' '+mealname[j],
-                                              "extra": {}})
+                                              "messageText": Days[i+1]+' '+mealname[j]+"으로 변경",
+                                              "blockId": "605ee41c6daec409bd3bd43d",
+                                              "extra": Days[i+1]+' '+mealname[j] })
             quickreplies.reverse() # 최근 급식부터 보여주기 위해 역순
             
             res={
@@ -453,9 +454,8 @@ def input_seat(): # 좌석 번호 입력 함수
 def change_meal(): # 식사 변경 함수
     
     req=request.get_json()
-    blockid=req["intent"]["id"]
-    #extra=req["action"]["clientExtra]
-    print(blockid)#, extra)
+    extra=req["action"]["clientExtra]
+    print(extra)
     res={
         "version": "2.0",
         "template": {
