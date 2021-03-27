@@ -352,104 +352,104 @@ def input_seat(): # 좌석 번호 입력 함수
                 "template": { "outputs": [ { "simpleText": { "text": "유효하지 않은 날짜/시간 값입니다." } } ] }
             }
     else :'''
-        fr=open("/home/ubuntu/dg1s_bot/user data.txt","r") # userdata 저장 및 변경
-        lines=fr.readlines()
-        fr.close()
-        fw=open("/home/ubuntu/dg1s_bot/user data.txt","w")
-        for line in lines:
-            datas=line.split(" ")
-            dusid=datas[0]; dstid=datas[1]; dday=datas[2]; dmeal=datas[3] # data 불러오기
-            dseat=int(datas[4]); dp1=datas[5]; dp2=datas[6].rstrip('\n')
-            if dusid==userid:
-                stid=dstid
-                #if dday!="7" and day=="7": day=int(dday) # 요일
-                #if dday=="7" and day=="7": day=Day
-                #if dmeal!="none" and meal=="none": meal=dmeal # 식사
-                #if dmeal=="none" and meal=="none": meal=Meal
-                if seat==0: seat=dseat # 좌석 
-                if p1=="none" and p2=="none": # 같이 앉은 사람
-                    p1=dp1; p2=dp2
-                elif p1!="none" and p2=="none": # 항상 p1이 p2보다 우선적으로 채워지도록
-                    if dp1=="none" and dp2=="none": p1=p1; p2=dp2
-                    elif dp1!="none" and dp2=="none": p2=p1; p1=dp1
-                    elif dp1!="none" and dp2!="none": p2=p1; p1=dp2
-            else : fw.write(line)
+    fr=open("/home/ubuntu/dg1s_bot/user data.txt","r") # userdata 저장 및 변경
+    lines=fr.readlines()
+    fr.close()
+    fw=open("/home/ubuntu/dg1s_bot/user data.txt","w")
+    for line in lines:
+        datas=line.split(" ")
+        dusid=datas[0]; dstid=datas[1]; dday=datas[2]; dmeal=datas[3] # data 불러오기
+        dseat=int(datas[4]); dp1=datas[5]; dp2=datas[6].rstrip('\n')
+        if dusid==userid:
+            stid=dstid
+            #if dday!="7" and day=="7": day=int(dday) # 요일
+            #if dday=="7" and day=="7": day=Day
+            #if dmeal!="none" and meal=="none": meal=dmeal # 식사
+            #if dmeal=="none" and meal=="none": meal=Meal
+            if seat==0: seat=dseat # 좌석 
+            if p1=="none" and p2=="none": # 같이 앉은 사람
+                p1=dp1; p2=dp2
+            elif p1!="none" and p2=="none": # 항상 p1이 p2보다 우선적으로 채워지도록
+                if dp1=="none" and dp2=="none": p1=p1; p2=dp2
+                elif dp1!="none" and dp2=="none": p2=p1; p1=dp1
+                elif dp1!="none" and dp2!="none": p2=p1; p1=dp2
+        else : fw.write(line)
         #if day=="7": day=Day
         #if meal=="none": meal=Meal
-        if p2==stid or p2==p1: p2="none" # 입력한 사람이 자기 자신이거나 중복일 경우
-        if p1==stid: p1="none"
+    if p2==stid or p2==p1: p2="none" # 입력한 사람이 자기 자신이거나 중복일 경우
+    if p1==stid: p1="none"
         #fw.write(userid+" "+stid+" "+str(day)+" "+meal+" "+str(seat)+" "+p1+" "+p2+"\n")
-        fw.write(userid+" "+stid+" "+str(Day)+" "+Meal+" "+str(seat)+" "+p1+" "+p2+"\n")
-        fw.close()
+    fw.write(userid+" "+stid+" "+str(Day)+" "+Meal+" "+str(seat)+" "+p1+" "+p2+"\n")
+    fw.close()
         
-        if stid=="none": # 등록 안된 user
-            res={
-                "version": "2.0",
-                "template": {
-                    "outputs": [
-                        {
-                            "basicCard": {
-                                "title": "[학번 등록]",
-                                "description": "학번이 등록되어 있지 않습니다.\n아래 버튼을 눌러 학번을 등록해주세요",
-                                "buttons": [ { "action": "message", "label": "학번 등록", "messageText": "학번 등록" } ]
-                            }
+    if stid=="none": # 등록 안된 user
+        res={
+            "version": "2.0",
+            "template": {
+                "outputs": [
+                    {
+                        "basicCard": {
+                            "title": "[학번 등록]",
+                            "description": "학번이 등록되어 있지 않습니다.\n아래 버튼을 눌러 학번을 등록해주세요",
+                            "buttons": [ { "action": "message", "label": "학번 등록", "messageText": "학번 등록" } ]
                         }
-                    ]
-                }
+                    }
+                ]
             }
-        else: # 
-            stids=stid
-            if p1!="none" and p1!=stid: stids+=", "+p1 
-            if p2!="none" and p2!=stid and p2!=p1: stids+=", "+p2
-            
-            quickreplies=[] # 사용자가 기록하지 않은 급식을 찾아서 바로가기 응답 형태로 제공
-            checkrecord=[[True,False,False],[False,False,False],[False,False,False],[False,False,False],[False,False,True]]
-            fr=open("/home/ubuntu/dg1s_bot/final save.txt","r")
-            lines=fr.readlines()
-            fr.close()
-            for line in lines:
-                if line[:4]==stids[:4] and "none" not in line: checkrecord[int(line[5])-1][int(line[7])]=True # 기록했으면 True
-            for i in range(5):
-                if i+1 > Day: break
-                for j in range(3):
-                    if i+1==Day and j>mealname.index(Meal): break
-                    if checkrecord[i][j]==False: # 현재까지의 급식 중 기록을 하지 않았다면 목록에 추가
-                        quickreplies.append({ "action": "block",
-                                              "label": Days[i+1]+' '+mealname[j],
-                                              "messageText": Days[i+1]+' '+mealname[j]+"으로 변경",
-                                              "blockId": "605ee41c6daec409bd3bd43d",
-                                              "extra": { "meal": str((i+1)*10+j) } })
-            quickreplies.reverse() # 최근 급식부터 보여주기 위해 역순
-            
-            res={
-                "version": "2.0",
-                "template": {
-                    "outputs": [
-                        {
-                            "carousel": {
-                                "type": "basicCard",
-                                "items": [
-                                    {
-                                        "title": "[저장 확인]",
-                                        #"description": "학번    "+stids+"\n날짜    "+Days[day]+"\n식사    "+meal+"\n좌석    "+str(seat),
-                                        "description": "학번    "+stids+"\n날짜    "+Days[Day]+"\n식사    "+Meal+"\n좌석    "+str(seat),
-                                        "buttons": [
-                                            { "action": "message", "label": "확인", "messageText": "확인했습니다." },
-                                            { "action": "message", "label": "초기화", "messageText": "초기화" }
-                                        ]
-                                    },
-                                    { 
-                                        "thumbnail":{
-                                            "imageUrl": "http://k.kakaocdn.net/dn/m2tci/btqOvcSDnnh/STY3XTAYC37ce8RYvulrX0/img_l.jpg", "fixedRatio": "true"
-                                        } 
-                                    }
-                                ]
-                            }
+        }
+    else: # 
+        stids=stid
+        if p1!="none" and p1!=stid: stids+=", "+p1 
+        if p2!="none" and p2!=stid and p2!=p1: stids+=", "+p2
+        
+        quickreplies=[] # 사용자가 기록하지 않은 급식을 찾아서 바로가기 응답 형태로 제공
+        checkrecord=[[True,False,False],[False,False,False],[False,False,False],[False,False,False],[False,False,True]]
+        fr=open("/home/ubuntu/dg1s_bot/final save.txt","r")
+        lines=fr.readlines()
+        fr.close()
+        for line in lines:
+            if line[:4]==stids[:4] and "none" not in line: checkrecord[int(line[5])-1][int(line[7])]=True # 기록했으면 True
+        for i in range(5):
+            if i+1 > Day: break
+            for j in range(3):
+                if i+1==Day and j>mealname.index(Meal): break
+                if checkrecord[i][j]==False: # 현재까지의 급식 중 기록을 하지 않았다면 목록에 추가
+                    quickreplies.append({ "action": "block",
+                                          "label": Days[i+1]+' '+mealname[j],
+                                          "messageText": Days[i+1]+' '+mealname[j]+"으로 변경",
+                                          "blockId": "605ee41c6daec409bd3bd43d",
+                                          "extra": { "meal": str((i+1)*10+j) } })
+        quickreplies.reverse() # 최근 급식부터 보여주기 위해 역순
+        
+        res={
+            "version": "2.0",
+            "template": {
+                "outputs": [
+                    {
+                        "carousel": {
+                            "type": "basicCard",
+                            "items": [
+                                {
+                                    "title": "[저장 확인]",
+                                    #"description": "학번    "+stids+"\n날짜    "+Days[day]+"\n식사    "+meal+"\n좌석    "+str(seat),
+                                    "description": "학번    "+stids+"\n날짜    "+Days[Day]+"\n식사    "+Meal+"\n좌석    "+str(seat),
+                                    "buttons": [
+                                        { "action": "message", "label": "확인", "messageText": "확인했습니다." },
+                                        { "action": "message", "label": "초기화", "messageText": "초기화" }
+                                    ]
+                                },
+                                { 
+                                    "thumbnail":{
+                                        "imageUrl": "http://k.kakaocdn.net/dn/m2tci/btqOvcSDnnh/STY3XTAYC37ce8RYvulrX0/img_l.jpg", "fixedRatio": "true"
+                                    } 
+                                }
+                            ]
                         }
-                    ],
-                    "quickReplies": quickreplies
-                }
-            }  
+                    }
+                ],
+                "quickReplies": quickreplies
+            }
+        }  
     return jsonify(res)
 
 @application.route('/chme', methods=['POST'])
