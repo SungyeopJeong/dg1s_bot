@@ -312,8 +312,7 @@ def input_seat(): # 좌석 번호 입력 함수
     p2=req["action"]["detailParams"]["student_id1"]["value"] # 같이 앉은 사람
     stid="none"; day=Day; meal=Meal
     
-    if seat=='.': seat=-1
-    else : seat=int(seat)
+    if seat=='.': seat='X'
     fr=open("/home/ubuntu/dg1s_bot/user data.txt","r") # userdata 저장 및 변경
     lines=fr.readlines()
     fr.close()
@@ -336,7 +335,7 @@ def input_seat(): # 좌석 번호 입력 함수
         else : fw.write(line)
     if p2==stid or p2==p1: p2="none" # 입력한 사람이 자기 자신이거나 중복일 경우
     if p1==stid: p1="none"
-    fw.write(userid+" "+stid+" "+str(day)+" "+meal+" "+str(seat)+" "+p1+" "+p2+"\n")
+    fw.write(userid+" "+stid+" "+str(day)+" "+meal+" "+seat+" "+p1+" "+p2+"\n")
     fw.close()
         
     if stid=="none": # 등록 안된 user
@@ -388,7 +387,7 @@ def input_seat(): # 좌석 번호 입력 함수
                             "items": [
                                 {
                                     "title": "[저장 확인]",
-                                    "description": "학번    "+stids+"\n날짜    "+Days[day]+"\n식사    "+meal+"\n좌석    "+str(seat),
+                                    "description": "학번    "+stids+"\n날짜    "+Days[day]+"\n식사    "+meal+"\n좌석    "+seat,
                                     "buttons": [
                                         { "action": "message", "label": "확인", "messageText": "확인했습니다." },
                                         { "action": "message", "label": "초기화", "messageText": "초기화" }
@@ -642,7 +641,7 @@ def to_excel(): # 엑셀 파일로 생성
         if len(datas)!=5: continue
         dstid=datas[0]; dday=int(datas[1]); dmeal=int(datas[2]); dseat=datas[3]
         col=dday*3+dmeal; row=int(dstid[2:])+3 
-        if dseat=="-1": dseat="X"
+        if dseat==".": dseat="X"
         if 4<=col and col<=16:
             sheet=wb[dstid[:2]]
             sheet.cell(row,col).value=dseat
@@ -777,7 +776,7 @@ def record_status():
         if id[:2]==classn[index]:
             if 3*day+meal-4<0 or 3*day+meal-4>12: continue
             if record[int(id[2:4])-1][3*day+meal-4]=='': record[int(id[2:4])-1][13]+=1
-            if seat=="-1": seat="X"
+            if seat==".": seat="X"
             record[int(id[2:4])-1][3*day+meal-4]=seat
     fr.close()
     mealN=int(lines[0].rstrip('\n'))
