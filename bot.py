@@ -454,6 +454,9 @@ def input_seat(): # 좌석 번호 입력 함수
 
 @application.route('/chme', methods=['POST'])
 def change_meal(): # 식사 변경 함수
+  
+    now=datetime.datetime.utcnow()
+    Day=int(utc.localize(now).astimezone(KST).strftime("%w"))
     
     req=request.get_json() # 파라미터 값 불러오기
     userid=req["userRequest"]["user"]["properties"]["plusfriendUserKey"]
@@ -486,7 +489,7 @@ def change_meal(): # 식사 변경 함수
     for i in range(5):
         if i+1 > Day: break
         for j in range(3):
-            if i+1==Day and j>mealname.index(Meal): break
+            if i+1==Day and j>meal: break
             if checkrecord[i][j]==False: # 현재까지의 급식 중 기록을 하지 않았다면 목록에 추가
                 quickreplies.append({ "action": "block",
                                       "label": Days[i+1]+' '+mealname[j],
