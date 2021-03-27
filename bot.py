@@ -472,7 +472,7 @@ def change_meal(): # 식사 변경 함수
             if dp1!="none" and dp1!=dstid: stids+=", "+dp1 
             if dp2!="none" and dp2!=dstid and dp2!=dp1: stids+=", "+dp2
             seat=dseat
-            fw.write(userid+" "+dstid+" "+day+" "+meal+" "dseat+" "+dp1+" "+dp2+"\n")
+            fw.write(userid+" "+dstid+" "+day+" "+meal+" "+dseat+" "+dp1+" "+dp2+"\n")
         else : fw.write(line)
     fw.close()
     
@@ -494,6 +494,7 @@ def change_meal(): # 식사 변경 함수
                                       "blockId": "605ee41c6daec409bd3bd43d",
                                       "extra": { "meal": str((i+1)*10+j) } })
     quickreplies.reverse() # 최근 급식부터 보여주기 위해 역순
+    
     res={
         "version": "2.0",
         "template": {
