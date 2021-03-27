@@ -508,7 +508,7 @@ def change_meal(): # 식사 변경 함수
                         "items": [
                             {
                                 "title": "[저장 확인]",
-                                "description": "학번    "+stids+"\n날짜    "+Days[day]+"\n식사    "+mealname[meal]+"\n좌석    "+seat,
+                                "description": "학번    "+stids+"\n날짜    "+Days[int(day)]+"\n식사    "+mealname[int(meal)]+"\n좌석    "+seat,
                                 "buttons": [
                                     { "action": "message", "label": "확인", "messageText": "확인했습니다." },
                                     { "action": "message", "label": "초기화", "messageText": "초기화" }
