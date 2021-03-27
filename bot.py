@@ -363,6 +363,7 @@ def input_seat(): # 좌석 번호 입력 함수
         lines=fr.readlines()
         fr.close()
         for line in lines:
+            if line==lines[0]: continue
             if line[:4]==stids[:4] and "none" not in line: checkrecord[int(line[5])-1][int(line[7])]=True # 기록했으면 True
         for i in range(5):
             if i+1 > Day: break
@@ -446,6 +447,7 @@ def change_meal(): # 식사 변경 함수
     lines=fr.readlines()
     fr.close()
     for line in lines:
+        if line==lines[0]: continue
         if line[:4]==stids[:4] and "none" not in line: checkrecord[int(line[5])-1][int(line[7])]=True # 기록했으면 True
     for i in range(5):
         if i+1 > Day: break
