@@ -630,7 +630,8 @@ def to_excel(): # 엑셀 파일로 생성
         if sheet.title not in classn: continue
         T = sheet.title; N = str(classN[j]+3)
         # 통계 칸 채우기
-        sh.cell(2,6).value = lines[0].rstrip('\n')
+        sh.cell(2,6).value = int(lines[0].rstrip('\n'))
+        sh.cell(j+2,5).value = int(N)-3
         sh.cell(j+2,4).value = "=COUNTA("+T+"!D4:P"+N+")/('통계'!$F$2*("+N+"-3))"
         sh.cell(j+2,4).number_format = "0.00%"
         for k in range(4,4+classN[j]):
