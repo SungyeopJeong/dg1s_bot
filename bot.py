@@ -467,7 +467,7 @@ def change_meal(): # 식사 변경 함수
     for line in lines:
         datas=line.split(" ")
         dusid=datas[0]; dstid=datas[1]; dseat=datas[4]; dp1=datas[5]; dp2=datas[6]
-        if dusid=userid:
+        if dusid==userid:
             stids=dstid
             if dp1!="none" and dp1!=dstid: stids+=", "+dp1 
             if dp2!="none" and dp2!=dstid and dp2!=dp1: stids+=", "+dp2
