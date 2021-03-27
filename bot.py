@@ -307,11 +307,13 @@ def input_seat(): # 좌석 번호 입력 함수
         
     req=request.get_json() # 파라미터 값 불러오기
     userid=req["userRequest"]["user"]["properties"]["plusfriendUserKey"]
-    seat=int(req["action"]["detailParams"]["table_seat"]["value"])
+    seat=req["action"]["detailParams"]["table_seat"]["value"]
     p1=req["action"]["detailParams"]["student_id"]["value"] # 같이 앉은 사람
     p2=req["action"]["detailParams"]["student_id1"]["value"] # 같이 앉은 사람
     stid="none"; day=Day; meal=Meal
-
+    
+    if seat=='.': seat=-1
+    else seat=int(seat)
     fr=open("/home/ubuntu/dg1s_bot/user data.txt","r") # userdata 저장 및 변경
     lines=fr.readlines()
     fr.close()
@@ -614,7 +616,7 @@ def to_excel(): # 엑셀 파일로 생성
         if not(sheet.title in classn): continue
         T = sheet.title; N = str(classN[j]+3)
         # 통계 칸 채우기
-        sh.cell(j+2,4).value = "=COUNTA("+T+"!D4:E"+N+","+T+"!G4:H"+N+","+T+"!J4:K"+N+","+T+"!M4:N"+N+","+T+"!P4:P"+N+")/('통계'!$F$2*("+N+"-3))"
+        sh.cell(j+2,4).value = "=COUNTA("+T+"!D4:P"+N+")/('통계'!$F$2*("+N+"-3))"
         sh.cell(j+2,4).number_format = "0.00%"
         #sheet['B3'].value="학번"; sheet['C3'].value="이름"; sheet['Q3'].value="참여율"
         #for k in range(4,17): 
@@ -627,7 +629,7 @@ def to_excel(): # 엑셀 파일로 생성
         #    else : sheet.cell(k,2).value=classn[j]+str(k-3)
             # 참여율 칸 채우기
             K = str(k)
-            sheet.cell(k,17).value = "=COUNTA(D"+K+":E"+K+",G"+K+":H"+K+",J"+K+":K"+K+",M"+K+":N"+K+",P"+K+")/'통계'!$F$2"
+            sheet.cell(k,17).value = "=COUNTA(D"+K+":P"+K+")/'통계'!$F$2"
             sheet.cell(k,17).number_format = "0%"
         j += 1
 
@@ -640,6 +642,7 @@ def to_excel(): # 엑셀 파일로 생성
         if len(datas)!=5: continue
         dstid=datas[0]; dday=int(datas[1]); dmeal=int(datas[2]); dseat=datas[3]
         col=dday*3+dmeal; row=int(dstid[2:])+3 
+        if dseat=="-1": dseat="X"
         if 4<=col and col<=16:
             sheet=wb[dstid[:2]]
             sheet.cell(row,col).value=dseat
@@ -773,7 +776,8 @@ def record_status():
         datas=line.split(' '); id=datas[0]; day=int(datas[1]); meal=int(datas[2]); seat=datas[3]
         if id[:2]==classn[index]:
             if 3*day+meal-4<0 or 3*day+meal-4>12: continue
-            if meal!=0 and record[int(id[2:4])-1][3*day+meal-4]=='': record[int(id[2:4])-1][13]+=1
+            if record[int(id[2:4])-1][3*day+meal-4]=='': record[int(id[2:4])-1][13]+=1
+            if seat=="-1": seat="X"
             record[int(id[2:4])-1][3*day+meal-4]=seat
     fr.close()
     mealN=int(lines[0].rstrip('\n'))
