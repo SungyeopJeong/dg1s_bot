@@ -82,14 +82,14 @@ def response_link(): # 온라인 시간표 대답 함수
     # 기본 : 시작시간 - 20 ~ 종료시간 - 10
     # 예외 : 조례, 종례, 5교시(점심시간)
     if (3 <= hour <= 7) or (hour == 8 and minutes < 23): classN = 0 # 8:20~8:30
-    elif ((hour == 8 and minutes >= 23) or (hour == 9 and minutes < 20)): classN = 1 # 8:40~9:30
-    elif ((hour == 9 and minutes >= 20) or (hour == 10 and minutes < 20)): classN = 2 # 9:40~10:30
-    elif ((hour == 10 and minutes >= 20) or (hour == 11 and minutes < 20)): classN = 3 # 10:40~11:30
-    elif ((hour == 11 and minutes >= 20) or (hour == 12 and minutes < 20)): classN = 4 # 11:40~12:30
-    elif (hour == 12 and minutes >= 20) or (hour == 13): classN = 5 # 13:20~14:10
-    elif (hour == 14): classN = 6 # 14:20~15:10
-    elif (hour == 15): classN = 7 # 15:20~16:10
-    elif (hour == 16 and minutes <= 20): classN = 8 # 16:10~16:20
+    elif (hour == 8 and minutes >= 23) or (hour == 9 and minutes < 20): classN = 1 # 8:40~9:30
+    elif (hour == 9 and minutes >= 20) or (hour == 10 and minutes < 20): classN = 2 # 9:40~10:30
+    elif (hour == 10 and minutes >= 20) or (hour == 11 and minutes < 20): classN = 3 # 10:40~11:30
+    elif (hour == 11 and minutes >= 20) or (hour == 12 and minutes < 20): classN = 4 # 11:40~12:30
+    elif (hour == 12 and minutes >= 20) or (hour == 13) or (hour == 14 and minutes < 10): classN = 5 # 13:30~14:20
+    elif (hour == 14 and minutes >= 10) or (hour == 15 and minutes < 10): classN = 6 # 14:30~15:20
+    elif (hour == 15 and minutes >= 10) or (hour == 16 and minutes < 10): classN = 7 # 15:30~16:20
+    elif (hour == 16 and minutes <= 40): classN = 8 # 16:20~16:40
     else : classN = 9 # 수업 없음
         
     req=request.get_json() # 파라미터 값 불러오기
@@ -232,9 +232,9 @@ def what_is_menu(): # made by 1316, 1301
     
     hour=int(utc.localize(now).astimezone(KST).strftime("%H")) # Meal 계산
     minu=int(utc.localize(now).astimezone(KST).strftime("%M"))
-    if (hour==13 and minu<20) or (hour>=8 and hour<=12): Meal="아침" # 아침을 먹은 후
-    elif (hour==13 and minu>=20) or (hour>=14 and hour<=18) or (hour==19 and minu<20): Meal="점심" # 점심을 먹은 후
-    else: Meal="저녁" # 저녁을 먹은 후
+    if (hour==6 and minu>=50) or (hour>=7 and hour<12) or (hour==12 and minu<30): Meal="아침" # 가장 최근 식사가 언제인지 자동 계산
+    elif (hour==12 and minu>=30) or (hour>=13 and hour<18) or (hour==18 and minu<30): Meal="점심"
+    else: Meal="저녁"
     
     i = 0
     
@@ -299,9 +299,9 @@ def input_seat(): # 좌석 번호 입력 함수
     Day=int(utc.localize(now).astimezone(KST).strftime("%w"))
     hour=int(utc.localize(now).astimezone(KST).strftime("%H"))
     minu=int(utc.localize(now).astimezone(KST).strftime("%M"))
-    if (hour==6 and minu>=50) or (hour>=7 and hour<12) or (hour==12 and minu<10): Meal="아침" # 가장 최근 식사가 언제인지 자동 계산
-    elif (hour==12 and minu>=10) or (hour>=13 and hour<18) or (hour==18 and minu<10): Meal="점심"
-    else:
+    if (hour==6 and minu>=50) or (hour>=7 and hour<12) or (hour==12 and minu<30): Meal="아침" # 가장 최근 식사가 언제인지 자동 계산
+    elif (hour==12 and minu>=30) or (hour>=13 and hour<18) or (hour==18 and minu<30): Meal="점심"
+    else: 
         Meal="저녁"
         if (hour==6 and minu<50) or hour<=5 : Day=(Day+6)%7
         
@@ -414,9 +414,9 @@ def change_meal(): # 식사 변경 함수
     Day=int(utc.localize(now).astimezone(KST).strftime("%w"))
     hour=int(utc.localize(now).astimezone(KST).strftime("%H"))
     minu=int(utc.localize(now).astimezone(KST).strftime("%M"))
-    if (hour==6 and minu>=50) or (hour>=7 and hour<12) or (hour==12 and minu<10): Meal="아침" # 가장 최근 식사가 언제인지 자동 계산
-    elif (hour==12 and minu>=10) or (hour>=13 and hour<18) or (hour==18 and minu<10): Meal="점심"
-    else:
+    if (hour==6 and minu>=50) or (hour>=7 and hour<12) or (hour==12 and minu<30): Meal="아침" # 가장 최근 식사가 언제인지 자동 계산
+    elif (hour==12 and minu>=30) or (hour>=13 and hour<18) or (hour==18 and minu<30): Meal="점심"
+    else: 
         Meal="저녁"
         if (hour==6 and minu<50) or hour<=5 : Day=(Day+6)%7
     
@@ -555,9 +555,9 @@ def reset(): # 초기화
     Day=int(utc.localize(now).astimezone(KST).strftime("%w"))
     hour=int(utc.localize(now).astimezone(KST).strftime("%H"))
     minu=int(utc.localize(now).astimezone(KST).strftime("%M"))
-    if (hour==6 and minu>=50) or (hour>=7 and hour<12) or (hour==12 and minu<10): Meal="아침"
-    elif (hour==12 and minu>=10) or (hour>=13 and hour<18) or (hour==18 and minu<10): Meal="점심"
-    else:
+    if (hour==6 and minu>=50) or (hour>=7 and hour<12) or (hour==12 and minu<30): Meal="아침" # 가장 최근 식사가 언제인지 자동 계산
+    elif (hour==12 and minu>=30) or (hour>=13 and hour<18) or (hour==18 and minu<30): Meal="점심"
+    else: 
         Meal="저녁"
         if (hour==6 and minu<50) or hour<=5 : Day=(Day+6)%7
     
