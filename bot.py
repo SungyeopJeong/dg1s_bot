@@ -417,7 +417,7 @@ def input_seat(): # 좌석 번호 입력 함수
                                               "label": Days[i+1]+' '+mealname[j],
                                               "messageText": Days[i+1]+' '+mealname[j]+"으로 변경",
                                               "blockId": "605ee41c6daec409bd3bd43d",
-                                              "extra": Days[i+1]+' '+mealname[j] })
+                                              "extra": { "meal": Days[i+1]+' '+mealname[j] } })
             quickreplies.reverse() # 최근 급식부터 보여주기 위해 역순
             
             res={
