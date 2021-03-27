@@ -319,13 +319,12 @@ def input_seat(): # 좌석 번호 입력 함수
     fw=open("/home/ubuntu/dg1s_bot/user data.txt","w")
     for line in lines:
         datas=line.split(" ")
-        dusid=datas[0]; dstid=datas[1]; dday=datas[2]; dmeal=datas[3] # data 불러오기
-        dseat=int(datas[4]); dp1=datas[5]; dp2=datas[6].rstrip('\n')
+        dusid=datas[0]; dstid=datas[1]; dday=datas[2] # data 불러오기
+        dmeal=datas[3]; dp1=datas[5]; dp2=datas[6].rstrip('\n')
         if dusid==userid:
             stid=dstid
             if dday!="7": day=int(dday) # 요일
             if dmeal!="none": meal=dmeal # 식사
-            if seat==0: seat=dseat # 좌석 
             if p1=="none" and p2=="none": # 같이 앉은 사람
                 p1=dp1; p2=dp2
             elif p1!="none" and p2=="none": # 항상 p1이 p2보다 우선적으로 채워지도록
