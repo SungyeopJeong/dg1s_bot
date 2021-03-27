@@ -299,9 +299,9 @@ def input_seat(): # 좌석 번호 입력 함수
     Day=int(utc.localize(now).astimezone(KST).strftime("%w"))
     hour=int(utc.localize(now).astimezone(KST).strftime("%H"))
     minu=int(utc.localize(now).astimezone(KST).strftime("%M"))
-    date=int(utc.localize(now).astimezone(KST).strftime("%d"))
-    month=int(utc.localize(now).astimezone(KST).strftime("%m"))
-    year=int(utc.localize(now).astimezone(KST).strftime("%Y"))
+    #date=int(utc.localize(now).astimezone(KST).strftime("%d"))
+    #month=int(utc.localize(now).astimezone(KST).strftime("%m"))
+    #year=int(utc.localize(now).astimezone(KST).strftime("%Y"))
     if (hour==6 and minu>=50) or (hour>=7 and hour<12) or (hour==12 and minu<10): Meal="아침" # 가장 최근 식사가 언제인지 자동 계산
     elif (hour==12 and minu>=10) or (hour>=13 and hour<18) or (hour==18 and minu<10): Meal="점심"
     else:
@@ -310,14 +310,14 @@ def input_seat(): # 좌석 번호 입력 함수
         
     req=request.get_json() # 파라미터 값 불러오기
     userid=req["userRequest"]["user"]["properties"]["plusfriendUserKey"]
-    day=req["action"]["detailParams"]["sys_date"]["value"] # 형식: {"date": "2021-02-09", "dateTag": "today", "dateHeadword": null, "year": null, "month": null, "day": null}
-    meal=req["action"]["detailParams"]["seat_menu"]["value"]
+    #day=req["action"]["detailParams"]["sys_date"]["value"] # 형식: {"date": "2021-02-09", "dateTag": "today", "dateHeadword": null, "year": null, "month": null, "day": null}
+    #meal=req["action"]["detailParams"]["seat_menu"]["value"]
     seat=int(req["action"]["detailParams"]["table_seat"]["value"])
     p1=req["action"]["detailParams"]["student_id"]["value"] # 같이 앉은 사람
     p2=req["action"]["detailParams"]["student_id1"]["value"] # 같이 앉은 사람
-    stid="none"; invt=False; cday=0; ciday=0
+    stid="none"#; invt=False; cday=0; ciday=0
 
-    if day!="7": # 유효한 날짜값인지 계산(유효한 날짜값: 이번주 월~오늘)
+    '''if day!="7": # 유효한 날짜값인지 계산(유효한 날짜값: 이번주 월~오늘)
         if day.split('"')[3]=="dateTag": invt=True # 1~9998년이 아닌 경우
         else :
             iyear=int(day.split('"')[3][:4]) # 입력한 날짜와 현재 날짜가 1년 1월 1일부터 몇일째인지 계산
@@ -351,7 +351,7 @@ def input_seat(): # 좌석 번호 입력 함수
                 "version": "2.0",
                 "template": { "outputs": [ { "simpleText": { "text": "유효하지 않은 날짜/시간 값입니다." } } ] }
             }
-    else :
+    else :'''
         fr=open("/home/ubuntu/dg1s_bot/user data.txt","r") # userdata 저장 및 변경
         lines=fr.readlines()
         fr.close()
@@ -362,10 +362,10 @@ def input_seat(): # 좌석 번호 입력 함수
             dseat=int(datas[4]); dp1=datas[5]; dp2=datas[6].rstrip('\n')
             if dusid==userid:
                 stid=dstid
-                if dday!="7" and day=="7": day=int(dday) # 요일
-                if dday=="7" and day=="7": day=Day
-                if dmeal!="none" and meal=="none": meal=dmeal # 식사
-                if dmeal=="none" and meal=="none": meal=Meal
+                #if dday!="7" and day=="7": day=int(dday) # 요일
+                #if dday=="7" and day=="7": day=Day
+                #if dmeal!="none" and meal=="none": meal=dmeal # 식사
+                #if dmeal=="none" and meal=="none": meal=Meal
                 if seat==0: seat=dseat # 좌석 
                 if p1=="none" and p2=="none": # 같이 앉은 사람
                     p1=dp1; p2=dp2
@@ -374,11 +374,12 @@ def input_seat(): # 좌석 번호 입력 함수
                     elif dp1!="none" and dp2=="none": p2=p1; p1=dp1
                     elif dp1!="none" and dp2!="none": p2=p1; p1=dp2
             else : fw.write(line)
-        if day=="7": day=Day
-        if meal=="none": meal=Meal
+        #if day=="7": day=Day
+        #if meal=="none": meal=Meal
         if p2==stid or p2==p1: p2="none" # 입력한 사람이 자기 자신이거나 중복일 경우
         if p1==stid: p1="none"
-        fw.write(userid+" "+stid+" "+str(day)+" "+meal+" "+str(seat)+" "+p1+" "+p2+"\n")
+        #fw.write(userid+" "+stid+" "+str(day)+" "+meal+" "+str(seat)+" "+p1+" "+p2+"\n")
+        fw.write(userid+" "+stid+" "+str(Day)+" "+Meal+" "+str(seat)+" "+p1+" "+p2+"\n")
         fw.close()
         
         if stid=="none": # 등록 안된 user
@@ -417,7 +418,7 @@ def input_seat(): # 좌석 번호 입력 함수
                                               "label": Days[i+1]+' '+mealname[j],
                                               "messageText": Days[i+1]+' '+mealname[j]+"으로 변경",
                                               "blockId": "605ee41c6daec409bd3bd43d",
-                                              "extra": { "meal": Days[i+1]+' '+mealname[j] } })
+                                              "extra": { "meal": str((i+1)*10+j) } })
             quickreplies.reverse() # 최근 급식부터 보여주기 위해 역순
             
             res={
@@ -430,7 +431,8 @@ def input_seat(): # 좌석 번호 입력 함수
                                 "items": [
                                     {
                                         "title": "[저장 확인]",
-                                        "description": "학번    "+stids+"\n날짜    "+Days[day]+"\n식사    "+meal+"\n좌석    "+str(seat),
+                                        #"description": "학번    "+stids+"\n날짜    "+Days[day]+"\n식사    "+meal+"\n좌석    "+str(seat),
+                                        "description": "학번    "+stids+"\n날짜    "+Days[Day]+"\n식사    "+Meal+"\n좌석    "+str(seat),
                                         "buttons": [
                                             { "action": "message", "label": "확인", "messageText": "확인했습니다." },
                                             { "action": "message", "label": "초기화", "messageText": "초기화" }
@@ -453,9 +455,45 @@ def input_seat(): # 좌석 번호 입력 함수
 @application.route('/chme', methods=['POST'])
 def change_meal(): # 식사 변경 함수
     
-    req=request.get_json()
+    req=request.get_json() # 파라미터 값 불러오기
+    userid=req["userRequest"]["user"]["properties"]["plusfriendUserKey"]
     extra=req["action"]["clientExtra"]
-    print(extra)
+    
+    day=extra[0]; meal=extra[1] # user data에서 식사 변경
+    fr=open("/home/ubuntu/dg1s_bot/user data.txt","r")
+    lines=fr.readlines()
+    fr.close()
+    fw=open("/home/ubuntu/dg1s_bot/user data.txt","w")
+    for line in lines:
+        datas=line.split(" ")
+        dusid=datas[0]; dstid=datas[1]; dseat=datas[4]; dp1=datas[5]; dp2=datas[6]
+        if dusid=userid:
+            stids=dstid
+            if dp1!="none" and dp1!=dstid: stids+=", "+dp1 
+            if dp2!="none" and dp2!=dstid and dp2!=dp1: stids+=", "+dp2
+            seat=dseat
+            fw.write(userid+" "+dstid+" "+day+" "+meal+" "dseat+" "+dp1+" "+dp2+"\n")
+        else : fw.write(line)
+    fw.close()
+    
+    quickreplies=[] # 사용자가 기록하지 않은 급식을 찾아서 바로가기 응답 형태로 제공
+    checkrecord=[[True,False,False],[False,False,False],[False,False,False],[False,False,False],[False,False,True]]
+    fr=open("/home/ubuntu/dg1s_bot/final save.txt","r")
+    lines=fr.readlines()
+    fr.close()
+    for line in lines:
+        if line[:4]==stids[:4] and "none" not in line: checkrecord[int(line[5])-1][int(line[7])]=True # 기록했으면 True
+    for i in range(5):
+        if i+1 > Day: break
+        for j in range(3):
+            if i+1==Day and j>mealname.index(Meal): break
+            if checkrecord[i][j]==False: # 현재까지의 급식 중 기록을 하지 않았다면 목록에 추가
+                quickreplies.append({ "action": "block",
+                                      "label": Days[i+1]+' '+mealname[j],
+                                      "messageText": Days[i+1]+' '+mealname[j]+"으로 변경",
+                                      "blockId": "605ee41c6daec409bd3bd43d",
+                                      "extra": { "meal": str((i+1)*10+j) } })
+    quickreplies.reverse() # 최근 급식부터 보여주기 위해 역순
     res={
         "version": "2.0",
         "template": {
@@ -466,7 +504,7 @@ def change_meal(): # 식사 변경 함수
                         "items": [
                             {
                                 "title": "[저장 확인]",
-                                "description": "학번    ",#+stids+"\n날짜    "+Days[day]+"\n식사    "+meal+"\n좌석    "+str(seat),
+                                "description": "학번    "+stids+"\n날짜    "+Days[day]+"\n식사    "+mealname[meal]+"\n좌석    "+seat,
                                 "buttons": [
                                     { "action": "message", "label": "확인", "messageText": "확인했습니다." },
                                     { "action": "message", "label": "초기화", "messageText": "초기화" }
@@ -480,8 +518,8 @@ def change_meal(): # 식사 변경 함수
                        ]
                     }
                 }
-            ]#,
-            #"quickReplies": #quickreplies
+            ],
+            "quickReplies": quickreplies
         }
     }
     return jsonify(res)
@@ -500,9 +538,8 @@ def input_stid(): # 학번 입력 함수
     fw=open("/home/ubuntu/dg1s_bot/user data.txt","w")
     for line in lines:
         datas=line.split(" ")
-        dusid=datas[0]; dstid=datas[1];
-        if dusid==userid:
-            fw.write(userid+" "+stid+" 7 none 0 none none\n")
+        dusid=datas[0]
+        if dusid==userid: fw.write(userid+" "+stid+" 7 none 0 none none\n")
         else : fw.write(line)
     fw.close()
     res={
@@ -524,15 +561,12 @@ def final_save(): # 최종 저장 함수
     fw=open("/home/ubuntu/dg1s_bot/final save.txt","a")
     for line in lines:
         datas=line.split(" ")
-        dusid=datas[0]; dstid=datas[1]; dday=int(datas[2]); dmeal=datas[3]
-        dseat=int(datas[4]); dp1=datas[5]; dp2=datas[6].rstrip('\n')
-        if dmeal=="아침": dmeal="0"
-        elif dmeal=="점심": dmeal="1"
-        elif dmeal=="저녁": dmeal="2"
+        dusid=datas[0]; dstid=datas[1]; dday=datas[2]; dmeal=datas[3]
+        dseat=datas[4]; dp1=datas[5]; dp2=datas[6].rstrip('\n')
         if dusid==userid:
-            fw.write(dstid+" "+str(dday)+" "+dmeal+" "+str(dseat)+" -\n")
-            if dp1!="none": fw.write(dp1+" "+str(dday)+" "+dmeal+" "+str(dseat)+" *\n")
-            if dp2!="none": fw.write(dp2+" "+str(dday)+" "+dmeal+" "+str(dseat)+" *\n")
+            fw.write(dstid+" "+dday+" "+dmeal+" "+dseat+" -\n")
+            if dp1!="none": fw.write(dp1+" "+dday+" "+dmeal+" "+dseat+" *\n")
+            if dp2!="none": fw.write(dp2+" "+dday+" "+dmeal+" "+dseat+" *\n")
             rw.write(userid+" "+dstid+" 7 none 0 none none\n")
         else : rw.write(line) 
     rw.close()
