@@ -469,7 +469,7 @@ def change_meal(): # 식사 변경 함수
     fw=open("/home/ubuntu/dg1s_bot/user data.txt","w")
     for line in lines:
         datas=line.split(" ")
-        dusid=datas[0]; dstid=datas[1]; dseat=datas[4]; dp1=datas[5]; dp2=datas[6]
+        dusid=datas[0]; dstid=datas[1]; dseat=datas[4]; dp1=datas[5]; dp2=datas[6].rstrip('\n')
         if dusid==userid:
             stids=dstid
             if dp1!="none" and dp1!=dstid: stids+=", "+dp1 
