@@ -313,7 +313,7 @@ def input_seat(): # 좌석 번호 입력 함수
     stid="none"; day=Day; meal=Meal
     
     if seat=='.': seat=-1
-    else seat=int(seat)
+    else : seat=int(seat)
     fr=open("/home/ubuntu/dg1s_bot/user data.txt","r") # userdata 저장 및 변경
     lines=fr.readlines()
     fr.close()
