@@ -608,29 +608,7 @@ def reset(): # 초기화
 def to_excel(): # 엑셀 파일로 생성
     
     wb = openpyxl.load_workbook('Gbob.xlsx',data_only=True) # 엑셀 기본 형식
-    sh = wb['통계']
-    j = 0
-    for sheet in wb:
-        if not(sheet.title in classn): continue
-        T = sheet.title; N = str(classN[j]+3)
-        # 통계 칸 채우기
-        sh.cell(j+2,4).value = "=COUNTA("+T+"!D4:P"+N+")/('통계'!$F$2*("+N+"-3))"
-        sh.cell(j+2,4).number_format = "0.00%"
-        #sheet['B3'].value="학번"; sheet['C3'].value="이름"; sheet['Q3'].value="참여율"
-        #for k in range(4,17): 
-        #    sheet.cell(2,k).value=Days[(k)//3][:1];
-        #    if k%3==0: sheet.cell(3,k).value="아침"
-        #    elif k%3==1: sheet.cell(3,k).value="점심"
-        #    if k%3==2: sheet.cell(3,k).value="저녁"
-        for k in range(4,4+classN[j]):
-        #    if k-3<10: sheet.cell(k,2).value=classn[j]+"0"+str(k-3)
-        #    else : sheet.cell(k,2).value=classn[j]+str(k-3)
-            # 참여율 칸 채우기
-            K = str(k)
-            sheet.cell(k,17).value = "=COUNTA(D"+K+":P"+K+")/'통계'!$F$2"
-            sheet.cell(k,17).number_format = "0%"
-        j += 1
-
+    
     fr=open("/home/ubuntu/dg1s_bot/final save.txt","r") # 엑셀 채워 넣기
     lines=fr.readlines()
     for line in lines:
@@ -645,6 +623,22 @@ def to_excel(): # 엑셀 파일로 생성
             sheet=wb[dstid[:2]]
             sheet.cell(row,col).value=dseat
     fr.close()
+    
+    sh = wb['통계']
+    j = 0
+    for sheet in wb:
+        if sheet.title not in classn: continue
+        T = sheet.title; N = str(classN[j]+3)
+        # 통계 칸 채우기
+        sh.cell(2,6).value = lines[0].rstrip('\n')
+        sh.cell(j+2,4).value = "=COUNTA("+T+"!D4:P"+N+")/('통계'!$F$2*("+N+"-3))"
+        sh.cell(j+2,4).number_format = "0.00%"
+        for k in range(4,4+classN[j]):
+            # 참여율 칸 채우기
+            K = str(k)
+            sheet.cell(k,17).value = "=COUNTA(D"+K+":P"+K+")/'통계'!$F$2"
+            sheet.cell(k,17).number_format = "0%"
+        j += 1
     
     wb.save("bob.xlsx")
     res={
