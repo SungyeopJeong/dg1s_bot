@@ -464,7 +464,7 @@ def change_meal(): # 식사 변경 함수
     userid=req["userRequest"]["user"]["properties"]["plusfriendUserKey"]
     extra=req["action"]["clientExtra"]["meal"]
     
-    day=extra[0]; meal=extra[1:2] # user data에서 식사 변경
+    day=extra[0]; meal=extra[1:3] # user data에서 식사 변경
     fr=open("/home/ubuntu/dg1s_bot/user data.txt","r")
     lines=fr.readlines()
     fr.close()
