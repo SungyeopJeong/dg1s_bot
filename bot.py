@@ -454,7 +454,7 @@ def input_seat(): # 좌석 번호 입력 함수
 def change_meal(): # 식사 변경 함수
     
     req=request.get_json()
-    extra=req["action"]["clientExtra]
+    extra=req["action"]["clientExtra"]
     print(extra)
     res={
         "version": "2.0",
