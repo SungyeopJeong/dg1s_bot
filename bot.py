@@ -457,7 +457,7 @@ def change_meal(): # 식사 변경 함수
     
     req=request.get_json() # 파라미터 값 불러오기
     userid=req["userRequest"]["user"]["properties"]["plusfriendUserKey"]
-    extra=req["action"]["clientExtra"]
+    extra=req["action"]["clientExtra"]["meal"]
     
     day=extra[0]; meal=extra[1] # user data에서 식사 변경
     fr=open("/home/ubuntu/dg1s_bot/user data.txt","r")
