@@ -315,8 +315,6 @@ def input_seat(): # 좌석 번호 입력 함수
     seat=int(req["action"]["detailParams"]["table_seat"]["value"])
     p1=req["action"]["detailParams"]["student_id"]["value"] # 같이 앉은 사람
     p2=req["action"]["detailParams"]["student_id1"]["value"] # 같이 앉은 사람
-    #blockid=req["intent"]["id"]
-    #print(blockid)
     stid="none"; invt=False; cday=0; ciday=0
 
     if day!="7": # 유효한 날짜값인지 계산(유효한 날짜값: 이번주 월~오늘)
@@ -422,35 +420,73 @@ def input_seat(): # 좌석 번호 입력 함수
             quickreplies.reverse() # 최근 급식부터 보여주기 위해 역순
             
             res={
-                    "version": "2.0",
-                    "template": {
-                        "outputs": [
-                            {
-                                "carousel": {
-                                    "type": "basicCard",
-                                    "items": [
-                                        {
-                                            "title": "[저장 확인]",
-                                            "description": "학번    "+stids+"\n날짜    "+Days[day]+"\n식사    "+meal+"\n좌석    "+str(seat),
-                                            "buttons": [
-                                                { "action": "message", "label": "확인", "messageText": "확인했습니다." },
-                                                { "action": "message", "label": "초기화", "messageText": "초기화" }
-                                            ]
-                                        },
-                                        { 
-                                            "thumbnail":{
-                                                "imageUrl": "http://k.kakaocdn.net/dn/m2tci/btqOvcSDnnh/STY3XTAYC37ce8RYvulrX0/img_l.jpg", "fixedRatio": "true"
-                                            } 
-                                        }
-                                    ]
-                                }
+                "version": "2.0",
+                "template": {
+                    "outputs": [
+                        {
+                            "carousel": {
+                                "type": "basicCard",
+                                "items": [
+                                    {
+                                        "title": "[저장 확인]",
+                                        "description": "학번    "+stids+"\n날짜    "+Days[day]+"\n식사    "+meal+"\n좌석    "+str(seat),
+                                        "buttons": [
+                                            { "action": "message", "label": "확인", "messageText": "확인했습니다." },
+                                            { "action": "message", "label": "초기화", "messageText": "초기화" }
+                                        ]
+                                    },
+                                    { 
+                                        "thumbnail":{
+                                            "imageUrl": "http://k.kakaocdn.net/dn/m2tci/btqOvcSDnnh/STY3XTAYC37ce8RYvulrX0/img_l.jpg", "fixedRatio": "true"
+                                        } 
+                                    }
+                                ]
                             }
-                        ],
-                        "quickReplies": quickreplies
-                    }
-                }  
+                        }
+                    ],
+                    "quickReplies": quickreplies
+                }
+            }  
     return jsonify(res)
 
+@application.route('/chme', methods=['POST'])
+def change_meal(): # 식사 변경 함수
+    
+    req=request.get_json()
+    blockid=req["intent"]["id"]
+    #extra=req["action"]["clientExtra]
+    print(blockid)#, extra)
+    res={
+        "version": "2.0",
+        "template": {
+            "outputs": [
+                {
+                    "carousel": {
+                        "type": "basicCard",
+                        "items": [
+                            {
+                                "title": "[저장 확인]",
+                                "description": "학번    "#+stids+"\n날짜    "+Days[day]+"\n식사    "+meal+"\n좌석    "+str(seat),
+                                "buttons": [
+                                    { "action": "message", "label": "확인", "messageText": "확인했습니다." },
+                                    { "action": "message", "label": "초기화", "messageText": "초기화" }
+                                ]
+                            },
+                            { 
+                                "thumbnail":{
+                                   "imageUrl": "http://k.kakaocdn.net/dn/m2tci/btqOvcSDnnh/STY3XTAYC37ce8RYvulrX0/img_l.jpg", "fixedRatio": "true"
+                                } 
+                            }
+                       ]
+                    }
+                }
+            ]#,
+            #"quickReplies": #quickreplies
+        }
+    }
+    return jsonify(res)
+   
+  
 @application.route('/stid', methods=['POST'])
 def input_stid(): # 학번 입력 함수
         
