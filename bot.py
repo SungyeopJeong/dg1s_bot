@@ -570,6 +570,9 @@ def final_save(): # 최종 저장 함수
         dusid=datas[0]; dstid=datas[1]; dday=datas[2]; dmeal=datas[3]
         dseat=datas[4]; dp1=datas[5]; dp2=datas[6].rstrip('\n')
         if dusid==userid:
+            if dmeal=="아침": dmeal='0'
+            elif dmeal=="점심": dmeal='1'
+            elif dmeal=="저녁": dmeal='2'
             fw.write(dstid+" "+dday+" "+dmeal+" "+dseat+" -\n")
             if dp1!="none": fw.write(dp1+" "+dday+" "+dmeal+" "+dseat+" *\n")
             if dp2!="none": fw.write(dp2+" "+dday+" "+dmeal+" "+dseat+" *\n")
