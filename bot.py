@@ -232,8 +232,8 @@ def what_is_menu(): # made by 1316, 1301
     
     hour=int(utc.localize(now).astimezone(KST).strftime("%H")) # Meal 계산
     minu=int(utc.localize(now).astimezone(KST).strftime("%M"))
-    if (hour==6 and minu>=50) or (hour>=7 and hour<12) or (hour==12 and minu<30): Meal="아침" # 가장 최근 식사가 언제인지 자동 계산
-    elif (hour==12 and minu>=30) or (hour>=13 and hour<18) or (hour==18 and minu<30): Meal="점심"
+    if (hour==7 and minu>=30) or (hour>=8 and hour<=12) or (hour==13 and minu<30): Meal="아침" # 가장 최근 식사가 언제인지 자동 계산
+    elif (hour==13 and minu>=30) or (hour>=14 and hour<19) or (hour==19 and minu<30): Meal="점심"
     else: Meal="저녁"
     
     i = 0
