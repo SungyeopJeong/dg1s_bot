@@ -310,10 +310,10 @@ def input_seat(): # 좌석 번호 입력 함수
     userid=req["userRequest"]["user"]["properties"]["plusfriendUserKey"]
     seat=req["action"]["detailParams"]["table_seat"]["value"]
     p1=req["action"]["detailParams"]["student_id"]["value"] # 같이 앉은 사람
-    p2=req["action"]["detailParams"]["student_id1"]["value"] # 같이 앉은 사람
-    '''stid="none"#; day=Day; meal=Meal
+    p2=req["action"]["detailParams"]["student_id1"]["value"] # 같이 앉은 사람'''
+    stid="none"#; day=Day; meal=Meal
     
-    if seat=='.': seat='X'
+    #if seat=='.': seat='X'
     fr=open("/home/ubuntu/dg1s_bot/user data.txt","r") # userdata 저장 및 변경
     lines=fr.readlines()
     fr.close()
