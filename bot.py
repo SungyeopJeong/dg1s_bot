@@ -304,11 +304,11 @@ def input_seat(): # 좌석 번호 입력 함수
     elif (hour==12 and minu>=30) or (hour>=13 and hour<18) or (hour==18 and minu<30): Meal="점심"
     else: 
         Meal="저녁"
-        if (hour==6 and minu<50) or hour<=5 : Day=(Day+6)%7
+        if (hour==6 and minu<50) or hour<=5 : Day=(Day+6)%7'''
         
     req=request.get_json() # 파라미터 값 불러오기
     userid=req["userRequest"]["user"]["properties"]["plusfriendUserKey"]
-    seat=req["action"]["detailParams"]["table_seat"]["value"]
+    '''seat=req["action"]["detailParams"]["table_seat"]["value"]
     p1=req["action"]["detailParams"]["student_id"]["value"] # 같이 앉은 사람
     p2=req["action"]["detailParams"]["student_id1"]["value"] # 같이 앉은 사람'''
     stid="none"#; day=Day; meal=Meal
