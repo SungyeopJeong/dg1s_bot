@@ -296,7 +296,7 @@ def response_menu(): # 메뉴 대답 함수
 @application.route('/seat', methods=['POST'])
 def input_seat(): # 좌석 번호 입력 함수
     
-    now=datetime.datetime.utcnow()
+    '''now=datetime.datetime.utcnow()
     Day=int(utc.localize(now).astimezone(KST).strftime("%w"))
     hour=int(utc.localize(now).astimezone(KST).strftime("%H"))
     minu=int(utc.localize(now).astimezone(KST).strftime("%M"))
@@ -311,20 +311,20 @@ def input_seat(): # 좌석 번호 입력 함수
     seat=req["action"]["detailParams"]["table_seat"]["value"]
     p1=req["action"]["detailParams"]["student_id"]["value"] # 같이 앉은 사람
     p2=req["action"]["detailParams"]["student_id1"]["value"] # 같이 앉은 사람
-    stid="none"; day=Day; meal=Meal
+    '''stid="none"#; day=Day; meal=Meal
     
     if seat=='.': seat='X'
     fr=open("/home/ubuntu/dg1s_bot/user data.txt","r") # userdata 저장 및 변경
     lines=fr.readlines()
     fr.close()
-    fw=open("/home/ubuntu/dg1s_bot/user data.txt","w")
+    #fw=open("/home/ubuntu/dg1s_bot/user data.txt","w")
     for line in lines:
         datas=line.split(" ")
-        dusid=datas[0]; dstid=datas[1]; dday=datas[2] # data 불러오기
-        dmeal=datas[3]; dp1=datas[5]; dp2=datas[6].rstrip('\n')
+        dusid=datas[0]; dstid=datas[1]#; dday=datas[2] # data 불러오기
+        #dmeal=datas[3]; dp1=datas[5]; dp2=datas[6].rstrip('\n')
         if dusid==userid:
             stid=dstid
-            if dday!="7": day=int(dday) # 요일
+            '''if dday!="7": day=int(dday) # 요일
             if dmeal!="none": meal=dmeal # 식사
             if p1=="none" and p2=="none": # 같이 앉은 사람
                 p1=dp1; p2=dp2
@@ -338,7 +338,7 @@ def input_seat(): # 좌석 번호 입력 함수
     fw.write(userid+" "+stid+" "+str(day)+" "+meal+" "+seat+" "+p1+" "+p2+"\n")
     fw.close()
         
-    '''if stid=="none": # 등록 안된 user
+    if stid=="none": # 등록 안된 user
         res={
             "version": "2.0",
             "template": {
