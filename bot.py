@@ -408,7 +408,7 @@ def input_seat(): # 좌석 번호 입력 함수
         } ''' 
     yourstats=""
     if stid!="none" and stid[0]=="2": 
-        yourstats="[통계 결과]\n"+"기간 : 3월 1주차~4월 4주차(총 8주)\n"+"학번 : "+stid+"\n평균 참여율 : "+str(round(statsdict[stid][0]*100,2))+"%\n순위 : "+str(statsdict[stid][1])+"/80"
+        yourstats="[통계 결과]\n"+"기간 : 3월 1주차~4월 4주차(총 8주)\n"+"학번 : "+stid+"\n총 참여율 : "+str(round(statsdict[stid][0]*100,2))+"%\n순위 : "+str(statsdict[stid][1])+"/80"
     res={
             "version": "2.0",
             "template": {
