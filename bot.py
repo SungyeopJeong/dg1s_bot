@@ -206,9 +206,9 @@ def what_is_menu(): # made by 1316, 1301
                 menu_when = menu_text[bracket_i+1:bracket_j]
                 menu_content = menu_text[bracket_j+3:].rstrip().replace(" ","\n")
               
-                if menu_when == "조식": save_i = 0
-                elif menu_when == "중식": save_i = 1
-                elif menu_when == "석식": save_i = 2
+                if menu_when == "아침": save_i = 0
+                elif menu_when == "점심": save_i = 1
+                elif menu_when == "저녁": save_i = 2
               
                 if menu_day == today_name: Menu[0][save_i]=menu_content
                 elif menu_day == tomorrow_name: Menu[1][save_i]=menu_content
