@@ -311,7 +311,8 @@ def check_wp():
     
     printmsg=""
     url = 'http://13.125.231.95:5000/colstdata'
-    response = requests.get(url) # url로부터 가져오기
+    headers = { 'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36'}
+    response = requests.get(url,headers=headers) # url로부터 가져오기
     if response.status_code == 200: 
         source = response.text
         print(source)
