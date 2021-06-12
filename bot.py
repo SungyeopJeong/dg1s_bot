@@ -324,13 +324,13 @@ def check_wp():
             datapenalty=data[2]
             datareason=data[3:]
             if stid==datastid:
-                printmsg=stid+"의 경고/벌점 현황\n경고 "+datawarning+"회, 벌점 "+datapenalty+"점"
+                printmsg="[경고/벌점 현황]\n학번 : "+stid+"\n경고 "+datawarning+"회, 벌점 "+datapenalty+"점"
                 if len(datareason)!=1:
                     reasons=""
                     for reason in datareason:
                         if reason=="none": continue
                         reasons+="\n"+reason.replace('_',' ')[:10]+' '+reason.replace('_',' ')[10:]
-                    printmsg+="\n사유 기록"+reasons
+                    printmsg+="\n날짜 및 사유"+reasons
     
     res={
         "version": "2.0",
