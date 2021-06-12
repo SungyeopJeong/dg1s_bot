@@ -330,7 +330,7 @@ def check_wp():
                     reasons=""
                     for reason in datareason:
                         if reason=="none": continue
-                        reasons+="\n"+reason.replace('_',' ')[:11]+' '+reason.replace('_',' ')[11:]
+                        reasons+="\n"+reason.replace('_',' ')[:10]+' '+reason.replace('_',' ')[10:]
                     printmsg+="\n사유 기록"+reasons
     
     res={
