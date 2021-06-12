@@ -305,13 +305,31 @@ def check_wp():
     for line in lines:
         datas=line.split(" ")
         dusid=datas[0]; dstid=datas[1];
-        if dusid==userid: stid=dstid
+        if dusid==userid: 
+            stid=dstid
+            break
     
-    url = 'http://3.16.114.104:5000/colstdata'
+    printmsg=""
+    url = 'http://13.125.239.33:5000/colstdata'
     response = requests.get(url) # url로부터 가져오기
     if response.status_code == 200: 
         source = response.text
         print(source)
+        lines=source.split("\n")
+        for line in lines:
+            data=line.rstrip('\n').split(' ')
+            datastid=data[0]
+            datawarning=data[1]
+            datapenalty=data[2]
+            datareason=data[3:]
+            if stid==datastid:
+                printmsg=stid+"의 경고/벌점 현황\n경고 "+datawarning+"회, 벌점 "+datapenalty+"점"
+                if len(datareason)!=1:
+                    reasons=""
+                    for reason in datareason:
+                        if reason=="none": continue
+                        reasons+="\n"+reason.replace('_',' ')
+                    printmsg+="사유 기록"+reasons
     
     res={
         "version": "2.0",
@@ -319,7 +337,7 @@ def check_wp():
             "outputs":[
                 {
                     "simpleText": {
-                        "text": "hi"
+                        "text": printmsg
                     }
                 }
             ]
