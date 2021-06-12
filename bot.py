@@ -253,7 +253,7 @@ def what_is_menu(): # made by 1316, 1301
 
 @application.route('/menu', methods=['POST'])
 def response_menu(): # 메뉴 대답 함수
-        
+    
     msg1, msg2, msg3, menu1, menu2, menu3, boborder = what_is_menu()
     if menu1=="등록된 급식이 없습니다." and menu2=="등록된 급식이 없습니다." and menu3=="등록된 급식이 없습니다.":
         res={
@@ -293,6 +293,40 @@ def response_menu(): # 메뉴 대답 함수
         }
     return jsonify(res)
 
+@application.route('/colcheck', methods=['POST'])
+def check_wp():
+    
+    req=request.get_json() # 파라미터 값 불러오기
+    userid=req["userRequest"]["user"]["properties"]["plusfriendUserKey"]
+    stid="none"
+    fr=open("/home/ubuntu/dg1s_bot/user data.txt","r") # 학번 불러오기
+    lines=fr.readlines()
+    fr.close()
+    for line in lines:
+        datas=line.split(" ")
+        dusid=datas[0]; dstid=datas[1];
+        if dusid==userid: stid=dstid
+    
+    url = 'http://3.16.114.104:5000/colstdata'
+    response = requests.get(url) # url로부터 가져오기
+    if response.status_code == 200: 
+        source = response.text
+        print(source)
+    
+    res={
+        "version": "2.0",
+        "template": {
+            "outputs":[
+                {
+                    "simpleText": {
+                        "text": "hi"
+                    }
+                }
+            ]
+        }
+    }
+    return jsonify(res)
+  
 @application.route('/seat', methods=['POST'])
 def input_seat(): # 좌석 번호 입력 함수
     
