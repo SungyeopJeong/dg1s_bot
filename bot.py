@@ -326,10 +326,7 @@ def check_wp():
         }
     }
     return jsonify(res)
-  
-@application.route('/col')
-def test():
-    return "goijojaogsjdogjo"
+
   
 @application.route('/seat', methods=['POST'])
 def input_seat(): # 좌석 번호 입력 함수
