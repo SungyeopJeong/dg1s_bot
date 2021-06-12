@@ -41,6 +41,146 @@ Name = [["곽성은","김도연","김민성","김수민","김정빈","김하진"
         ["","","","","","","","","","",""]]
 #statsdict = {'2104' : (1.0000, 1), '2417' : (1.0000, 1), '2402' : (0.964705882352941, 3), '2201' : (0.964705882352941, 3), '2321' : (0.952941176470588, 5), '2118' : (0.952941176470588, 5), '2216' : (0.952941176470588, 5), '2309' : (0.952941176470588, 5), '2109' : (0.952941176470588, 5), '2119' : (0.952941176470588, 5), '2415' : (0.952941176470588, 5), '2107' : (0.941176470588235, 12), '2316' : (0.929411764705882, 13), '2106' : (0.929411764705882, 13), '2115' : (0.882352941176471, 15), '2414' : (0.882352941176471, 15), '2404' : (0.870588235294118, 17), '2302' : (0.870588235294118, 17), '2311' : (0.858823529411765, 19), '2317' : (0.858823529411765, 19), '2406' : (0.835294117647059, 21), '2418' : (0.835294117647059, 21), '2105' : (0.8000, 23), '2113' : (0.8000, 23), '2112' : (0.788235294117647, 25), '2303' : (0.788235294117647, 25), '2405' : (0.776470588235294, 27), '2410' : (0.764705882352941, 28), '2205' : (0.741176470588235, 29), '2401' : (0.741176470588235, 29), '2306' : (0.741176470588235, 29), '2408' : (0.729411764705882, 32), '2407' : (0.729411764705882, 32), '2217' : (0.705882352941177, 34), '2110' : (0.694117647058824, 35), '2420' : (0.670588235294118, 36), '2116' : (0.670588235294118, 36), '2312' : (0.670588235294118, 36), '2413' : (0.658823529411765, 39), '2219' : (0.658823529411765, 39), '2210' : (0.647058823529412, 41), '2310' : (0.647058823529412, 41), '2203' : (0.623529411764706, 43), '2212' : (0.623529411764706, 43), '2213' : (0.611764705882353, 45), '2206' : (0.611764705882353, 45), '2208' : (0.588235294117647, 47), '2313' : (0.588235294117647, 47), '2314' : (0.588235294117647, 47), '2211' : (0.576470588235294, 50), '2103' : (0.576470588235294, 50), '2319' : (0.505882352941176, 52), '2318' : (0.505882352941176, 52), '2108' : (0.505882352941176, 52), '2214' : (0.494117647058824, 55), '2308' : (0.482352941176471, 56), '2320' : (0.447058823529412, 57), '2412' : (0.411764705882353, 58), '2207' : (0.411764705882353, 58), '2304' : (0.388235294117647, 60), '2220' : (0.376470588235294, 61), '2215' : (0.364705882352941, 62), '2416' : (0.364705882352941, 62), '2202' : (0.341176470588235, 64), '2411' : (0.329411764705882, 65), '2114' : (0.305882352941176, 66), '2305' : (0.305882352941176, 66), '2120' : (0.294117647058824, 68), '2409' : (0.282352941176471, 69), '2102' : (0.270588235294118, 70), '2111' : (0.223529411764706, 71), '2204' : (0.223529411764706, 71), '2301' : (0.2000, 73), '2403' : (0.2000, 73), '2209' : (0.2000, 73), '2117' : (0.2000, 73), '2218' : (0.188235294117647, 77), '2419' : (0.164705882352941, 78), '2101' : (0.141176470588235, 79), '2307' : (0.105882352941176, 80), '2315' : (0.0117647058823529, 81)}
 
+@application.route('/colstid', methods=['POST'])
+def after_stid(): # 학번 입력 후
+    
+    req=request.get_json() # 파라미터 값 불러오기
+    userid=req["userRequest"]["user"]["properties"]["plusfriendUserKey"] # 사용자 고유 키
+    stid=req["action"]["detailParams"]["student_id"]["value"] # 벌점 부여할 학번
+    #isstaff=False
+    isstaff=True
+    print(userid)
+    
+    '''fr=open("/home/ubuntu/dg1s_collab/staff_data.txt","r") # staff_data와 비교
+    lines=fr.readlines()
+    fr.close()
+    for line in lines:
+        if userid==line.rstrip("\n") : isstaff=True'''
+    if isstaff==False: # 생교부원이 아니다
+        print("where2")
+        res={
+            "version": "2.0",
+            "template": {
+                "outputs": [
+                    {
+                        "simpleText": {
+                            "text": "권한이 없습니다."  
+                        }
+                    }
+                ]
+            }
+        }
+    else:
+        quickReplies=[] # 경고/벌점을 바로가기 응답 형태로 제공
+        msgtxt=["경고 1회 추가","벌점 1점 추가"]
+        for msg in msgtxt:
+            quickReplies.append({ "action": "block",
+                                  "label": msg[:2],
+                                  "messageText": msg,
+                                  "blockId": "60c3a762a0293f369849360a",
+                                  "extra": { "stid": stid, "type": msg[:2] }})
+        res={
+            "version": "2.0",
+            "template": {
+                "output": [
+                    {
+                        "simpleText": {
+                            "text": "welcome"  
+                        }
+                    }
+                ],
+                "quickReplies": quickReplies
+            }
+        }
+    return jsonify(res)
+    print(res)
+
+@application.route('/coltype', methods=['POST'])
+def after_type(): # 유형 선택 후
+    
+    req=request.get_json() # 파라미터 값 불러오기
+    stid=req["action"]["clientExtra"]["stid"] # 부여할 학
+    typei=req["action"]["clientExtra"]["type"] # 선택한 유형
+    print(stid, typei)
+                                 
+    quickReplies=[] # 사유를 바로가기 응답 형태로 제공
+    msgtxt=["미소등","책상 미정리","의자 미정리","콘센트","캐리어"]
+    for msg in msgtxt:
+        quickReplies.append({ "action": "block",
+                              "label": msg,
+                              "messageText": "사유 : "+msg,
+                              "blockId": "60c3a77bcb976d4f0ad40ffa",
+                              "extra": { "stid": stid, "type": typei, "reason": msg }})
+    res={
+        "version": "2.0",
+        "template": {
+            "quickReplies": quickReplies
+        }
+    }
+    return jsonify(res)
+
+@application.route('/colreason', methods=['POST'])
+def after_reason(): # 사유 선택 후
+    
+    req=request.get_json() # 파라미터 값 불러오기
+    print(req["intent"]["id"])
+    stid=req["action"]["clientExtra"]["stid"] # 부여할 학번
+    typei=req["action"]["clientExtra"]["type"] # 선택한 유형
+    reason=req["action"]["clientExtra"]["reason"] # 선택한 사유
+    printmsg=""
+    print(stid,typei,reason)
+                                 
+    fr=open("/home/ubuntu/dg1s_collab/student_data.txt","r") # student_data에 업데이트
+    lines=fr.readlines()
+    fr.close()
+    for line in lines:
+        data=line.split(' ')
+        datastid=data[0]
+        if stid==datastid:
+            datawarning=data[1]
+            datapenalty=data[2]
+            printmsg=stid+"\n이전 : 경고 "+datawarning+"회, 벌점 "+datapenalty+"점\n"
+            if typei=="경고": datawarning=str(int(datawarning)+1)
+            elif typei=="벌점": datapenalty=str(int(datapenalty)+1)
+            printmsg+="이후 : 경고 "+datawarning+"회, 벌점 "+datapenalty+"점\n사유 : "+reason
+            break
+
+    now=datetime.datetime.utcnow()
+    print(utc.localize(now).astimezone(KST))
+    
+    res={
+        "version": "2.0",
+        "template": {
+            "outputs": [
+                {
+                    "simpleText": {
+                        "text": printmsg
+                    }
+                }
+            ]
+        }
+    }
+    return jsonify(res)
+
+@application.route('/colload', methods=['POST'])
+def load_data(): # 경고/벌점 확인
+     
+    req=request.get_json() # 파라미터 값 불러오기
+
+    res={
+        "version": "2.0",
+        "template": {
+            "outputs": [
+                {
+                    "simpleText": {
+                        "text": "hi"
+                    }
+                }
+            ]
+        }
+    }
+    return jsonify(res)
+
 def prin(datas,classN): # 시간표 출력 함수
     
     now=datetime.datetime.utcnow() # 현재 시간
