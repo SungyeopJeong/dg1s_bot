@@ -315,7 +315,6 @@ def check_wp():
     response = requests.get(url,headers=headers) # url로부터 가져오기
     if response.status_code == 200: 
         source = response.text
-        print(source)
         lines=source.split("\n")
         for line in lines:
             data=line.rstrip('\n').split(' ')
