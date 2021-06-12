@@ -319,6 +319,7 @@ def check_wp():
         lines=source.split("\n")
         for line in lines:
             data=line.rstrip('\n').split(' ')
+            if len(data)<4: continue
             datastid=data[0]
             datawarning=data[1]
             datapenalty=data[2]
