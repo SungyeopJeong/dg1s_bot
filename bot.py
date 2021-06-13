@@ -573,6 +573,7 @@ def input_stid(): # 학번 입력 함수
     req=request.get_json() # 파라미터 값 불러오기
     userid=req["userRequest"]["user"]["properties"]["plusfriendUserKey"]
     stid=req["action"]["detailParams"]["student_id"]["value"]
+    check=False
     
     fr=open("/home/ubuntu/dg1s_bot/user data.txt","r") # userdata 저장 및 변경
     lines=fr.readlines()
@@ -581,8 +582,11 @@ def input_stid(): # 학번 입력 함수
     for line in lines:
         datas=line.split(" ")
         dusid=datas[0]
-        if dusid==userid: fw.write(userid+" "+stid+" 7 none 0 none none\n")
+        if dusid==userid: 
+            fw.write(userid+" "+stid+" 7 none 0 none none\n")
+            check=True
         else : fw.write(line)
+    if check==False : fw.write(userid+" "+stid+" 7 none 0 none none\n")
     fw.close()
     res={
         "version": "2.0",
