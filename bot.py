@@ -309,41 +309,57 @@ def check_wp():
             stid=dstid
             break
     
-    printmsg=""
-    url = 'http://13.209.42.53:5000/colstdata'
-    headers = { 'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36'}
-    response = requests.get(url,headers=headers) # url로부터 가져오기
-    if response.status_code == 200: 
-        source = response.text
-        lines=source.split("\n")
-        for line in lines:
-            data=line.rstrip('\n').split(' ')
-            if len(data)<4: continue
-            datastid=data[0]
-            datawarning=data[1]
-            datapenalty=data[2]
-            datareason=data[3:]
-            if stid==datastid:
-                printmsg="[경고/벌점 현황]\n학번 : "+stid+"\n경고 "+datawarning+"회, 벌점 "+datapenalty+"점"
-                if len(datareason)!=1:
-                    reasons=""
-                    for reason in datareason:
-                        if reason=="none": continue
-                        reasons+="\n"+reason.replace('_',' ')[:10]+' '+reason.replace('_',' ')[10:]
-                    printmsg+="\n사유 :"+reasons
-    
-    res={
-        "version": "2.0",
-        "template": {
-            "outputs":[
-                {
-                    "simpleText": {
-                        "text": printmsg
+    if stid=="none":
+        res={
+            "version": "2.0",
+            "template": {
+                "outputs": [
+                    {
+                        "basicCard": {
+                            "title": "[학번 등록]",
+                            "description": "학번이 등록되어 있지 않습니다.\n아래 버튼을 눌러 학번을 등록해주세요",
+                            "buttons": [ { "action": "message", "label": "학번 등록", "messageText": "학번 등록" } ]
+                        }
                     }
-                }
-            ]
+                ]
+            }
         }
-    }
+    else :
+        printmsg=""
+        url = 'http://13.209.42.53:5000/colstdata'
+        headers = { 'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36'}
+        response = requests.get(url,headers=headers) # url로부터 가져오기
+        if response.status_code == 200: 
+            source = response.text
+            lines=source.split("\n")
+            for line in lines:
+                data=line.rstrip('\n').split(' ')
+                if len(data)<4: continue
+                datastid=data[0]
+                datawarning=data[1]
+                datapenalty=data[2]
+                datareason=data[3:]
+                if stid==datastid:
+                    printmsg="[경고/벌점 현황]\n학번 : "+stid+"\n경고 "+datawarning+"회, 벌점 "+datapenalty+"점"
+                    if len(datareason)!=1:
+                        reasons=""
+                        for reason in datareason:
+                            if reason=="none": continue
+                            reasons+="\n"+reason.replace('_',' ')[:10]+' '+reason.replace('_',' ')[10:]
+                        printmsg+="\n사유 :"+reasons
+
+        res={
+            "version": "2.0",
+            "template": {
+                "outputs":[
+                    {
+                        "simpleText": {
+                            "text": printmsg
+                        }
+                    }
+                ]
+            }
+        }
     return jsonify(res)
 
   
