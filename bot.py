@@ -310,7 +310,7 @@ def check_wp():
             break
     
     printmsg=""
-    url = 'http://13.125.231.95:5000/colstdata'
+    url = 'http://13.209.42.53:5000/colstdata'
     headers = { 'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36'}
     response = requests.get(url,headers=headers) # url로부터 가져오기
     if response.status_code == 200: 
