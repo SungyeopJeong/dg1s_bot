@@ -179,34 +179,34 @@
 <body>
     <div id="header">
         <div id="logobox">
-            <a href="http://15.164.222.88:5000/" id="logolink"><img id="logotype" src="./static/images/code21_logotype.png" /></a>
+            <a href="" id="logolink"><img id="logotype" src="./static/images/code21_logotype.png" /></a>
         </div>
         <ul id="menu">
             <li class="menucontent">
-                <a class="menuname" id="user data" href="http://15.164.222.88:5000/texteditor?filename=user data">User Data</a>
+                <a class="menuname" id="user data" href="./texteditor?filename=user data">User Data</a>
             </li>
             <li class="menucontent">
-                <a class="menuname" id="final save" href="http://15.164.222.88:5000/texteditor?filename=final save">Final Save</a>
+                <a class="menuname" id="final save" href="./texteditor?filename=final save">Final Save</a>
             </li>
             <li class="menucontent">
-                <a class="menuname" id="record status" href="http://15.164.222.88:5000/status?index=0">Record Status</a>
+                <a class="menuname" id="record status" href="./status?index=0">Record Status</a>
             </li>
             <li class="menucontent">
-                <a class="menuname" id="subject data" href="http://15.164.222.88:5000/texteditor?filename=subject data">Subject Data</a>
+                <a class="menuname" id="subject data" href="./texteditor?filename=subject data">Subject Data</a>
             </li>
             <li class="menucontent">
-                <a class="menuname" id="timetable" href="http://15.164.222.88:5000/texteditor?filename=timetable">Timetable</a>
+                <a class="menuname" id="timetable" href="./texteditor?filename=timetable">Timetable</a>
             </li>
             <li class="menucontent">
-                <a class="menuname" id="file management" href="http://15.164.222.88:5000/file">File Management</a>
+                <a class="menuname" id="file management" href="./file">File Management</a>
             </li>
             <li class="menucontent">
-                <a class="menuname" id="ball" href="http://15.164.222.88:5000/ball">Ball</a>
+                <a class="menuname" id="ball" href="./ball">Ball</a>
             </li>
         </ul>
     </div>
     <div id="contentbox">
-        <form method="POST" action="http://15.164.222.88:5000/xlsave" target="_blank" enctype="multipart/form-data" onsubmit="return chksubmit();">
+        <form method="POST" action="./xlsave" target="_blank" enctype="multipart/form-data" onsubmit="return chksubmit();">
             <div id="borderbox">
                 <div id="uploadformbox">
                     <img src="./static/images/upload_icon2.png" id="uploadimg" onclick="document.getElementById('uploadfile').click();">
@@ -216,7 +216,7 @@
                 </div>
             </div>
         </form>
-        <form method="POST" action="http://15.164.222.88:5000/dnldfile" target="_blank" onsubmit="return chkdownload();">
+        <form method="POST" action="./dnldfile" target="_blank" onsubmit="return chkdownload();">
             <div id="downloadformbox">
                 <div id="downloadbox">
                     <input type="text" id="downloadfilename" name="downloadfilename" Placeholder="Click the filename below">
