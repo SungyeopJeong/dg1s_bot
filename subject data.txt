@@ -1,22 +1,24 @@
 name zoomid zoompwd hangout classroom teacher
 1학년
 국어A none none none none 이재선
-국어B(1,2반) none none none none 최광석
-국어B(3,4반) none none none none 윤소영
+국어B none none none none  윤소영
 수학A none none none none 김선화
 수학B none none none none 손주희
 영어A none none none none 최진영
 영어B none none none none Michael
 물리 none none none none 김종수
-화학 none none none none 박준규
-통과A none none none none 김정화
-통과B none none none none 김영탁
-통과C none none none none 송영순
-생명 none none none none 김영광
-지학 none none none none 정윤지
+화학A none none none none 박준규
+화학B none none none none 김영탁
+생명A none none none none 송영순
+생명B none none none none 김영광
+지학A none none none none 정윤지
+지학B none none none none 김동우
 체육 none none none none 남인숙
-악기 none none none none 이선희
+음악 none none none none 김현정
+미술 none none none none 전혜경
+진로 none none none none 김태자
 자율 none none none none
+봉사 none none none none
 동아리 none none none none
 1반 none none none none 김종수
 2반 none none none none 박준규
@@ -38,13 +40,13 @@ name zoomid zoompwd hangout classroom teacher
 화학B none none none none 김영탁
 생명 none none none none 이은영
 지학 5826675614 dCt0dWVyais2QVVrQ3lUZVZuUmpTQT09 none MTMwNjAwMzAyNjU1 김휘민
-정보 none none none MjkxNTIwMTY4NTI0 권헌춘
-사회A none none none MjkzMDQ0MDkxMDE0 안진표
-사회B none none none MjkzMDQ0MDkxMDE0 배희정
-체육(1반) none none none none 남인숙
-체육(2반) none none none none 남인숙
-체육(3반) none none none none 남인숙
-체육(4반) none none none none 남인숙
+정보(1반) none none none none 권헌춘
+정보(2반) none none none none 권헌춘
+정보(3반) none none none none 권헌춘
+정보(4반) none none none MjkxNTIwMTY4NTI0 권헌춘
+통사A none none none MjkzMDQ0MDkxMDE0 안진표
+통사B none none none MjkzMDQ0MDkxMDE0 배희정
+체육 none none none none 남인숙
 진로 none none none none 김태자
 자율 none none none none
 봉사 none none none none
@@ -54,9 +56,12 @@ name zoomid zoompwd hangout classroom teacher
 3반 5826675614 dCt0dWVyais2QVVrQ3lUZVZuUmpTQT09 none none 김휘민
 4반 none none none none 이은영
 3학년
-화법 none none none none 윤소영
+논술 none none none none 윤소영
+독서 none none none none 최광석
 수학A none none none none 곽동현
+탐구A none none none none 곽동현
 수학B none none none none 이지혜
+탐구B none none none none 이지혜
 영어A none none none none 서연희
 영어B none none none none Michael
 물리 none none none none 김승홍
@@ -66,8 +71,6 @@ name zoomid zoompwd hangout classroom teacher
 경제 none none none none 안진표
 국사 none none none none 문지현
 체육 none none none none 이상만
-음악 none none none none 이선희
-미술 none none none none 전혜경
 중국어 none none none none 정규리
 진로 none none none none 김태자
 봉사 none none none none
