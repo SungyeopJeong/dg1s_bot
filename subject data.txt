@@ -1,34 +1,79 @@
-name type zoom_id zoom_pwd hangout_id class teacher
+name zoomid zoompwd hangout classroom teacher
 1학년
-물리A classroom none none none MTUxODMzODgyNDkz 김종수
-물리B classroom none none none MTUxODMzODgyNDkz 김정화
-화학A classroom none none none NjY1MjA0MDI1NzNa 김연주
-화학B zoom 3679054234 dkh3eUtpN3BpWFJCRk9lSU9XYnlNQT09 none NjY5NTQ4ODIxMDRa 이은만
-생명A classroom none none none MjE3NjEzNDc2Nzkw 정원영
-생명B(1,2반) hangout none none hjxtq6m7sg NjY1Mzk3MDM0OTBa 권지희
-생명B(3,4반) hangout none none ckfmjbdzez NzAyMTMwNDY3OTRa 권지희
-지학A hangout none none gdkxxq4mwi MTMwNjAwMzAyNjU1 김동우
-지학B zoom 5826675614 dCt0dWVyais2QVVrQ3lUZVZuUmpTQT09 none MTMwNjAwMzAyNjU1 김휘민
-수학A zoom 6775010103 anBXazZ5Znh1SU1DaXF6enBNbndZdz09 none NjY5NjQ0OTIyMzha 서혁민
-수학B zoom 3465762136 N0xWT1VmM2ROU2plbHJkMisydTZKUT09 none NjY5MzAxMjAzMTNa 석호진
-국어A classroom none none none NjY5NTc3NDMwNzha 김은숙
-국어B classroom none none none Njc0OTc4OTUwNjBa 최광석
-영어A(1,2반) zoom 6749003316 Ymd5VFkwSnBFc1lrSDI4Tksxa2JsUT09 none NjY1MTE3MTE5MTda 이지선
-영어A(3,4반) zoom 6749003316 Ymd5VFkwSnBFc1lrSDI4Tksxa2JsUT09 none NzA1NjE5NDk1MDha 이지선
-영어B classroom none none none Njk4NTUyMDY1MTVa Mark Brucal
-음악 classroom none none none NjY5NjkyMjQ5NTha 이선희
-미술 classroom none none none MTMxMTM0MDcxNjQy 김신희
-체육(1반) classroom none none none none 남인숙
-체육(2반) classroom none none none MTAwNzU0NTg3MTUx 남인숙
-체육(3반) classroom none none none MTAwNzU0NTg3MTc1 남인숙
-체육(4반) classroom none none none MTAwNzU0NTg3MTk5 남인숙
-봉사 classroom none none none NTI3MTI3MjI4MTla
-자율 classroom none none none NTI3MTI3MjI4MTla
-진로 classroom none none none MjM3ODE5MDg0NjA5 김태자
-동아리 club none none none none
-1반 daymeeting 3679054234 dkh3eUtpN3BpWFJCRk9lSU9XYnlNQT09 none none 이은만
-2반 daymeeting 6749003316 Ymd5VFkwSnBFc1lrSDI4Tksxa2JsUT09 none none 이지선
-3반 daymeeting 3465762136 N0xWT1VmM2ROU2plbHJkMisydTZKUT09 none none 석호진
-4반 daymeeting 6775010103 anBXazZ5Znh1SU1DaXF6enBNbndZdz09 none none 서혁민
+국어A none none none none 이재선
+국어B(1,2반) none none none none 최광석
+국어B(3,4반) none none none none 윤소영
+수학A none none none none 김선화
+수학B none none none none 손주희
+영어A none none none none 최진영
+영어B none none none none Michael
+물리 none none none none 김종수
+화학 none none none none 박준규
+통과A none none none none 김정화
+통과B none none none none 김영탁
+통과C none none none none 송영순
+생명 none none none none 김영광
+지학 none none none none 정윤지
+체육 none none none none 남인숙
+악기 none none none none 이선희
+자율 none none none none
+동아리 none none none none
+1반 none none none none 김종수
+2반 none none none none 박준규
+3반 none none none none 김선화
+4반 none none none none 정윤지
 2학년
+문학 none none none Mjc1NDMzMjA5ODMz 최광석
+수학A 3465762136 N0xWT1VmM2ROU2plbHJkMisydTZKUT09 none Mjk4NzEyNjc3MDcx 석호진
+수학B none none none MjkxOTQ4ODI2NDc2 유현철
+수학C 6775010103 anBXazZ5Znh1SU1DaXF6enBNbndZdz09 none none 서혁민
+영어A(1반) 6749003316 Ymd5VFkwSnBFc1lrSDI4Tksxa2JsUT09 none none 이지선
+영어A(2반) 6749003316 Ymd5VFkwSnBFc1lrSDI4Tksxa2JsUT09 none none 이지선
+영어A(3반) 6749003316 Ymd5VFkwSnBFc1lrSDI4Tksxa2JsUT09 none none 이지선
+영어A(4반) 6749003316 Ymd5VFkwSnBFc1lrSDI4Tksxa2JsUT09 none Mjk0Mjk0MTc4NzEz 이지선
+영어B none none none MzAwODA3MzU0ODY0 Michael
+물리A none none none MjkxODUwMjg4Mjc1 김정화
+물리B none none none MjkxODUwMjg4Mjc1 김희태
+화학A 3679054234 dkh3eUtpN3BpWFJCRk9lSU9XYnlNQT09 none MjkxODU5ODMzOTA3 이은만
+화학B none none none none 김영탁
+생명 none none none none 이은영
+지학 5826675614 dCt0dWVyais2QVVrQ3lUZVZuUmpTQT09 none MTMwNjAwMzAyNjU1 김휘민
+정보 none none none MjkxNTIwMTY4NTI0 권헌춘
+사회A none none none MjkzMDQ0MDkxMDE0 안진표
+사회B none none none MjkzMDQ0MDkxMDE0 배희정
+체육(1반) none none none none 남인숙
+체육(2반) none none none none 남인숙
+체육(3반) none none none none 남인숙
+체육(4반) none none none none 남인숙
+진로 none none none none 김태자
+자율 none none none none
+봉사 none none none none
+동아리 none none none none
+1반 3679054234 dkh3eUtpN3BpWFJCRk9lSU9XYnlNQT09 none none 이은만
+2반 3465762136 N0xWT1VmM2ROU2plbHJkMisydTZKUT09 none none 석호진
+3반 5826675614 dCt0dWVyais2QVVrQ3lUZVZuUmpTQT09 none none 김휘민
+4반 none none none none 이은영
 3학년
+화법 none none none none 윤소영
+수학A none none none none 곽동현
+수학B none none none none 이지혜
+영어A none none none none 서연희
+영어B none none none none Michael
+물리 none none none none 김승홍
+화학 none none none none 김동현
+생명 none none none none 이근우
+지학 none none none none 김동우
+경제 none none none none 안진표
+국사 none none none none 문지현
+체육 none none none none 이상만
+음악 none none none none 이선희
+미술 none none none none 전혜경
+중국어 none none none none 정규리
+진로 none none none none 김태자
+봉사 none none none none
+자율 none none none none
+동아리 none none none none
+1반 none none none none 곽동현
+2반 none none none none 이근우
+3반 none none none none 이지혜
+4반 none none none none 윤소영
