@@ -199,7 +199,7 @@ def what_is_menu(): # made by 1316, 1301
             
             for menu in a:
                 menu_text = menu.get_text()
-                print(menu_text)
+                print(menu_text.split())
                 bracket_i = menu_text.find('[')
                 bracket_j = menu_text.find(']')
                 menu_day = menu_text[:bracket_i]
