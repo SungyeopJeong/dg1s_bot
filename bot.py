@@ -199,8 +199,6 @@ def what_is_menu(): # made by 1316, 1301
             
             for menu in a:
                 menu_text = menu.get_text().split()
-                bracket_i = menu_text.find('[')
-                bracket_j = menu_text.find(']')
                 menu_day = menu_text[0]
                 menu_when = menu_text[1]
                 menu_list = menu_text[2:] if menu_text[2]!='TODAY' else menu_text[3:]
