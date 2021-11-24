@@ -189,15 +189,15 @@ def what_is_menu(): # made by 1316, 1301
     if Menu_saved_date == "" or Menu_saved_date != today_name :
         Menu_saved_date = today_name
         Menu = [["","",""],["","",""]]
-      
-        url = 'https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=%EB%8C%80%EA%B5%AC%EC%9D%BC%EA%B3%BC%ED%95%99%EA%B3%A0%EB%93%B1%ED%95%99%EA%B5%90&oquery=eorndlfrhkrh+rmqtlr&tqi=U%2Ftz5wprvOssslHyxuossssssLN-415573'
+        url = 'https://search.naver.com/search.naver?ie=UTF-8&query=%EB%8C%80%EA%B5%AC%EC%9D%BC%EA%B3%BC%ED%95%99%EA%B3%A0%EB%93%B1%ED%95%99%EA%B5%90&sm=chr_hty'
+        #url = 'https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=%EB%8C%80%EA%B5%AC%EC%9D%BC%EA%B3%BC%ED%95%99%EA%B3%A0%EB%93%B1%ED%95%99%EA%B5%90&oquery=eorndlfrhkrh+rmqtlr&tqi=U%2Ftz5wprvOssslHyxuossssssLN-415573'
         response = requests.get(url) # url로부터 가져오기
         if response.status_code == 200:  
           
             source = response.text # menu_info class 내용 가져오기
             soup = BeautifulSoup(source,'html.parser')
-            a = soup.select('.menu_info')
-          
+            a = soup.select('.list')
+            print(a)
             for menu in a:
                 menu_text = menu.get_text()
                 bracket_i = menu_text.find('[')
