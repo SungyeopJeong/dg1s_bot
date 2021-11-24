@@ -196,7 +196,7 @@ def what_is_menu(): # made by 1316, 1301
           
             source = response.text # menu_info class 내용 가져오기
             soup = BeautifulSoup(source,'html.parser')
-            a = soup.select('.cs_common_module > .cm_info_box.scroll_timeline > .scroll_box > .list')
+            a = soup.select('.timeline_box')
             print(a)
             for menu in a:
                 menu_text = menu.get_text()
