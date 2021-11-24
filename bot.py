@@ -183,8 +183,8 @@ def what_is_menu(): # made by 1316, 1301
     now = datetime.datetime.utcnow() # 오늘, 내일 날짜
     today = utc.localize(now).astimezone(KST)
     tomorrow = today + timedelta(days=1)
-    today_name = " "+str(today.month)+"월 "+str(today.day)+"일 " # 추후 비교용 날짜명 텍스트("_N월_N일_")
-    tomorrow_name = " "+str(tomorrow.month)+"월 "+str(tomorrow.day)+"일 "
+    today_name = str(today.month)+"."+str(today.day)+"." # 추후 비교용 날짜명 텍스트("M.D.W")
+    tomorrow_name = str(tomorrow.month)+"."+str(tomorrow.day)+"."
 
     if Menu_saved_date == "" or Menu_saved_date != today_name :
         Menu_saved_date = today_name
@@ -198,20 +198,22 @@ def what_is_menu(): # made by 1316, 1301
             a = soup.select('.timeline_box')
             
             for menu in a:
-                menu_text = menu.get_text()
-                print(menu_text.split())
+                menu_text = menu.get_text().split()
                 bracket_i = menu_text.find('[')
                 bracket_j = menu_text.find(']')
-                menu_day = menu_text[:bracket_i]
-                menu_when = menu_text[bracket_i+1:bracket_j]
-                menu_content = menu_text[bracket_j+3:].rstrip().replace(" ","\n")
+                menu_day = menu_text[0]
+                menu_when = menu_text[1]
+                menu_list = menu_text[2:] if menu_text[2]!='TODAY' else menu_text[3:]
+                menu_content = menu_list[0]
+                for menu_c in menu_list[1:]:
+                    menu_content += "\n" + menu_c
               
                 if menu_when == "아침": save_i = 0
                 elif menu_when == "점심": save_i = 1
                 elif menu_when == "저녁": save_i = 2
               
-                if menu_day == today_name: Menu[0][save_i]=menu_content
-                elif menu_day == tomorrow_name: Menu[1][save_i]=menu_content
+                if today_name in menu_day : Menu[0][save_i]=menu_content
+                elif tomorrow_name in menu_day: Menu[1][save_i]=menu_content
     
     req=request.get_json() # 파라미터 값 불러오기
     askmenu=req["action"]["detailParams"]["ask_menu"]["value"]
